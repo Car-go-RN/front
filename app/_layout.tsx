@@ -14,7 +14,7 @@ SplashScreen.preventAutoHideAsync();
 export default function RootLayout() {
   const colorScheme = useColorScheme();
   const [loaded] = useFonts({
-    SpaceMono: require('../assets/fonts/SpaceMono-Regular.ttf'),
+    Paperlogy: require('../assets/fonts/Paperlogy-4Regular.ttf'),
   });
 
   useEffect(() => {
@@ -30,7 +30,8 @@ export default function RootLayout() {
   return (
     <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
       <Stack>
-        <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+        <Stack.Screen name="auth/Login" options={{title:'Login'}}/>
+        <Stack.Screen name="auth/Signup" options={{title:'Signup'}}/>
         <Stack.Screen name="+not-found" />
       </Stack>
       <StatusBar style="auto" />
