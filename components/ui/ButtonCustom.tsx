@@ -23,7 +23,7 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     alignItems: 'center',
     justifyContent: 'center',
-    margin: 'auto',
+    marginHorizontal: 'auto'
   },
   text: {
     color: '#FFF',
