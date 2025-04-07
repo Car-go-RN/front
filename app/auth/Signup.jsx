@@ -1,9 +1,9 @@
-import { View, Text } from "react-native"
+import { View } from "react-native"
 
 const Signup = () => {
     return(
         <View>
-            <Text>회원가입</Text>
+            회원가입
         </View>
     )
 }
