@@ -29,7 +29,7 @@ const styles = StyleSheet.create({
     container:{
         width:'80%',
         marginHorizontal:'auto',
-        marginBottom: 10,
+        marginBottom: 13,
     },
     input:{
         width: '100%',
@@ -45,7 +45,8 @@ const styles = StyleSheet.create({
     text:{
         fontFamily:'Paperlogy',
         fontSize: 16,
-        marginBottom: 5
+        marginBottom: 6,
+        marginLeft:5
     }
 })
 
