@@ -1,5 +1,7 @@
+import { Colors } from "@/constants/Colors";
 import React from "react";
 import { Pressable, Text, StyleSheet, GestureResponderEvent } from "react-native";
+
 
 type ButtonCustomProps = {
   text: string;
@@ -17,7 +19,7 @@ const ButtonCustom: React.FC<ButtonCustomProps> = ({ text, onPress }) => {
 const styles = StyleSheet.create({
   button: {
     width: '80%',
-    backgroundColor: '#25CCA0',
+    backgroundColor: Colors.tint,
     paddingVertical: 14,
     paddingHorizontal: 32,
     borderRadius: 8,

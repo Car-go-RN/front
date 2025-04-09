@@ -4,15 +4,14 @@
  */
 
 export const Colors = {
-  light: {
-    text: '#000',
-    background: '#fff',
-    backgroundGrey: '#F4F4F4',
-    tint: '#25CCA0',
-    tintDark: '#12B489',
-    icon: '#ADB3B1',
-    yellow: '#FECF31',
-    red: '#FF6969',
-    placeholder: '#D1D1D1'
-  },
+  text: '#000',
+  background: '#fff',
+  backgroundGrey: '#F4F4F4',
+  tint: '#25CCA0',
+  tintDark: '#12B489',
+  icon: '#ADB3B1',
+  yellow: '#FECF31',
+  red: '#FF6969',
+  placeholder: '#D1D1D1',
+  lightGrey: '#D9D9D9'
 };
