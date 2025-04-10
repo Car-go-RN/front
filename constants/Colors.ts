@@ -13,5 +13,6 @@ export const Colors = {
   yellow: '#FECF31',
   red: '#FF6969',
   placeholder: '#D1D1D1',
+  placeholderGreen: '#6FC9B2',
   lightGrey: '#D9D9D9'
 };
