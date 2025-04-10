@@ -1,13 +1,11 @@
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet } from 'react-native';
+import { Colors } from "@/constants/Colors";
 
 export default function Splash() {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.logo}>스플래쉬하면</Text>
-      <TouchableOpacity style={[styles.button, {marginTop: "auto"}]} >
-          <Text style={styles.buttonText}>로그인</Text>
-      </TouchableOpacity>
+      <Text style={styles.logo}>스플래쉬화면</Text>
     </View>
   );
 }
@@ -15,7 +13,7 @@ export default function Splash() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: Colors.background,
     alignItems: 'center',
     justifyContent: 'center',
   },
@@ -27,6 +25,6 @@ const styles = StyleSheet.create({
     backgroundColor: 'blue'
   },
   buttonText: {
-    color: '#fff'
+    color: Colors.background
   }
 });

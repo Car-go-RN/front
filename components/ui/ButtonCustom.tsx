@@ -28,7 +28,7 @@ const styles = StyleSheet.create({
     marginHorizontal: 'auto'
   },
   text: {
-    color: '#FFF',
+    color: Colors.background,
     fontSize: 16,
     fontFamily: 'Paperlogy'
   },

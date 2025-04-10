@@ -14,8 +14,8 @@ const Login = () => {
     return(
         <View style={styles.container}>
             <HeaderCustom />
-            <Text style={[styles.text, {marginTop:88, marginBottom:48, marginLeft:48}]}>
-                로그인
+            <Text style={[styles.text, {marginTop:88, marginBottom:48, marginLeft:44}]}>
+            로그인
             </Text>
             <InputCustom 
                 label="이메일"
@@ -54,6 +54,7 @@ const styles = StyleSheet.create({
         backgroundColor: Colors.background,
     },
     text: {
+        width: '80%',
         fontWeight: 'bold',
         fontFamily: 'Paperlogy',
         fontSize: 24,
@@ -83,7 +84,7 @@ const styles = StyleSheet.create({
         marginRight: 8,
     },
     checkUser: {
-        color: '#25CCA0',
+        color: Colors.tint,
         fontWeight: '500',
         fontFamily: 'Paperlogy',
         fontSize: 16,
