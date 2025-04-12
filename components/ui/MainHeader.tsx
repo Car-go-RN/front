@@ -27,7 +27,7 @@ const styles = StyleSheet.create({
     header:{
         backgroundColor: Colors.tint,
         width: '100%',
-        height: 220
+        height: 200
 
     },
     container:{
@@ -35,22 +35,22 @@ const styles = StyleSheet.create({
         flexDirection:'row',
         justifyContent:'space-between',
         marginTop: 50,
-        marginBottom: 25,
-        width: '80%',
+        marginBottom: 18,
+        width: '85%',
         alignSelf:'center'
     },
     text:{
         fontFamily: 'Paperlogy',
-        fontSize: 17,
+        fontSize: 16,
         fontWeight: 400,
         color: Colors.background,
-        lineHeight: 25,
+        lineHeight: 23,
     },
     textBold:{
         fontWeight: 600
     },
     searchBox:{
-        width: '80%',
+        width: '85%',
         height: 40,
         backgroundColor: Colors.tintDark,
         alignSelf:'center',
