@@ -39,7 +39,7 @@ const Login = () => {
             <ButtonCustom
                 text="로그인"        
             />
-            <Pressable onPress={() => router.push('/auth/Signup')}>
+            <Pressable onPress={() => router.push('/auth/signup')}>
                 <Text style={styles.checkUser}>
                     아직 회원이 아니신가요?
                 </Text>

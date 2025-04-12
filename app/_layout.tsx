@@ -30,9 +30,10 @@ export default function RootLayout() {
         initialRouteName="Splash"
         screenOptions={{ headerShown: false }}
       >
-        <Stack.Screen name="Splash" />
-        <Stack.Screen name="auth/Login" />
-        <Stack.Screen name="auth/Signup" />
+        <Stack.Screen name="splash" />
+        <Stack.Screen name="auth/login" />
+        <Stack.Screen name="auth/signup" />
+        <Stack.Screen name="" />
         <Stack.Screen name="+not-found" />
       </Stack>
       <StatusBar style="auto" />
