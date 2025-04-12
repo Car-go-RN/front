@@ -1,10 +1,12 @@
-import { StyleSheet, Image, View } from "react-native"
+import { StyleSheet, Image, View, Pressable } from "react-native"
 import { AntDesign } from "@expo/vector-icons"
+import { useRouter } from "expo-router"
 
 const HeaderCustom = () => {
+  const router = useRouter();
   return (
     <View style={styles.container}>
-      <AntDesign name="arrowleft" size={28} color="#ADB3B1" />
+      <Pressable onPress={()=>router.push('/Main')}><AntDesign name="arrowleft" size={28} color="#ADB3B1" /></Pressable>
       <Image source={require('../../assets/images/카GO바지logo2.png')} />
     </View>
   )

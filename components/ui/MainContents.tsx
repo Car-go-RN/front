@@ -4,6 +4,7 @@ import FontAwesome6 from '@expo/vector-icons/FontAwesome6';
 import { Colors } from "@/constants/Colors";
 import MainRestItem from "./MainRestItem";
 import ButtonCustom from "./ButtonCustom";
+import { useRouter } from "expo-router";
 
 const list = [{id:1},{id:2},{id:3}]
 
@@ -12,6 +13,8 @@ type MainContentProps = {
 }
 
 const MainContents:React.FC<MainContentProps> = ({isLogin}) => {
+    const router = useRouter();
+
     return(
         <View style={styles.container}>
         {
@@ -38,8 +41,8 @@ const MainContents:React.FC<MainContentProps> = ({isLogin}) => {
                     <Text style={[styles.text,{lineHeight: 25}]}><Text style={{color: Colors.tint}}>설문조사</Text>를 하면{'\n'}나에게 맞는 휴게소를{'\n'}<Text style={{color: Colors.tint}}>더 빠르고 간편하게</Text> 찾을 수 있어요</Text>
                     
                     <View style={styles.buttonContainer}>
-                        <ButtonCustom text="로그인 하러가기"/>
-                        <ButtonCustom text="회원가입 하러가기" outline={true}/>
+                        <ButtonCustom text="로그인 하러가기" onPress={()=>router.push('/auth/Login')}/>
+                        <ButtonCustom text="회원가입 하러가기" outline={true} onPress={()=>router.push('/auth/Signup')}/>
                     </View>
                 </View>
             )
