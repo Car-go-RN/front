@@ -1,6 +1,7 @@
 import { StyleSheet, Image, View, Pressable } from "react-native"
 import { AntDesign } from "@expo/vector-icons"
 import { useRouter } from "expo-router"
+import { Colors } from "@/constants/Colors"
 
 const HeaderCustom = () => {
   const router = useRouter();

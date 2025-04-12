@@ -34,7 +34,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
   },
   text: {
-    color: '#FFF',
+    color: Colors.background,
     fontSize: 16,
     fontFamily: 'Paperlogy'
   },
