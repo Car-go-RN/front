@@ -36,9 +36,11 @@ const Login = () => {
                 </View>
                 <Text style={styles.middleText}>비밀번호를 잊어버리셨습니까?</Text>
             </View>
-            <ButtonCustom
-                text="로그인"        
-            />
+            <Pressable onPress={() => router.push('/auth/signup')}>
+                <ButtonCustom
+                    text="로그인"        
+                />
+            </Pressable>
             <Pressable onPress={() => router.push('/auth/signup')}>
                 <Text style={styles.checkUser}>
                     아직 회원이 아니신가요?
