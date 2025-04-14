@@ -13,7 +13,7 @@ const HeaderCustom: React.FC<headerProps> = ({isDetail}) => {
   const router = useRouter();
   return (
     <View style={styles.container}>
-      <Pressable onPress={()=>router.push('/Main')}><AntDesign name="arrowleft" size={28} color={isDetail ? '#ffffff': '#ADB3B1'} /></Pressable>
+      <Pressable onPress={()=>router.push('/Main')}><AntDesign name="arrowleft" size={28} color={isDetail ? Colors.background: Colors.icon} /></Pressable>
       {
         isDetail ? (
           <Pressable><Ionicons name="person-outline" size={24} color="white" /></Pressable>
