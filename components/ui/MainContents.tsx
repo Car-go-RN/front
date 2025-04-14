@@ -1,5 +1,5 @@
 import React from "react";
-import { ScrollView, StyleSheet, Text, View } from "react-native";
+import { Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
 import FontAwesome6 from '@expo/vector-icons/FontAwesome6';
 import { Colors } from "@/constants/Colors";
 import MainRestItem from "./MainRestItem";
