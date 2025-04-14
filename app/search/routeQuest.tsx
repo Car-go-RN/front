@@ -1,18 +1,21 @@
 import MainHeader from "@/components/ui/MainHeader";
 import { Colors } from "@/constants/Colors";
-import { StyleSheet, View } from "react-native";
+import { StyleSheet, View, ScrollView } from "react-native";
 import RestItem from "@/components/ui/RestItem";
+
+const list = [{id:1},{id:2},{id:3},{id:4}]
 
 const RouteQuest = () => {
   return (
     <View>
       <MainHeader isRoute={true}/>
-      <View style={styles.container}>       
-        <RestItem />
-        <RestItem />
-        <RestItem />
-        <RestItem />
-      </View>
+      <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>       
+        {
+            list.map((item)=>(
+              <RestItem />
+            ))
+        }
+      </ScrollView>
     </View>
   )
 }
