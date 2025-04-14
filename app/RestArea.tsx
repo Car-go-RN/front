@@ -1,15 +1,51 @@
 import HeaderCustom from "@/components/ui/HeaderCustom";
+import RestDetail from "@/components/ui/RestDetail";
+import RestReview from "@/components/ui/RestReview";
 import { Colors } from "@/constants/Colors";
-import { StyleSheet, View, Text, Image } from "react-native"
+import AntDesign from '@expo/vector-icons/AntDesign';
+import Ionicons from '@expo/vector-icons/Ionicons';
+import { useState } from "react";
+import { StyleSheet, View, Text, Image, Pressable } from "react-native"
 
 const RestArea = () => {
+    const [nav, setNav] = useState<string>('detail');
+
     return(
         <View style={styles.container}>
             <View style={styles.header}>
                 <HeaderCustom isDetail={true} />
             </View>
             <Image style={styles.restImg} source={require('@/assets/images/test-rest-area.png')}/>
-            <Text>asㅇㄻㄴㅇㅇ</Text>
+            <View style={[container.all,container.title,{paddingVertical: 35}]}>
+                <Text style={[styles.text,{fontSize: 24, fontWeight:700}]}>동명휴게소(춘천방향)</Text>
+                <View style={styles.reaction}>
+                    <AntDesign name="heart" size={17} color={Colors.lightGrey} style={styles.icon} /><Text style={styles.reactState}>12</Text>
+                    <Ionicons name="bookmark" size={17} color={Colors.lightGrey} style={styles.icon} />
+                </View>
+            </View>
+            <View style={[container.all,container.title]}>
+                <Text style={[styles.text,{color:Colors.yellow, fontSize: 16}]}>★★★★☆ 3.0</Text>
+                <Text style={[styles.text,{color:Colors.tint, fontSize: 14, alignSelf:'center'}]}>휴게소까지 거리 28km</Text>
+            </View>
+            <View style={container.nav}>
+                <View style={[container.all,{flexDirection:'row', paddingVertical: 15}]}>
+                    <Pressable onPress={()=>setNav('detail')} style={{marginRight: 25}}>
+                        <Text 
+                            style={[styles.text, styles.nav, nav=='detail' ? styles.activeNav : undefined]}>상세정보
+                        </Text>
+                    </Pressable>
+                    <Pressable onPress={()=>setNav('review')}><Text style={[styles.text,styles.nav, nav=='review' ? styles.activeNav : undefined]}>리뷰</Text></Pressable>
+                </View>
+            </View>
+                <View style={container.all}>
+                {
+                    nav=='detail' ? (
+                        <RestDetail />
+                    ) : (
+                        <RestReview />
+                    )
+                }
+                </View>
         </View>
     )
 }
@@ -28,7 +64,49 @@ const styles = StyleSheet.create({
     restImg: {
         width: '100%',
         height: 250
+    },
+    reaction: {
+        flexDirection: 'row',
+        marginLeft:10
+    },
+    icon: {
+        marginRight: 3
+    },
+    reactState: {
+        color: Colors.lightGrey,
+        width: 25,
+        fontSize: 15
+    },
+    text: {
+        fontFamily: 'Paperlogy'
+    },
+    nav:{
+        fontSize: 14,
+        color: Colors.placeholder
+    },
+    activeNav:{
+        color: Colors.tint,
+        textDecorationColor: Colors.tint,
+        textDecorationStyle: 'solid',
+        textDecorationLine: 'underline'                                                                     
     }
 });
+
+const container = StyleSheet.create({
+    all: {
+        width: '80%',
+        alignSelf: 'center',
+    },
+    title:{
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+    },
+    nav: {
+        marginVertical: 15,
+        borderColor: Colors.lightGrey,
+        borderTopWidth: 1,
+        borderBottomWidth: 1,
+    }
+})
 
 export default RestArea;
