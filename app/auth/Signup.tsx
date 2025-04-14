@@ -18,11 +18,13 @@ const Signup = () => {
                     placeholder="이메일을 입력하세요."
                     type="email"
                     isError={true}
+                    isSignup={true}
                 />
                 <InputCustom 
                     label="인증번호"
                     placeholder="C2J3D2"
                     type="authNum"
+                    isSignup={true}
                 />
                 <InputCustom 
                     label="비밀번호"

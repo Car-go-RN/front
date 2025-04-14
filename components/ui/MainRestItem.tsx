@@ -1,8 +1,9 @@
 import { Colors } from "@/constants/Colors"
-import { Image, StyleSheet, Text, View } from "react-native"
+import { Image, Pressable, StyleSheet, Text, View } from "react-native"
 import AntDesign from '@expo/vector-icons/AntDesign';
 import Entypo from '@expo/vector-icons/Entypo';
 import Ionicons from '@expo/vector-icons/Ionicons';
+import { useRouter } from "expo-router";
 
 type Brand = {
     name: string,
@@ -25,8 +26,10 @@ type restItemProps = {
 }
 
 const MainRestItem = () => {
+    const router = useRouter();
     return(
         <View style={styles.restItem}>
+            <Pressable onPress={()=>router.push('/RestArea')}>
             <Image style={styles.restImg} source={require('@/assets/images/test-rest-area.png')}/>
             <View style={styles.restDetail}>
                 <Text style={[styles.text,{fontSize:15}]}>동명휴게소(춘천방향)</Text>
@@ -40,6 +43,7 @@ const MainRestItem = () => {
                 <Entypo name="message" size={15} color={Colors.lightGrey} style={styles.icon} /><Text style={styles.reactState}>12</Text>
                 <Ionicons name="bookmark" size={15} color={Colors.lightGrey} style={styles.icon} /><Text style={styles.reactState}>12</Text>
             </View>
+            </Pressable>
         </View>
     )
 }
