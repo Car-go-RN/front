@@ -41,7 +41,7 @@ const MainRestItem = () => {
             <View style={styles.reaction}>
                 <AntDesign name="heart" size={15} color={Colors.lightGrey} style={styles.icon} /><Text style={styles.reactState}>12</Text>
                 <Entypo name="message" size={15} color={Colors.lightGrey} style={styles.icon} /><Text style={styles.reactState}>12</Text>
-                <Ionicons name="bookmark" size={15} color={Colors.lightGrey} style={styles.icon} /><Text style={styles.reactState}>12</Text>
+                <Ionicons name="bookmark" size={15} color={Colors.lightGrey} style={styles.icon} />
             </View>
             </Pressable>
         </View>
