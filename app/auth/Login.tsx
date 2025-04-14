@@ -35,13 +35,12 @@ const Login = () => {
                     <Text style={styles.middleText}>아이디 저장하기</Text>
                 </View>
                 <Text style={styles.middleText}>비밀번호를 잊어버리셨습니까?</Text>
-            </View>
-            <Pressable onPress={() => router.push('/auth/signup')}>
-                <ButtonCustom
-                    text="로그인"        
-                />
-            </Pressable>
-            <Pressable onPress={() => router.push('/auth/signup')}>
+            </View> 
+            <ButtonCustom
+                text="로그인"   
+                onPress={() => router.push('/Main')}     
+            />
+            <Pressable onPress={() => router.push('/auth/Signup')}>
                 <Text style={styles.checkUser}>
                     아직 회원이 아니신가요?
                 </Text>
