@@ -18,7 +18,7 @@ const Main = () => {
                     </View>
                 </View>
             </View>
-            <MainContents isLogin={false}/>
+            <MainContents isLogin={true}/>
         </View>
     )
 
