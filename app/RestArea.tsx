@@ -46,6 +46,9 @@ const RestArea = () => {
                     )
                 }
                 </View>
+                <View style={container.writeButton}>
+                    <Pressable><Ionicons name="chatbox-ellipses" size={30} color="white" /></Pressable>
+                </View>
         </View>
     )
 }
@@ -106,6 +109,18 @@ const container = StyleSheet.create({
         borderColor: Colors.lightGrey,
         borderTopWidth: 1,
         borderBottomWidth: 1,
+    },
+    writeButton:{
+        position: 'absolute',
+        bottom: 40,
+        right: 30,
+        backgroundColor: Colors.tint,
+        width: 60, 
+        height: 60,
+        borderRadius: 50,
+        alignItems: 'center',
+        justifyContent: 'center',
+        padding: 10
     }
 })
 
