@@ -1,11 +1,21 @@
 import { Colors } from "@/constants/Colors";
 import { View, Text, Image, StyleSheet } from "react-native"
+import React from "react"
 
-const TagCustom = () => {
+type TagCustomProps = {
+    isRestReview?: boolean;
+    isRestItem?: boolean;
+}
+
+const TagCustom:React.FC<TagCustomProps> = ({isRestReview, isRestItem}) => {
     return(
-        <View style={styles.container}>
+        <View style={[styles.container, { paddingHorizontal: isRestItem ? 3 : 7 }]}>
             <Image style={styles.icon} source={require('@/assets/brands/CU.png')}/>
-            <Text style={styles.text}>CU</Text>
+            {
+                isRestReview && (
+                    <Text style={styles.text}>CU</Text>
+                )
+            }      
         </View>
     )
 }

@@ -14,11 +14,12 @@ const RestDetail = () => {
             </View>
             <View style={styles.itemContainer}>
                 <Text style={[styles.text,styles.subject]}>브랜드</Text>
-                <View style={styles.tagContainer}><TagCustom /><TagCustom /><TagCustom /><TagCustom /><TagCustom /><TagCustom /><TagCustom /></View>
+
+                <View style={styles.tagContainer}><TagCustom isRestReview={true}/><TagCustom isRestReview={true}/><TagCustom isRestReview={true}/><TagCustom isRestReview={true}/><TagCustom isRestReview={true}/><TagCustom isRestReview={true}/><TagCustom isRestReview={true}/></View>
             </View>
             <View style={styles.itemContainer}>
                 <Text style={[styles.text,styles.subject]}>편의시설</Text>
-                <View style={styles.tagContainer}><TagCustom /><TagCustom /><TagCustom /><TagCustom /></View>
+                <View style={styles.tagContainer}><TagCustom isRestReview={true}/><TagCustom isRestReview={true}/><TagCustom isRestReview={true}/><TagCustom isRestReview={true}/></View>
             </View>
             <View style={[styles.itemContainer,{flexDirection:'column'}]}>
                 <Text style={[styles.text,styles.subject]}>메뉴</Text>
