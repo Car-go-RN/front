@@ -1,6 +1,7 @@
 import HeaderCustom from "@/components/ui/HeaderCustom";
 import RestDetail from "@/components/ui/RestDetail";
 import RestReview from "@/components/ui/RestReview";
+import RestWriteReview from "@/components/ui/RestWriteReview";
 import { Colors } from "@/constants/Colors";
 import AntDesign from '@expo/vector-icons/AntDesign';
 import Ionicons from '@expo/vector-icons/Ionicons';
@@ -8,7 +9,8 @@ import { useState } from "react";
 import { StyleSheet, View, Text, Image, Pressable } from "react-native"
 
 const RestArea = () => {
-    const [nav, setNav] = useState<string>('detail');
+    type navType = 'detail'|'review'|'write';
+    const [nav, setNav] = useState<navType>('detail');
 
     return(
         <View style={styles.container}>
@@ -34,21 +36,28 @@ const RestArea = () => {
                             style={[styles.text, styles.nav, nav=='detail' ? styles.activeNav : undefined]}>상세정보
                         </Text>
                     </Pressable>
-                    <Pressable onPress={()=>setNav('review')}><Text style={[styles.text,styles.nav, nav=='review' ? styles.activeNav : undefined]}>리뷰</Text></Pressable>
+                    <Pressable onPress={()=>setNav('review')}><Text style={[styles.text,styles.nav, nav!=='detail' ? styles.activeNav : undefined]}>리뷰</Text></Pressable>
                 </View>
             </View>
                 <View style={container.all}>
                 {
                     nav=='detail' ? (
                         <RestDetail />
-                    ) : (
+                    ) : nav=='review' ?  (
                         <RestReview />
+                    ) : (
+                        <RestWriteReview setNav={setNav} />
                     )
                 }
                 </View>
-                <View style={container.writeButton}>
-                    <Pressable><Ionicons name="chatbox-ellipses" size={30} color="white" /></Pressable>
-                </View>
+                {
+                    nav!=='write' && (
+                        <View style={container.writeButton}>
+                            <Pressable onPress={()=>setNav('write')}><Ionicons name="chatbox-ellipses" size={30} color="white" /></Pressable>
+                        </View>
+                    )
+                }
+                
         </View>
     )
 }
