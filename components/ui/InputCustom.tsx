@@ -1,26 +1,43 @@
 import { Colors } from "@/constants/Colors";
 import React from "react";
-import { TextInput, StyleSheet, Text, View } from "react-native";
+import { TextInput, StyleSheet, Text, View, Pressable } from "react-native";
 
-type InputType = 'email'|'password'|'authNum';
+type InputType = 'email'|'signupEmail'|'password'|'authNum';
 
 type InputCustomProps = {
     label: string;
     placeholder: string;
     isError?: boolean;
+    isSignup?: boolean;
     type: InputType; 
 }
 
-const InputCustom:React.FC<InputCustomProps> = ({label, placeholder, isError, type }) => {
+const InputCustom:React.FC<InputCustomProps> = ({label, placeholder, isError, isSignup, type }) => {
+    const onPressEmail = () => {
+        console.log('email');
+    }
+
+    const onPressNumber = () => {
+        console.log('num');
+    }
+
     return(
         <View style={styles.container}>
             <Text style={styles.text}>{label}</Text>
-            <TextInput 
-                style={[styles.input,{borderColor: isError ? Colors.red : undefined}]}
-                placeholder={placeholder}
-                placeholderTextColor={Colors.placeholder}
-                secureTextEntry={type=='password'? true : false }
-            />
+            <View style={{flexDirection: 'row'}}>
+                <TextInput 
+                    style={[styles.input,{borderColor: isError ? Colors.red : undefined, width: isSignup ? '70%' : undefined}]}
+                    placeholder={placeholder}
+                    placeholderTextColor={Colors.placeholder}
+                    secureTextEntry={type=='password'? true : false }
+                />{
+                    isSignup && (
+                        <Pressable style={styles.authButton} onPress={()=>{type=='email' ? onPressEmail() : onPressNumber()}}>
+                            <Text style={[styles.text,{margin:0, color:'white', fontSize:13, fontWeight:400}]}>{type=='email' ? '인증번호 발송' : '인증'}</Text>
+                        </Pressable>
+                    )
+                }
+            </View>
         </View>
     )
 }
@@ -47,6 +64,14 @@ const styles = StyleSheet.create({
         fontSize: 16,
         marginBottom: 6,
         marginLeft:5
+    },
+    authButton: {
+        alignItems:'center',
+        justifyContent: 'center',
+        backgroundColor: Colors.tint,
+        flex: 1,
+        marginLeft: 5,
+        borderRadius: 5
     }
 })
 
