@@ -2,6 +2,8 @@ import { Pressable, StyleSheet, Text, View } from "react-native"
 import Ionicons from '@expo/vector-icons/Ionicons';
 import { useState } from "react";
 import { Colors } from "@/constants/Colors";
+import ToggleListCustom from "./ToggleListCustom";
+import { amenities, brands, gas } from "@/data/TagMock";
 
 const CategoryCustom = () => {
     const [isOpen, setIsOpen] = useState(false);
@@ -14,7 +16,15 @@ const CategoryCustom = () => {
             {
                 isOpen && (
                     <View>
-
+                        <View style={styles.category}>
+                            <ToggleListCustom title="주유/충전소" tagList={gas}/>
+                        </View>
+                        <View style={styles.category}>
+                            <ToggleListCustom title="브랜드" tagList={brands}/>
+                        </View>
+                        <View style={styles.category}>
+                            <ToggleListCustom title="편의시설" tagList={amenities}/>
+                        </View>
                     </View>
                 )
             }
@@ -36,7 +46,8 @@ const styles = StyleSheet.create({
         paddingVertical: 20
     },
     category:{
-
+        width: '85%',
+        margin: 'auto'
     },
     text:{
         fontFamily:'Paperlogy',

@@ -7,7 +7,7 @@ import CategoryCustom from "./CategoryCustom";
 
 const MainHeader = () => {
     return(
-        <View>
+        <View style={{position:'relative'}}>
             <View style={styles.header}>
                 <View style={styles.container}>
                     <Text style={styles.text}><Text style={styles.textBold}>카Go바지</Text>를 통해{'\n'}편하게 쉴 수 있는 휴게소를{'\n'}<Text style={styles.textBold}>추천</Text> 받아보세요!</Text>

@@ -1,15 +1,20 @@
 import { Colors } from "@/constants/Colors";
-import { useState } from "react";
+import React, { useState } from "react";
 import { View, Text, Image, StyleSheet } from "react-native"
 import { Pressable } from "react-native-gesture-handler";
 
-const TagCustom = () => {
+type TagProps = {
+    name: string,
+    select?:boolean
+}
+
+const TagCustom:React.FC<TagProps> = ({name,select}) => {
     const [isSelect, setIsSelect] = useState(false)
     return(
-        <View style={[styles.container, {borderColor: isSelect ? Colors.tint : Colors.lightGrey}]}>
-            <Pressable onPress={()=>setIsSelect(!isSelect)}>
+        <View style={[styles.container, {borderColor: select ? isSelect ? Colors.tint : Colors.lightGrey: Colors.lightGrey}]}>
+            <Pressable style={{flexDirection:'row'}} onPress={()=>setIsSelect(!isSelect)}>
                 <Image style={styles.icon} source={require('@/assets/brands/CU.png')}/>
-                <Text style={styles.text}>CU</Text>
+                <Text style={styles.text}>{name}</Text>
             </Pressable>
         </View>
     )
@@ -17,14 +22,14 @@ const TagCustom = () => {
 
 const styles = StyleSheet.create({
     container:{
-        flexDirection: 'row',
         paddingVertical: 3,
         paddingHorizontal: 7,
         borderRadius: 5,
         borderWidth: 1,
         marginRight: 5,
         marginBottom:5,
-        height: 23
+        width: 'auto',
+        alignSelf:'flex-start' //fit-content의 역할을 대신
     },
     icon: {
         width: 20,

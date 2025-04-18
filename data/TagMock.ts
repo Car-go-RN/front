@@ -1,4 +1,4 @@
-export const amenities = [
+export const gas = [
     {name: '전기 충전소'},
     {name: '수소 충전소'}
 
@@ -24,7 +24,7 @@ export const brands = [
     {name: '파리바게트'},
 ]
 
-export const gas = [
+export const amenities = [
     {name: '샤워실'},
     {name: '쉼터'},
     {name: '약국'},
