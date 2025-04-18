@@ -2,23 +2,27 @@ import { Colors } from "@/constants/Colors";
 import Ionicons from '@expo/vector-icons/Ionicons';
 import AntDesign from '@expo/vector-icons/AntDesign';
 import { View, StyleSheet, Text, Pressable, TextInput } from "react-native";
+import CategoryCustom from "./CategoryCustom";
 
 
 const MainHeader = () => {
     return(
-        <View style={styles.header}>
-            <View style={styles.container}>
-                <Text style={styles.text}><Text style={styles.textBold}>카Go바지</Text>를 통해{'\n'}편하게 쉴 수 있는 휴게소를{'\n'}<Text style={styles.textBold}>추천</Text> 받아보세요!</Text>
-                <Pressable><Ionicons name="person-outline" size={24} color="white" /></Pressable>
+        <View style={{position:'relative'}}>
+            <View style={styles.header}>
+                <View style={styles.container}>
+                    <Text style={styles.text}><Text style={styles.textBold}>카Go바지</Text>를 통해{'\n'}편하게 쉴 수 있는 휴게소를{'\n'}<Text style={styles.textBold}>추천</Text> 받아보세요!</Text>
+                    <Pressable><Ionicons name="person-outline" size={24} color="white" /></Pressable>
+                </View>
+                <View style={styles.searchBox}>
+                    <Pressable><AntDesign name="search1" size={18} color={Colors.placeholderGreen} /></Pressable>
+                    <TextInput 
+                        style={styles.searchInput}
+                        placeholder="검색어/키워드를 입력해 보세요."
+                        placeholderTextColor={Colors.placeholderGreen}
+                    />
+                </View>
             </View>
-            <View style={styles.searchBox}>
-                <Pressable><AntDesign name="search1" size={18} color={Colors.placeholderGreen} /></Pressable>
-                <TextInput 
-                    style={styles.searchInput}
-                    placeholder="검색어/키워드를 입력해 보세요."
-                    placeholderTextColor={Colors.placeholderGreen}
-                />
-            </View>
+            <CategoryCustom />
         </View>
     )
 }
