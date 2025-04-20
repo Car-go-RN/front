@@ -1,36 +1,35 @@
 import { Colors } from "@/constants/Colors";
+import React, { useState } from "react";
 import { View, Text, Image, StyleSheet } from "react-native"
-import React from "react"
+import { Pressable } from "react-native-gesture-handler";
 
-type TagCustomProps = {
-    isRestReview?: boolean;
-    isRestItem?: boolean;
+type TagProps = {
+    name: string,
+    select?:boolean
 }
 
-const TagCustom:React.FC<TagCustomProps> = ({isRestReview, isRestItem}) => {
+const TagCustom:React.FC<TagProps> = ({name,select}) => {
+    const [isSelect, setIsSelect] = useState(false)
     return(
-        <View style={[styles.container, { paddingHorizontal: isRestItem ? 3 : 7 }]}>
-            <Image style={styles.icon} source={require('@/assets/brands/CU.png')}/>
-            {
-                isRestReview && (
-                    <Text style={styles.text}>CU</Text>
-                )
-            }      
+        <View style={[styles.container, {borderColor: select ? isSelect ? Colors.tint : Colors.lightGrey: Colors.lightGrey}]}>
+            <Pressable style={{flexDirection:'row'}} onPress={()=>setIsSelect(!isSelect)}>
+                <Image style={styles.icon} source={require('@/assets/brands/CU.png')}/>
+                <Text style={styles.text}>{name}</Text>
+            </Pressable>
         </View>
     )
 }
 
 const styles = StyleSheet.create({
     container:{
-        flexDirection: 'row',
         paddingVertical: 3,
         paddingHorizontal: 7,
         borderRadius: 5,
-        borderColor: Colors.lightGrey,
         borderWidth: 1,
         marginRight: 5,
         marginBottom:5,
-        height: 23
+        width: 'auto',
+        alignSelf:'flex-start' //fit-content의 역할을 대신
     },
     icon: {
         width: 20,
