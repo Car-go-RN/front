@@ -5,12 +5,14 @@ import React from "react";
 import { View, StyleSheet, Text, Pressable, TextInput } from "react-native";
 import HeaderCustom from "./HeaderCustom";
 import InputCustom from "./InputCustom";
+import { useRouter } from "expo-router";
 
 type MainHeaderProps = {
     isRoute?:boolean,
 }
 
 const MainHeader:React.FC<MainHeaderProps> = ({isRoute}) => {
+    const router = useRouter();
     return(
         <View style={styles.header}>
             {
@@ -37,7 +39,7 @@ const MainHeader:React.FC<MainHeaderProps> = ({isRoute}) => {
                     <View>
                         <View style={styles.container}>
                             <Text style={styles.text}><Text style={styles.textBold}>카Go바지</Text>를 통해{'\n'}편하게 쉴 수 있는 휴게소를{'\n'}<Text style={styles.textBold}>추천</Text> 받아보세요!</Text>
-                            <Pressable><Ionicons name="person-outline" size={24} color="white" /></Pressable>
+                            <Pressable onPress={()=>router.push('/profile/MyPage')}><Ionicons name="person-outline" size={24} color="white" /></Pressable>
                         </View>
                         <View style={styles.searchBox}>
                             <Pressable><AntDesign name="search1" size={18} color={Colors.placeholderGreen} /></Pressable>

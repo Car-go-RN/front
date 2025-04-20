@@ -16,7 +16,7 @@ const HeaderCustom: React.FC<headerProps> = ({isDetail}) => {
       <Pressable onPress={()=>router.push('/Main')}><AntDesign name="arrowleft" size={28} color={isDetail ? Colors.background: Colors.icon} /></Pressable>
       {
         isDetail ? (
-          <Pressable><Ionicons name="person-outline" size={24} color="white" /></Pressable>
+          <Pressable onPress={()=>router.push('/profile/MyPage')}><Ionicons name="person-outline" size={24} color="white" /></Pressable>
         ) : (
           <Image source={require('../../assets/images/카GO바지logo2.png')} />
         )
