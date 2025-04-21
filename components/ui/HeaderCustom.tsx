@@ -1,11 +1,26 @@
-import { StyleSheet, Image, View } from "react-native"
+import { StyleSheet, Image, View, Pressable } from "react-native"
 import { AntDesign } from "@expo/vector-icons"
+import { useRouter } from "expo-router"
+import Ionicons from '@expo/vector-icons/Ionicons';
+import { Colors } from "@/constants/Colors"
+import React from "react"
 
-const HeaderCustom = () => {
+type headerProps = {
+  isDetail?: boolean;
+}
+
+const HeaderCustom: React.FC<headerProps> = ({isDetail}) => {
+  const router = useRouter();
   return (
     <View style={styles.container}>
-      <AntDesign name="arrowleft" size={28} color="#ADB3B1" />
-      <Image source={require('../../assets/images/카GO바지logo2.png')} />
+      <Pressable onPress={()=>router.push('/Main')}><AntDesign name="arrowleft" size={28} color={isDetail ? '#ffffff': '#ADB3B1'} /></Pressable>
+      {
+        isDetail ? (
+          <Pressable><Ionicons name="person-outline" size={24} color="white" /></Pressable>
+        ) : (
+          <Image source={require('../../assets/images/카GO바지logo2.png')} />
+        )
+      }
     </View>
   )
 }

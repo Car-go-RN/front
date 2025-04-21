@@ -5,13 +5,14 @@ import { Pressable, Text, StyleSheet, GestureResponderEvent } from "react-native
 
 type ButtonCustomProps = {
   text: string;
+  outline?: boolean;
   onPress?: (event: GestureResponderEvent) => void;
 };
 
-const ButtonCustom: React.FC<ButtonCustomProps> = ({ text, onPress }) => {
+const ButtonCustom: React.FC<ButtonCustomProps> = ({ text, outline, onPress }) => {
   return (
-    <Pressable style={styles.button} onPress={onPress}>
-      <Text style={styles.text}>{text}</Text>
+    <Pressable style={[styles.button, outline && styles.outline]} onPress={onPress}>
+      <Text style={[styles.text, {color: outline ? Colors.tint : undefined}]}>{text}</Text>
     </Pressable>
   );
 };
@@ -22,13 +23,18 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.tint,
     paddingVertical: 14,
     paddingHorizontal: 32,
-    borderRadius: 8,
+    borderRadius: 5,
     alignItems: 'center',
     justifyContent: 'center',
     marginHorizontal: 'auto'
   },
+  outline:{
+    backgroundColor: 'white',
+    borderColor: Colors.tint,
+    borderWidth: 1,
+  },
   text: {
-    color: '#FFF',
+    color: Colors.background,
     fontSize: 16,
     fontFamily: 'Paperlogy'
   },

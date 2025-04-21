@@ -4,8 +4,45 @@ import { View, Text, Pressable, StyleSheet } from "react-native"
 
 import { Colors } from "@/constants/Colors";
 import InputCustom from "@/components/ui/InputCustom";
+import { useReducer } from "react";
+
+type FormState = {
+    email: string,
+    authNum: string,
+    password: string,
+    repassword: string
+}
+
+type Action = 
+    | {type:'CHANGE_INPUT'; name: keyof FormState; value: string}
+    | {type:'RESET'};
+
+
+const initialForm:FormState = {
+    email: '',
+    authNum: '',
+    password: '',
+    repassword: ''
+}
+
+const formReducer = (state:FormState, action: Action) : FormState => {
+    switch(action.type){
+        case 'CHANGE_INPUT':
+            console.log(state);
+            return {
+                ...state,
+                [action.name]: action.value
+            }
+        case 'RESET':
+            return initialForm;
+        default:
+            return state
+    }
+}
 
 const Signup = () => {
+    const [form, dispatch] = useReducer(formReducer, initialForm);
+
     return(
         <View style={styles.container}>
             <HeaderCustom />
@@ -18,11 +55,13 @@ const Signup = () => {
                     placeholder="이메일을 입력하세요."
                     type="email"
                     isError={true}
+                    isSignup={true}
                 />
                 <InputCustom 
                     label="인증번호"
                     placeholder="C2J3D2"
                     type="authNum"
+                    isSignup={true}
                 />
                 <InputCustom 
                     label="비밀번호"
