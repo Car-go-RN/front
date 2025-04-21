@@ -43,6 +43,12 @@ const formReducer = (state:FormState, action: Action) : FormState => {
 const Signup = () => {
     const [form, dispatch] = useReducer(formReducer, initialForm);
 
+    const handlePostData = () => {
+        //회원가입 api 로직
+        
+        dispatch({type:'RESET'})
+    }
+
     return(
         <View style={styles.container}>
             <HeaderCustom />
@@ -56,27 +62,32 @@ const Signup = () => {
                     type="email"
                     isError={true}
                     isSignup={true}
+                    onChangeText={(text)=>dispatch({type:'CHANGE_INPUT', name:'email', value:text})}
                 />
                 <InputCustom 
                     label="인증번호"
                     placeholder="C2J3D2"
                     type="authNum"
                     isSignup={true}
+                    onChangeText={(text)=>dispatch({type:'CHANGE_INPUT', name:'authNum', value:text})}
                 />
                 <InputCustom 
                     label="비밀번호"
                     placeholder="*********"
                     type="password"
+                    onChangeText={(text)=>dispatch({type:'CHANGE_INPUT', name:'password', value:text})}
                 />
                 <InputCustom 
                     label="비밀번호 확인"
                     placeholder="*********"
                     type="password"
+                    onChangeText={(text)=>dispatch({type:'CHANGE_INPUT', name:'repassword', value:text})}
                 />
             </View>
             
             <ButtonCustom
-                text="회원가입"            
+                text="회원가입"   
+                onPress={()=>handlePostData()}         
             />
             <Pressable>
                 <Text style={styles.checkUser}>이미 회원이신가요</Text>
