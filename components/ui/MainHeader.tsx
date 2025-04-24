@@ -4,8 +4,8 @@ import AntDesign from '@expo/vector-icons/AntDesign';
 import React from "react";
 import { View, StyleSheet, Text, Pressable, TextInput } from "react-native";
 import HeaderCustom from "./HeaderCustom";
-import InputCustom from "./InputCustom";
 import { useRouter } from "expo-router";
+import CategoryCustom from "./CategoryCustom";
 
 type MainHeaderProps = {
     isRoute?:boolean,
@@ -14,7 +14,8 @@ type MainHeaderProps = {
 const MainHeader:React.FC<MainHeaderProps> = ({isRoute}) => {
     const router = useRouter();
     return(
-        <View style={styles.header}>
+        <View style={{position:'relative'}}>
+            <View style={styles.header}>
             {
                 isRoute ? (
                     <View style={{marginTop: -20}}>
@@ -52,7 +53,8 @@ const MainHeader:React.FC<MainHeaderProps> = ({isRoute}) => {
                     </View>
                 )
             } 
-                
+            </View>
+            <CategoryCustom />   
         </View>
     )
 }

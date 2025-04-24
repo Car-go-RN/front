@@ -1,6 +1,6 @@
 import { StyleSheet, Image, View, Pressable } from "react-native"
 import { AntDesign } from "@expo/vector-icons"
-import { useRouter } from "expo-router"
+import { useRouter, usePathname } from "expo-router"
 import Ionicons from '@expo/vector-icons/Ionicons';
 import { Colors } from "@/constants/Colors"
 import React from "react"
@@ -9,13 +9,14 @@ type headerProps = {
   isDetail?: boolean;
 }
 
-const HeaderCustom: React.FC<headerProps> = ({isDetail}) => {
+const HeaderCustom: React.FC<headerProps> = () => {
   const router = useRouter();
+  const pathname = usePathname()
   return (
     <View style={styles.container}>
-      <Pressable onPress={()=>router.push('/Main')}><AntDesign name="arrowleft" size={28} color={isDetail ? Colors.background: Colors.icon} /></Pressable>
+      <Pressable onPress={()=>router.push('/Main')}><AntDesign name="arrowleft" size={28} color={pathname === '/Main' ? Colors.background: Colors.icon} /></Pressable>
       {
-        isDetail ? (
+        pathname === '/Main' ? (
           <Pressable onPress={()=>router.push('/profile/MyPage')}><Ionicons name="person-outline" size={24} color="white" /></Pressable>
         ) : (
           <Image source={require('../../assets/images/카GO바지logo2.png')} />

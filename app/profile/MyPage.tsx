@@ -1,31 +1,52 @@
-import MainHeader from "@/components/ui/MainHeader";
 import { View, StyleSheet, Text, Pressable } from "react-native"
+import { useRouter } from "expo-router";
 import { Colors } from "@/constants/Colors";
-import ButtonCustom from "@/components/ui/ButtonCustom";
 import { MaterialIcons } from "@expo/vector-icons";
 import { FontAwesome5 } from "@expo/vector-icons";
+import { FontAwesome } from "@expo/vector-icons";
+import { Feather } from "@expo/vector-icons";
+import { Entypo } from "@expo/vector-icons";
+import ProfileHeader from "@/components/ui/ProfileHeader";
 
 
 const MyPage = () => {
+  const router = useRouter();
   return (
     <View style={styles.container}>
-      <MainHeader />
-      <Text style={[styles.text, {marginVertical: 20}]}><Text style={{color: Colors.tint}}>설문조사</Text>를 하면{'\n'}나에게 맞는 휴게소를{'\n'}<Text style={{color: Colors.tint}}>더 빠르고 간편하게</Text> 찾을 수 있어요</Text>
-      <Pressable>
-        <ButtonCustom text="설문조사 하러가기"/>
-      </Pressable>
+      <ProfileHeader isSurvey={true}/>
       <View style={{marginVertical: 20,}}>
-        <Pressable style={styles.border}>
-          <MaterialIcons name="email" size={18} />
-          <Text style={styles.borderText}>이메일 변경하기</Text>
+        <Pressable style={styles.border} onPress={()=>router.push('/profile/EmailUpdate')}>
+          <View style={{flexDirection: 'row'}}>
+            <MaterialIcons name="email" size={18} color={Colors.grey}/>
+            <Text style={styles.borderText}>이메일 변경하기</Text>
+          </View>
+          <View>
+            <Entypo name="chevron-right" size={16} color={Colors.grey}/>
+          </View>
         </Pressable>
-        <Pressable style={styles.border}>
-          <FontAwesome5 name="lock" size={16} />
-          <Text style={styles.borderText}>비밀번호 변경하기</Text>
+        <Pressable style={styles.border} onPress={()=>router.push('/profile/PasswordUpdate')}>
+          <View style={{flexDirection: 'row'}}>
+            <FontAwesome5 name="lock" size={16} color={Colors.grey}/>
+            <Text style={styles.borderText}>비밀번호 변경하기</Text>
+          </View>
+          <View>
+            <Entypo name="chevron-right" size={16} color={Colors.grey}/>
+          </View>
         </Pressable>
-        <Pressable style={styles.border}>
-          <FontAwesome5 name="bookmark" size={16} color={Colors.tint} />
-          <Text style={styles.borderText}>즐겨찾기한 휴게소 보러가기</Text>
+        <Pressable style={styles.border} onPress={()=>router.push('/profile/LookBookMark')}>
+          <View style={{flexDirection: 'row'}}>
+            <FontAwesome name="bookmark" size={16} color={Colors.tint} />
+            <Text style={styles.borderText}>즐겨찾기한 휴게소 보러가기</Text>
+          </View>
+          <View>
+            <Entypo name="chevron-right" size={16} color={Colors.grey}/>
+          </View>
+        </Pressable>
+      </View>
+      <View style={{marginTop:'auto', marginBottom:40, position:'relative'}}>
+        <Pressable style={[styles.border, {justifyContent: 'flex-end'}]}>
+          <Feather name="log-out" size={18} color={Colors.red} />
+          <Text style={[styles.borderText, styles.logout]}>로그아웃</Text>
         </Pressable>
       </View>
     </View>
@@ -49,10 +70,16 @@ const styles = StyleSheet.create({
     paddingVertical: 12,
     paddingHorizontal: 28,
     flexDirection: 'row',
+    justifyContent: 'space-between'
   },
   borderText: {
     fontFamily:'Paperlogy',
     marginHorizontal: 4,
+    color: Colors.grey,
+    lineHeight: 18,
+  },
+  logout: {
+    color: Colors.red,
   }
 })
 
