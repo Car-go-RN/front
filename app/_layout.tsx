@@ -32,6 +32,7 @@ export default function RootLayout() {
       >
         <Stack.Screen name="Splash" />
         <Stack.Screen name="Main" />
+        <Stack.Screen name="Survey" />
         <Stack.Screen name="auth/Login" />
         <Stack.Screen name="auth/Signup" />
         <Stack.Screen name="+not-found" />

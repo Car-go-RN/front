@@ -1,7 +1,6 @@
 import { Colors } from "@/constants/Colors";
 import React, { useState } from "react";
-import { View, Text, Image, StyleSheet } from "react-native"
-import { Pressable } from "react-native-gesture-handler";
+import { View, Text, Image, StyleSheet, Pressable } from "react-native"
 
 type TagProps = {
     name: string,
