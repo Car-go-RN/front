@@ -13,11 +13,11 @@ const MyPage = () => {
   const router = useRouter();
   return (
     <View style={styles.container}>
-      <ProfileHeader isSurvey={true}/>
+      <ProfileHeader isSurvey={true} name="마이페이지"/>
       <View style={{marginVertical: 20,}}>
         <Pressable style={styles.border} onPress={()=>router.push('/profile/EmailUpdate')}>
-          <View style={{flexDirection: 'row'}}>
-            <MaterialIcons name="email" size={18} color={Colors.grey}/>
+          <View style={{flexDirection: 'row', alignItems:'center'}}>
+            <MaterialIcons name="email" size={18} color={Colors.grey} style={[styles.icon, {marginLeft:-2}]}/>
             <Text style={styles.borderText}>이메일 변경하기</Text>
           </View>
           <View>
@@ -25,8 +25,8 @@ const MyPage = () => {
           </View>
         </Pressable>
         <Pressable style={styles.border} onPress={()=>router.push('/profile/PasswordUpdate')}>
-          <View style={{flexDirection: 'row'}}>
-            <FontAwesome5 name="lock" size={16} color={Colors.grey}/>
+          <View style={{flexDirection: 'row', alignItems:'center', gap: 4}}>
+            <FontAwesome5 name="lock" size={16} color={Colors.grey} style={[styles.icon, {marginLeft:-1}]}/>
             <Text style={styles.borderText}>비밀번호 변경하기</Text>
           </View>
           <View>
@@ -34,8 +34,8 @@ const MyPage = () => {
           </View>
         </Pressable>
         <Pressable style={styles.border} onPress={()=>router.push('/profile/LookBookMark')}>
-          <View style={{flexDirection: 'row'}}>
-            <FontAwesome name="bookmark" size={16} color={Colors.tint} />
+          <View style={{flexDirection: 'row', alignItems:'center', gap: 6}}>
+            <FontAwesome name="bookmark" size={16} color={Colors.tint} style={styles.icon}/>
             <Text style={styles.borderText}>즐겨찾기한 휴게소 보러가기</Text>
           </View>
           <View>
@@ -63,6 +63,9 @@ const styles = StyleSheet.create({
     marginLeft: 15,
     paddingHorizontal: 20,
   },
+  icon: {
+    marginRight: 8,
+  },
   border: {
     borderColor: Colors.lightGrey,
     borderTopWidth: 1,
@@ -70,17 +73,16 @@ const styles = StyleSheet.create({
     paddingVertical: 12,
     paddingHorizontal: 28,
     flexDirection: 'row',
-    justifyContent: 'space-between'
+    justifyContent: 'space-between',
   },
   borderText: {
     fontFamily:'Paperlogy',
-    marginHorizontal: 4,
     color: Colors.grey,
     lineHeight: 18,
   },
   logout: {
     color: Colors.red,
-  }
+  },
 })
 
 export default MyPage;

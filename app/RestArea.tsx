@@ -15,7 +15,7 @@ const RestArea = () => {
     return(
         <View style={styles.container}>
             <View style={styles.header}>
-                <HeaderCustom isDetail={true} />
+                <HeaderCustom />
             </View>
             <Image style={styles.restImg} source={require('@/assets/images/test-rest-area.png')}/>
             <View style={[container.all,container.title,{paddingVertical: 35}]}>

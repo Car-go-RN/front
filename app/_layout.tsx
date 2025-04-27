@@ -38,6 +38,7 @@ export default function RootLayout() {
         <Stack.Screen name="profile/MyPage" />
         <Stack.Screen name="profile/EmailUpdate" />
         <Stack.Screen name="profile/PasswordUpdate" />
+        <Stack.Screen name="Survey" />
         <Stack.Screen name="+not-found" />
       </Stack>
       <StatusBar style="auto" />

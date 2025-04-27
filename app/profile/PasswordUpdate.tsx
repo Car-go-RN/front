@@ -7,7 +7,7 @@ import { Colors } from "@/constants/Colors"
 const PasswordUpdate = () => {
   return (
     <View style={styles.container}>
-      <ProfileHeader />
+      <ProfileHeader name="비밀번호 변경"/>
       <View style={{marginTop: 40}}>
         <InputCustom 
           label="현재 비밀번호"

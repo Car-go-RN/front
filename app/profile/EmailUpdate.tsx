@@ -7,7 +7,7 @@ import { Colors } from "@/constants/Colors"
 const EmailUpdate = () => {
   return (
     <View style={styles.container}>
-      <ProfileHeader />
+      <ProfileHeader name="이메일 변경"/>
       <View style={{marginTop: 40}}>
         <InputCustom 
           label="새 이메일"

@@ -9,7 +9,7 @@ const list = [{id:1},{id:2},{id:3},{id:4}]
 const LookBookMark = () => {
   return (
     <View style={styles.container}>
-      <ProfileHeader />
+      <ProfileHeader name="즐겨찾기"/>
       <CategoryCustom />
         <ScrollView style={styles.scroll} showsVerticalScrollIndicator={false}>       
           {
