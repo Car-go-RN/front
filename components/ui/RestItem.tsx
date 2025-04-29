@@ -1,14 +1,17 @@
-import { View, Image, StyleSheet, Text } from "react-native"
+import { View, Image, StyleSheet, Text, GestureResponderEvent, Pressable } from "react-native"
 import { Colors } from "@/constants/Colors"
 import { Foundation } from "@expo/vector-icons"
 import { useState } from "react"
+import { useRouter } from "expo-router"
 import TagCustom from "./TagCustom"
 
 type RestMark = {
   isMark?: boolean;
+  onPress?: (event: GestureResponderEvent) => void;
 }
 
 const RestItem:React.FC<RestMark> = ({isMark = false}) => {
+  const router = useRouter()
   const [marked, setMarked] = useState(isMark);
   const handleMark = () => {
     setMarked(true)
@@ -18,36 +21,38 @@ const RestItem:React.FC<RestMark> = ({isMark = false}) => {
   }
   return (
     <View style={styles.container}>
-      <Image style={styles.routeImg} source={require('@/assets/images/test-rest-route.png')}/>
-      <View style={styles.restDetail}>
-      <View style={styles.bookmark}>
-          {
-            marked ? (
-                <Foundation name="bookmark" size={32} color={Colors.yellow} onPress={handleDownMark}/>
-            ) : 
-            (
-                <Foundation name="bookmark" size={32} color={Colors.lightGrey} onPress={handleMark}/>
-            )
-          }
-        </View>
-        <Text style={[styles.text,{fontSize:15, fontWeight:'bold'}]}>청도새마을휴개소</Text>
-        <Text style={[styles.text,{fontSize:13, color: Colors.yellow}]}>★★★☆☆</Text>
-        <Text style={[styles.text,{marginVertical:3}]}>경유 1,234  휘발유 1,234</Text>
-        <View style={{flex: 1, overflow:'scroll'}}>
-          <View style={styles.row}>
-            <Text style={[styles.text,{marginVertical:3, marginRight:17}]}>브랜드</Text>
-            <View style={styles.tagContainer}>
-              <TagCustom isRestItem={true}/> <TagCustom isRestItem={true}/> <TagCustom isRestItem={true}/> <TagCustom isRestItem={true}/>
-            </View>
+      <Pressable onPress={()=>router.push('/RestArea')} style={{flexDirection: 'row', justifyContent: 'center'}}>
+        <Image style={styles.routeImg} source={require('@/assets/images/test-rest-route.png')}/>
+        <View style={styles.restDetail}>
+        <View style={styles.bookmark}>
+            {
+              marked ? (
+                  <Foundation name="bookmark" size={32} color={Colors.yellow} onPress={handleDownMark}/>
+              ) : 
+              (
+                  <Foundation name="bookmark" size={32} color={Colors.lightGrey} onPress={handleMark}/>
+              )
+            }
           </View>
-          <View style={styles.row}>
-            <Text style={[styles.text,{marginVertical:3, marginRight:8}]}>편의시설</Text>
+          <Text style={[styles.text,{fontSize:15, fontWeight:'bold'}]}>청도새마을휴개소</Text>
+          <Text style={[styles.text,{fontSize:13, color: Colors.yellow}]}>★★★☆☆</Text>
+          <Text style={[styles.text,{marginVertical:3}]}>경유 1,234  휘발유 1,234</Text>
+          <View style={{flex: 1, overflow:'scroll'}}>
+            <View style={styles.row}>
+              <Text style={[styles.text,{marginVertical:3, marginRight:17}]}>브랜드</Text>
               <View style={styles.tagContainer}>
                 <TagCustom isRestItem={true}/> <TagCustom isRestItem={true}/> <TagCustom isRestItem={true}/> <TagCustom isRestItem={true}/>
               </View>
-          </View> 
-        </View>       
-      </View>
+            </View>
+            <View style={styles.row}>
+              <Text style={[styles.text,{marginVertical:3, marginRight:8}]}>편의시설</Text>
+                <View style={styles.tagContainer}>
+                  <TagCustom isRestItem={true}/> <TagCustom isRestItem={true}/> <TagCustom isRestItem={true}/> <TagCustom isRestItem={true}/>
+                </View>
+            </View> 
+          </View>       
+        </View>
+      </Pressable>
     </View>   
   )
 }
@@ -55,8 +60,8 @@ const RestItem:React.FC<RestMark> = ({isMark = false}) => {
 const styles = StyleSheet.create({
   container: {
     marginBottom: 16,
-    flexDirection: 'row',
     minHeight: 136,
+    justifyContent: 'center',
   },
   routeImg: {
     borderTopLeftRadius: 12,
