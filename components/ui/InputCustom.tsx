@@ -2,7 +2,7 @@ import { Colors } from "@/constants/Colors";
 import React from "react";
 import { TextInput, StyleSheet, Text, View, Pressable } from "react-native";
 
-type InputType = 'email'|'signupEmail'|'password'|'authNum';
+type InputType = 'email'|'signupEmail'|'password'|'authNum'|'text';
 
 type InputCustomProps = {
     label: string;

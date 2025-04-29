@@ -11,10 +11,10 @@ const HeaderCustom = () => {
 
   return (
     <View style={styles.container}>
-      <Pressable onPress={()=>router.push('/Main')}><AntDesign name="arrowleft" size={28} color={pathname==='/RestArea' ? '#ffffff': '#ADB3B1'} /></Pressable>
+      <Pressable onPress={()=>router.push('/Main')}><AntDesign name="arrowleft" size={28} color={pathname==='/RestArea' || pathname==='/search/routeQuest' ? Colors.background: Colors.icon} /></Pressable>
       {
-        pathname==='/RestArea' ? (
-          <Pressable><Ionicons name="person-outline" size={24} color="white" /></Pressable>
+        pathname==='/RestArea'|| pathname==='/search/routeQuest'? (
+          <Pressable onPress={()=>router.push('/profile/MyPage')}><Ionicons name="person-outline" size={24} color="white" /></Pressable>
         ) : pathname !== '/Survey' && (
           <Image source={require('../../assets/images/카GO바지logo2.png')} />
         ) 
