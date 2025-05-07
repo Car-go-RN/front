@@ -1,20 +1,28 @@
 import { Colors } from "@/constants/Colors";
 import React, { useState } from "react";
-import { View, Text, Image, StyleSheet } from "react-native"
-import { Pressable } from "react-native-gesture-handler";
+import { View, Text, Image, StyleSheet, Pressable } from "react-native"
 
 type TagProps = {
-    name: string,
-    select?:boolean
+    name?: string,
+    select?:boolean,
+    isRestItem?: boolean,
 }
 
-const TagCustom:React.FC<TagProps> = ({name,select}) => {
+const TagCustom:React.FC<TagProps> = ({name,select,isRestItem}) => {
     const [isSelect, setIsSelect] = useState(false)
     return(
-        <View style={[styles.container, {borderColor: select ? isSelect ? Colors.tint : Colors.lightGrey: Colors.lightGrey}]}>
+        <View style={[styles.container, {
+            borderColor: select ? isSelect ? Colors.tint : Colors.lightGrey: Colors.lightGrey, 
+            paddingHorizontal: isRestItem ? 1 : 7, 
+            paddingVertical: isRestItem ?  1 : 3,
+            }]}>
             <Pressable style={{flexDirection:'row'}} onPress={()=>setIsSelect(!isSelect)}>
-                <Image style={styles.icon} source={require('@/assets/brands/CU.png')}/>
-                <Text style={styles.text}>{name}</Text>
+                <Image style={[styles.icon,{marginTop: isRestItem ? 0 : 3,}]} source={require('@/assets/brands/CU.png')}/>
+                {
+                    !isRestItem && (
+                        <Text style={styles.text}>{name}</Text>
+                    )
+                }
             </Pressable>
         </View>
     )
@@ -34,7 +42,6 @@ const styles = StyleSheet.create({
     icon: {
         width: 20,
         height: 10,
-        marginTop: 3
     },
     text:{
         fontFamily: 'Paperlogy',

@@ -2,17 +2,18 @@ import { Colors } from "@/constants/Colors";
 import React from "react";
 import { TextInput, StyleSheet, Text, View, Pressable } from "react-native";
 
-type InputType = 'email'|'signupEmail'|'password'|'authNum';
+type InputType = 'email'|'signupEmail'|'password'|'authNum'|'text';
 
 type InputCustomProps = {
     label: string;
     placeholder: string;
     isError?: boolean;
     isSignup?: boolean;
-    type: InputType; 
+    type: InputType;
+    onChangeText?: (text:string) => void; 
 }
 
-const InputCustom:React.FC<InputCustomProps> = ({label, placeholder, isError, isSignup, type }) => {
+const InputCustom:React.FC<InputCustomProps> = ({label, placeholder, isError, isSignup, type, onChangeText }) => {
     const onPressEmail = () => {
         console.log('email');
     }
@@ -30,6 +31,7 @@ const InputCustom:React.FC<InputCustomProps> = ({label, placeholder, isError, is
                     placeholder={placeholder}
                     placeholderTextColor={Colors.placeholder}
                     secureTextEntry={type=='password'? true : false }
+                    onChangeText={onChangeText}
                 />{
                     isSignup && (
                         <Pressable style={styles.authButton} onPress={()=>{type=='email' ? onPressEmail() : onPressNumber()}}>
