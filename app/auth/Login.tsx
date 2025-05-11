@@ -38,7 +38,7 @@ const Login = () => {
             </View> 
             <ButtonCustom
                 text="로그인"   
-                onPress={() => router.push('/Main')}     
+                onPress={() => router.push('/')}     
             />
             <Pressable onPress={() => router.push('/auth/Signup')}>
                 <Text style={styles.checkUser}>
