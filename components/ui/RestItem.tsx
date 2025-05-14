@@ -60,8 +60,16 @@ const RestItem:React.FC<RestMark> = ({isMark = false}) => {
 const styles = StyleSheet.create({
   container: {
     marginBottom: 16,
+    marginHorizontal: 'auto',
     minHeight: 136,
+    width: 340,
     justifyContent: 'center',
+    backgroundColor: '#fff',
+    borderRadius: 12,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.1,
+    shadowRadius: 6,
   },
   routeImg: {
     borderTopLeftRadius: 12,

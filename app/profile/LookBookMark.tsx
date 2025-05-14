@@ -11,7 +11,7 @@ const LookBookMark = () => {
     <View style={styles.container}>
       <ProfileHeader name="즐겨찾기"/>
       <CategoryCustom />
-        <ScrollView style={styles.scroll} showsVerticalScrollIndicator={false}>       
+        <ScrollView showsVerticalScrollIndicator={false}>       
           {
               list.map((item)=>(
                 <RestItem />
@@ -27,9 +27,6 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor:Colors.background,
   }, 
-  scroll: {
-    marginLeft:20,
-  }
 })
 
 export default LookBookMark;

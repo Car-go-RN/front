@@ -18,7 +18,7 @@ const ProfileHeader: React.FC<ProfileHeaderProps> = ({isCategory, isSurvey, name
 
   const handleBack = () => {
     if (pathname === '/profile/MyPage') {
-      router.push('/Main');
+      router.push('/');
     } else {
       router.push('/profile/MyPage');
     }
