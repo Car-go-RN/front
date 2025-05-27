@@ -1,14 +1,20 @@
 import { Colors } from "@/constants/Colors";
 import React, { useState } from "react";
+import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 import { View, Text, Image, StyleSheet, Pressable } from "react-native"
+import { brandImg, brandKey } from "@/constants/BrandImg";
+
+type IconName = keyof typeof MaterialCommunityIcons.glyphMap;
 
 type TagProps = {
-    name?: string,
+    name: string,
+    icon?: string,
     select?:boolean,
     isRestItem?: boolean,
+    isbrand?: boolean
 }
 
-const TagCustom:React.FC<TagProps> = ({name,select,isRestItem}) => {
+const TagCustom:React.FC<TagProps> = ({name,icon,select,isRestItem, isbrand}) => {
     const [isSelect, setIsSelect] = useState(false)
     return(
         <View style={[styles.container, {
@@ -17,7 +23,12 @@ const TagCustom:React.FC<TagProps> = ({name,select,isRestItem}) => {
             paddingVertical: isRestItem ?  1 : 3,
             }]}>
             <Pressable style={{flexDirection:'row'}} onPress={()=>setIsSelect(!isSelect)}>
-                <Image style={[styles.icon,{marginTop: isRestItem ? 0 : 3,}]} source={require('@/assets/brands/CU.png')}/>
+                {
+                    isbrand ?
+                    <Image style={[styles.icon,{marginTop: isRestItem ? 0 : 3,}]} source={icon ? brandImg[icon as brandKey]?.img : undefined}/>
+                    : 
+                    <MaterialCommunityIcons name={icon as IconName} size={15} color="black" />
+                }
                 {
                     !isRestItem && (
                         <Text style={styles.text}>{name}</Text>

@@ -2,7 +2,7 @@ import { Pressable, StyleSheet, Text, View } from "react-native"
 import FontAwesome6 from '@expo/vector-icons/FontAwesome6';
 import React, { useState } from "react";
 import { Colors } from "@/constants/Colors";
-import { amenities, brands } from "@/data/TagMock";
+import { amenities, brands } from "@/constants/TagMock";
 import TagCustom from "./TagCustom";
 
 type surveyOptionProps = {

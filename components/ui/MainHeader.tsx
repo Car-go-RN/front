@@ -19,7 +19,7 @@ const MainHeader:React.FC<MainHeaderProps> = ({isRoute}) => {
             {
                 isRoute ? (
                     <View style={{marginTop: -20}}>
-                        <HeaderCustom isDetail={true} />
+                        <HeaderCustom />
                         <View style={styles.routeContainer}>
                             <Text style={[styles.textBold, styles.text,{marginBottom:4, marginTop:-4}]}>내 경로 입력</Text>
                             <View>

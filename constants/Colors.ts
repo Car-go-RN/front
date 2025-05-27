@@ -15,5 +15,17 @@ export const Colors = {
   placeholder: '#D1D1D1',
   placeholderGreen: '#6FC9B2',
   lightGrey: '#D9D9D9',
-  grey: '#646464'
+  grey: '#646464',
+  light: {
+    text: '#11181C',
+    background: '#fff',
+    icon: '#687076',
+    tabIconDefault: '#687076',
+  },
+  dark: {
+    text: '#ECEDEE',
+    background: '#151718',
+    icon: '#9BA1A6',
+    tabIconDefault: '#9BA1A6',
+  },
 };

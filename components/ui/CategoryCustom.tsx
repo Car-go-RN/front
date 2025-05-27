@@ -3,7 +3,7 @@ import Ionicons from '@expo/vector-icons/Ionicons';
 import { useState } from "react";
 import { Colors } from "@/constants/Colors";
 import ToggleListCustom from "./ToggleListCustom";
-import { amenities, brands, gas } from "@/data/TagMock";
+import { amenities, brands, gas } from "@/constants/TagMock";
 
 const CategoryCustom = () => {
     const [isOpen, setIsOpen] = useState(false);
@@ -17,13 +17,13 @@ const CategoryCustom = () => {
                 isOpen && (
                     <View>
                         <View style={styles.category}>
-                            <ToggleListCustom title="주유/충전소" tagList={gas}/>
+                            <ToggleListCustom title="주유/충전소" tagList={gas} isbrand={false}/>
                         </View>
                         <View style={styles.category}>
-                            <ToggleListCustom title="브랜드" tagList={brands}/>
+                            <ToggleListCustom title="브랜드" tagList={brands} isbrand={true} />
                         </View>
                         <View style={styles.category}>
-                            <ToggleListCustom title="편의시설" tagList={amenities}/>
+                            <ToggleListCustom title="편의시설" tagList={amenities} isbrand={false}/>
                         </View>
                     </View>
                 )
