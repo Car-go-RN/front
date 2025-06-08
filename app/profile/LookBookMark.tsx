@@ -14,7 +14,7 @@ const LookBookMark = () => {
         <ScrollView showsVerticalScrollIndicator={false}>       
           {
               list.map((item)=>(
-                <RestItem />
+                <RestItem key={item.id} isMark={true} />
               ))
           }
         </ScrollView>
