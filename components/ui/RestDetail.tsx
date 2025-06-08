@@ -1,6 +1,9 @@
 import { StyleSheet, Text, View } from "react-native"
 import TagCustom from "./TagCustom";
 
+import { brandImg } from "@/constants/BrandImg";
+import { amenities } from "@/constants/TagMock";
+
 const RestDetail = () => {
     return(
         <View style={styles.container}>
@@ -14,11 +17,11 @@ const RestDetail = () => {
             </View>
             <View style={styles.itemContainer}>
                 <Text style={[styles.text,styles.subject]}>브랜드</Text>
-                <View style={styles.tagContainer}><TagCustom name="CU" /><TagCustom name="CU" /><TagCustom name="CU" /><TagCustom name="CU" /><TagCustom name="CU" /><TagCustom name="CU"/><TagCustom name="CU" /></View>
+                <View style={styles.tagContainer}><TagCustom name="CU" isbrand={true} icon={brandImg.CU.icon}/><TagCustom  name="던킨도너츠" isbrand={true} icon={brandImg.던킨도너츠.icon}/><TagCustom  name="베스킨라빈스" isbrand={true} icon={brandImg.베스킨라빈스.icon}/></View>
             </View>
             <View style={styles.itemContainer}>
                 <Text style={[styles.text,styles.subject]}>편의시설</Text>
-                <View style={styles.tagContainer}><TagCustom name="CU" /><TagCustom name="CU" /><TagCustom name="CU" /><TagCustom name="CU" /></View>
+                <View style={styles.tagContainer}><TagCustom name="병원" icon={amenities[6].icon} /><TagCustom name="약국" icon={amenities[2].icon} /><TagCustom name="경정비소" icon={amenities[9].icon}/></View>
             </View>
             <View style={[styles.itemContainer,{flexDirection:'column'}]}>
                 <Text style={[styles.text,styles.subject]}>메뉴</Text>
@@ -27,12 +30,12 @@ const RestDetail = () => {
                     <Text style={styles.text}>15000원</Text>
                 </View>
                 <View style={{marginTop: 15, flexDirection: 'row', justifyContent:'space-between'}}>
-                    <Text style={styles.text}>한우비빔밥</Text>
-                    <Text style={styles.text}>15000원</Text>
+                    <Text style={styles.text}>육회비빔밥</Text>
+                    <Text style={styles.text}>9000원</Text>
                 </View>
                 <View style={{marginTop: 15, flexDirection: 'row', justifyContent:'space-between'}}>
-                    <Text style={styles.text}>한우비빔밥</Text>
-                    <Text style={styles.text}>15000원</Text>
+                    <Text style={styles.text}>유부우동</Text>
+                    <Text style={styles.text}>8500원</Text>
                 </View>
             </View>
         </View>

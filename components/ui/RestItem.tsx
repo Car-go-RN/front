@@ -4,6 +4,8 @@ import { Foundation } from "@expo/vector-icons"
 import { useState } from "react"
 import { useRouter } from "expo-router"
 import TagCustom from "./TagCustom"
+import { brandImg } from "@/constants/BrandImg"
+import { amenities } from "@/constants/TagMock"
 
 type RestMark = {
   isMark?: boolean;
@@ -41,13 +43,13 @@ const RestItem:React.FC<RestMark> = ({isMark = false}) => {
             <View style={styles.row}>
               <Text style={[styles.text,{marginVertical:3, marginRight:17}]}>브랜드</Text>
               <View style={styles.tagContainer}>
-                <TagCustom isRestItem={true}/> <TagCustom isRestItem={true}/> <TagCustom isRestItem={true}/> <TagCustom isRestItem={true}/>
+                <TagCustom isRestItem={true}  name="CU" isbrand={true} icon={brandImg.CU.icon}/> <TagCustom isRestItem={true}  name="던킨도너츠" isbrand={true} icon={brandImg.던킨도너츠.icon}/> <TagCustom isRestItem={true}  name="베스킨라빈스" isbrand={true} icon={brandImg.베스킨라빈스.icon}/>
               </View>
             </View>
             <View style={styles.row}>
               <Text style={[styles.text,{marginVertical:3, marginRight:8}]}>편의시설</Text>
                 <View style={styles.tagContainer}>
-                  <TagCustom isRestItem={true}/> <TagCustom isRestItem={true}/> <TagCustom isRestItem={true}/> <TagCustom isRestItem={true}/>
+                  <TagCustom isRestItem={true} name="병원" icon={amenities[6].icon}/> <TagCustom isRestItem={true} name="약국" icon={amenities[2].icon}/> <TagCustom isRestItem={true} name="경정비소" icon={amenities[9].icon}/>
                 </View>
             </View> 
           </View>       

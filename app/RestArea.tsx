@@ -8,6 +8,8 @@ import Ionicons from '@expo/vector-icons/Ionicons';
 import { useState } from "react";
 import { StyleSheet, View, Text, Image, Pressable } from "react-native"
 
+
+
 const RestArea = () => {
     type navType = 'detail'|'review'|'write';
     const [nav, setNav] = useState<navType>('detail');

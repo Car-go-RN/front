@@ -5,6 +5,7 @@ import { View, Text, Pressable, StyleSheet } from "react-native"
 import { Colors } from "@/constants/Colors";
 import InputCustom from "@/components/ui/InputCustom";
 import { useReducer } from "react";
+import { useRouter } from "expo-router";
 
 type FormState = {
     email: string,
@@ -41,12 +42,14 @@ const formReducer = (state:FormState, action: Action) : FormState => {
 }
 
 const Signup = () => {
+    const router = useRouter();
     const [form, dispatch] = useReducer(formReducer, initialForm);
 
     const handlePostData = () => {
         //회원가입 api 로직
         
         dispatch({type:'RESET'})
+        
     }
 
     return(
@@ -89,7 +92,7 @@ const Signup = () => {
                 text="회원가입"   
                 onPress={()=>handlePostData()}         
             />
-            <Pressable>
+            <Pressable onPress={()=>router.push('/auth/Login')}>
                 <Text style={styles.checkUser}>이미 회원이신가요</Text>
             </Pressable>
         </View>
