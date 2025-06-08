@@ -1,4 +1,11 @@
-export const brandImg = {
+
+
+export const brandImg : {
+    [key: string] : {
+        icon: string,
+        img: string
+    }
+} = {
     CU: {icon: 'CU', img: require('@/assets/brands/CU.png')},
     GS25: {icon: 'GS25',img: require('@/assets/brands/GS25.png')},
     세븐일레븐: {icon:'세븐일레븐',img: require('@/assets/brands/세븐일레븐.png')},

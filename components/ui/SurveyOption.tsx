@@ -4,6 +4,8 @@ import React, { useState } from "react";
 import { Colors } from "@/constants/Colors";
 import { amenities, brands } from "@/constants/TagMock";
 import TagCustom from "./TagCustom";
+import { brandImg } from "@/constants/BrandImg";
+import { AmenitiesIcon } from "@/constants/AmenitiesIcon";
 
 type surveyOptionProps = {
     name: string
@@ -24,9 +26,9 @@ const SurveyOption:React.FC<surveyOptionProps> = ({name}) => {
                     checked && (name==='브랜드 매장' ? 
                     brands.map((item, index) =>(
                         
-                            <TagCustom key={index} name={item.name} select={true} />
+                            <TagCustom key={index} name={item.name} icon={brandImg[item.icon].icon} select={true} isbrand={true} />
                     )) : name==='편의시설' && amenities.map((item, index) =>(
-                            <TagCustom key={index} name={item.name} select={true} />
+                            <TagCustom key={index} name={item.name} select={true} icon={AmenitiesIcon[item.name].icon}/>
                     )))
                 }
                 </View>
