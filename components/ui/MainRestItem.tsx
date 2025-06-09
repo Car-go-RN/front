@@ -4,6 +4,9 @@ import AntDesign from '@expo/vector-icons/AntDesign';
 import Entypo from '@expo/vector-icons/Entypo';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import { useRouter } from "expo-router";
+import TagCustom from "./TagCustom";
+import { brandImg } from "@/constants/BrandImg";
+import { amenities } from "@/constants/TagMock";
 
 type Brand = {
     name: string,
@@ -35,8 +38,18 @@ const MainRestItem = () => {
                 <Text style={[styles.text,{fontSize:15}]}>동명휴게소(춘천방향)</Text>
                 <Text style={[styles.text,{fontSize:13, color: Colors.yellow}]}>★★★★☆</Text>
                 <Text style={[styles.text,{marginVertical:3}]}>경유 1,234  휘발유 1,352</Text>
-                <Text style={[styles.text,{marginVertical:3}]}>브랜드</Text>
-                <Text style={[styles.text,{marginVertical:3}]}>편의시설</Text>
+                <View style={styles.row}>
+                    <Text style={[styles.text,{marginVertical:3, marginRight:17}]}>브랜드</Text>
+                    <View style={styles.tagContainer}>
+                        <TagCustom isRestItem={true}  name="CU" isbrand={true} icon={brandImg.CU.icon}/> <TagCustom isRestItem={true}  name="던킨도너츠" isbrand={true} icon={brandImg.던킨도너츠.icon}/> <TagCustom isRestItem={true}  name="베스킨라빈스" isbrand={true} icon={brandImg.베스킨라빈스.icon}/>
+                    </View>
+                </View>
+                <View style={styles.row}>
+                    <Text style={[styles.text,{marginVertical:3, marginRight:8}]}>편의시설</Text>
+                    <View style={styles.tagContainer}>
+                        <TagCustom isRestItem={true} name="병원" icon={amenities[6].icon}/> <TagCustom isRestItem={true} name="약국" icon={amenities[2].icon}/> <TagCustom isRestItem={true} name="경정비소" icon={amenities[9].icon}/>
+                    </View>
+                </View> 
             </View>
             <View style={styles.reaction}>
                 <AntDesign name="heart" size={15} color={Colors.lightGrey} style={styles.icon} /><Text style={styles.reactState}>12</Text>
@@ -80,7 +93,15 @@ const styles = StyleSheet.create({
         color: Colors.lightGrey,
         width: 25,
         fontSize: 12
-    }
+    },
+    row: {
+        flexDirection: 'row',
+    },
+    tagContainer: {
+        flex: 1,
+        flexDirection: 'row',
+        flexWrap:'wrap',
+    },
 });
 
 export default MainRestItem;
