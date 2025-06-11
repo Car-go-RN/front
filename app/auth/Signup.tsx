@@ -4,8 +4,9 @@ import { View, Text, Pressable, StyleSheet } from "react-native"
 
 import { Colors } from "@/constants/Colors";
 import InputCustom from "@/components/ui/InputCustom";
-import { useReducer } from "react";
+import { useReducer, useState } from "react";
 import { useRouter } from "expo-router";
+import { codeVerification, emailVerification, postSignup } from "@/api/AuthAPI";
 
 type FormState = {
     email: string,
@@ -44,12 +45,39 @@ const formReducer = (state:FormState, action: Action) : FormState => {
 const Signup = () => {
     const router = useRouter();
     const [form, dispatch] = useReducer(formReducer, initialForm);
+    const [emailCheck, setEmailCheck] = useState(false);
 
-    const handlePostData = () => {
+    const handlePostData = async () => {
         //회원가입 api 로직
+        if(emailCheck){
+            alert('이메일을 인증해주세요');
+            return;
+        }
+        if(form.password !== form.repassword){
+            alert('비밀번호와 비밀번호 확인이 일치하지 않습니다');
+            return;
+        }
         
-        dispatch({type:'RESET'})
-        
+        const res = await postSignup({email: form.email, password:form.password});
+        if(res.pass){
+            dispatch({type:'RESET'})
+            router.push('/auth/Login');
+        }
+    }
+
+    const emailVerify = async () => {
+        const res = await emailVerification({email:form.email});
+        if(res.pass){
+            alert("이메일을 확인해주세요");
+        }
+    }
+
+    const emailCodeVerify = async () => {
+        const res = await codeVerification({email: form.email, code:form.authNum})
+        if(res.pass){
+            alert("인증되었습니다");
+            setEmailCheck(true);
+        }
     }
 
     return(
@@ -66,6 +94,7 @@ const Signup = () => {
                     isError={true}
                     isSignup={true}
                     onChangeText={(text)=>dispatch({type:'CHANGE_INPUT', name:'email', value:text})}
+                    onPress={emailVerify}
                 />
                 <InputCustom 
                     label="인증번호"
@@ -73,6 +102,7 @@ const Signup = () => {
                     type="authNum"
                     isSignup={true}
                     onChangeText={(text)=>dispatch({type:'CHANGE_INPUT', name:'authNum', value:text})}
+                    onPress={emailCodeVerify}
                 />
                 <InputCustom 
                     label="비밀번호"

@@ -11,17 +11,10 @@ type InputCustomProps = {
     isSignup?: boolean;
     type: InputType;
     onChangeText?: (text:string) => void; 
+    onPress?: () => void;
 }
 
-const InputCustom:React.FC<InputCustomProps> = ({label, placeholder, isError, isSignup, type, onChangeText }) => {
-    const onPressEmail = () => {
-        console.log('email');
-    }
-
-    const onPressNumber = () => {
-        console.log('num');
-    }
-
+const InputCustom:React.FC<InputCustomProps> = ({label, placeholder, isError, isSignup, type, onChangeText, onPress }) => {
     return(
         <View style={styles.container}>
             <Text style={styles.text}>{label}</Text>
@@ -34,7 +27,7 @@ const InputCustom:React.FC<InputCustomProps> = ({label, placeholder, isError, is
                     onChangeText={onChangeText}
                 />{
                     isSignup && (
-                        <Pressable style={styles.authButton} onPress={()=>{type=='email' ? onPressEmail() : onPressNumber()}}>
+                        <Pressable style={styles.authButton} onPress={onPress}>
                             <Text style={[styles.text,{margin:0, color:'white', fontSize:13, fontWeight:400}]}>{type=='email' ? '인증번호 발송' : '인증'}</Text>
                         </Pressable>
                     )
