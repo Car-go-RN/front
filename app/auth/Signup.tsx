@@ -91,7 +91,6 @@ const Signup = () => {
                     label="이메일"
                     placeholder="이메일을 입력하세요."
                     type="email"
-                    isError={true}
                     isSignup={true}
                     onChangeText={(text)=>dispatch({type:'CHANGE_INPUT', name:'email', value:text})}
                     onPress={emailVerify}
