@@ -27,7 +27,7 @@ const ProfileHeader: React.FC<ProfileHeaderProps> = ({isCategory, isSurvey, name
   return (
     <View>
       <View style={styles.header}>
-        <View style={{flexDirection:"row", marginTop:32, marginLeft:28}}>
+        <View style={{flexDirection:"row", marginTop:50, marginLeft:28}}>
           <Pressable onPress={handleBack}><AntDesign name="arrowleft" size={28} color={Colors.background} /></Pressable>
           <Text style={[styles.text,{lineHeight:28, marginLeft:4}]}>{name}</Text>
         </View>

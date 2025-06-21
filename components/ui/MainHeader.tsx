@@ -18,7 +18,7 @@ const MainHeader:React.FC<MainHeaderProps> = ({isRoute}) => {
             <View style={styles.header}>
             {
                 isRoute ? (
-                    <View style={{marginTop: -20}}>
+                    <View style={{marginTop: -10}}>
                         <HeaderCustom />
                         <View style={styles.routeContainer}>
                             <Text style={[styles.textBold, styles.text,{marginBottom:4, marginTop:-4}]}>내 경로 입력</Text>
@@ -70,7 +70,7 @@ const styles = StyleSheet.create({
         display:'flex',
         flexDirection:'row',
         justifyContent:'space-between',
-        marginTop: 50,
+        marginTop: 60,
         marginBottom: 18,
         width: '85%',
         alignSelf:'center'

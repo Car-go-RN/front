@@ -50,7 +50,7 @@ const styles = StyleSheet.create({
     },
     text:{
         fontFamily: 'Paperlogy',
-        fontWeight: 400,
+        fontWeight: "400",
         fontSize: 13
     },
     itemContainer: {

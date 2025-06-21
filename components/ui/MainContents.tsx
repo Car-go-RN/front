@@ -28,7 +28,7 @@ const MainContents:React.FC<MainContentProps> = ({isLogin}) => {
                         <ScrollView horizontal showsVerticalScrollIndicator={false}>
                             {
                                 list.map((item)=>(
-                                    <MainRestItem />
+                                    <MainRestItem key={item.id} />
                                 ))
                             }
                         </ScrollView>
