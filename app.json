@@ -4,16 +4,19 @@
     "slug": "cargo",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/images/icon.png",
+    "icon": "./assets/images/카GO바지logo2.png",
     "scheme": "myapp",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
     "ios": {
       "supportsTablet": true
     },
+    "androidStatusBar": {
+      "backgroundColor": "#ffffff"
+    },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/images/adaptive-icon.png",
+        "foregroundImage": "./assets/images/카GO바지logo2.png",
         "backgroundColor": "#ffffff"
       },
       "package": "com.shinsuji.cargo"
