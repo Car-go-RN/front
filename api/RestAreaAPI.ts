@@ -43,3 +43,12 @@ export const deleteRestReview = async ({reviewId}:{reviewId:number}) => {
 //즐겨찾기
 
 //즐겨찾기 표시/취소
+export const postMyFavorite = async ({restAreaId, userId}:{restAreaId:number, userId:number}) => {
+    try{
+        const res = await BaseUrl.post(`/favorites/${restAreaId}?userId=${userId}`);
+        return {data:res.data, pass: true}
+    }
+    catch(error){
+        return {data:error, pass:false}
+    }
+}
