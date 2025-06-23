@@ -2,7 +2,7 @@ import ButtonCustom from "@/components/ui/ButtonCustom";
 import HeaderCustom from "@/components/ui/HeaderCustom";
 import SurveyOption from "@/components/ui/SurveyOption";
 import { Colors } from "@/constants/Colors";
-import { StyleSheet, Text, View } from "react-native"
+import { StyleSheet, Text, View, ScrollView } from "react-native"
 
 const surveyChoice = [
     {name:'전기/수소차 충전소'},
@@ -21,7 +21,7 @@ const Survey = () => {
                 <HeaderCustom />
                 <Text style={[styles.text,{fontWeight: 700,fontSize:22, width:'85%', margin:'auto'}]}>휴게소 설문조사</Text>
             </View>
-            <View style={styles.contents}>
+            <ScrollView style={styles.contents}>
                 <Text style={styles.text}>휴게소에 꼭 있었으면 하는 시설은 무엇인가요?</Text>
                 <Text style={[styles.text, {color:Colors.tint, fontSize: 13, marginTop:3, marginBottom: 30}]}>*복수선택 가능</Text>
                 
@@ -30,7 +30,7 @@ const Survey = () => {
                         <SurveyOption key={index} name={item.name} />
                     ))
                 }
-            </View>
+            </ScrollView>
             <View style={styles.buttonContainer}>
                 <ButtonCustom text="설문조사 완료하기"/>
             </View>

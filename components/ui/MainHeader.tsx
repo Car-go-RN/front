@@ -82,7 +82,7 @@ const styles = StyleSheet.create({
     },
     inputRoute: {
         width: '90%',
-        height: 40,
+        height: 35,
         margin: 0,
         fontFamily: 'Paperlogy',
         fontSize: 13,

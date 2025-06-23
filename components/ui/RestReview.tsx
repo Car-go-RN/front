@@ -19,7 +19,7 @@ const RestReview = () => {
 
 const styles = StyleSheet.create({
     container: {
-        height: '60%',
+        height: '100%',
     }
 })
 
