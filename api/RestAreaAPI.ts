@@ -12,3 +12,34 @@ export const restSearchReview = async ({restAreaId}:{restAreaId:string}) => {
         return {data:error, pass:false}
     }
 }
+
+//휴게소 리뷰 작성
+export const writeRestReview = async ({restAreaName, content, grade, userId}:{restAreaName:string, content:string, grade:number, userId:number}) => {
+    try{
+        const res = await BaseUrl.post(`/review?restAreaNm=${restAreaName}`, {
+            content,
+            grade, 
+            userId
+        });
+        return {data:res.data, pass: true}
+    }
+    catch(error){
+        return {data:error, pass:false}
+    }
+}
+
+//휴게소 리뷰 삭제
+export const deleteRestReview = async ({reviewId}:{reviewId:number}) => {
+    try{
+        const res = await BaseUrl.delete(`/review/${reviewId}`);
+        return {data:res.data, pass: true}
+    }
+    catch(error){
+        return {data:error, pass:false}
+    }
+}
+
+
+//즐겨찾기
+
+//즐겨찾기 표시/취소

@@ -38,7 +38,7 @@ const RestReview = ({restAreaName}:RestReview) => {
             <ScrollView showsVerticalScrollIndicator={false} >
                 {
                     reviewData.map((review:Review) => (
-                        <ReviewItem key={review.id} message={review.content} />
+                        <ReviewItem key={review.id} message={review.content} grade={review.grade} userId={review.userId} reviewId={review.id} />
 
                     ))
                 }

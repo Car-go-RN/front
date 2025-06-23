@@ -1,16 +1,57 @@
 import { Pressable, StyleSheet, Text, TextInput, View } from "react-native"
 import AntDesign from '@expo/vector-icons/AntDesign';
 import Foundation from '@expo/vector-icons/Foundation';
-import React, { useState } from "react";
+import React, { useReducer, useState } from "react";
 import ButtonCustom from "./ButtonCustom";
 import { Colors } from "@/constants/Colors";
+import { writeRestReview } from "@/api/RestAreaAPI";
 
 type writeProps = {
     setNav: (nav:'write'|'detail'|'review') => void
 }
 
+type FormState = {
+    content: string,
+    grade: number,
+}
+
+type Action = 
+    | {type:'CHANGE_INPUT'; name: keyof FormState; value: string|number}
+    | {type:'RESET'};
+
+const initialForm:FormState = {
+    content: '',
+    grade: 0
+}
+
+const formReducer = (state:FormState, action: Action) : FormState => {
+    switch(action.type){
+        case 'CHANGE_INPUT':
+            console.log(state);
+            return {
+                ...state,
+                [action.name]: action.value
+            }
+        case 'RESET':
+            return initialForm;
+        default:
+            return state
+    }
+}
+
+
 const RestWriteReview:React.FC<writeProps> = ({setNav}) => {
-    const [rating, setRating] = useState<number>(0);
+    const [form, dispatch] = useReducer(formReducer, initialForm)
+
+    const handlePostReview = async () => {
+        //폼 비었는지 환인하는 조건문 작성 필요
+
+        const res = await writeRestReview({restAreaName: '동명휴게소', content: form.content, grade: form.grade, userId: 1})
+        if(res.pass){
+            console.log('작성 완료');
+            setNav('review')
+        }
+    }
 
     return(
         <View>
@@ -23,8 +64,8 @@ const RestWriteReview:React.FC<writeProps> = ({setNav}) => {
                 <View style={styles.rating}>
                     {
                         [1,2,3,4,5].map((i)=>(
-                            <Pressable onPress={()=>setRating(i)} key={i}>
-                                <Foundation name="star" size={40} color={i<=rating ? Colors.yellow : Colors.placeholder } />
+                            <Pressable onPress={()=>dispatch({type:'CHANGE_INPUT', name:'grade', value: i})} key={i}>
+                                <Foundation name="star" size={40} color={i<=form.grade ? Colors.yellow : Colors.placeholder } />
                             </Pressable>
                         ))
                     }
@@ -33,10 +74,10 @@ const RestWriteReview:React.FC<writeProps> = ({setNav}) => {
             </View>
             <View style={styles.answer}>
                 <Text style={[styles.text,{marginBottom: 15}]}>휴게소에 대한 리뷰를 작성해주세요</Text> 
-                <TextInput style={styles.input} placeholder="리뷰를 입력해주세요" placeholderTextColor={Colors.placeholder}/>
+                <TextInput style={styles.input} placeholder="리뷰를 입력해주세요" onChangeText={(text: string)=>dispatch({type:'CHANGE_INPUT', name: 'content', value: text})} placeholderTextColor={Colors.placeholder}/>
             </View>
             <View style={styles.buttonContainer}>
-                <ButtonCustom text="리뷰 등록" onPress={()=>setNav('review')}/>
+                <ButtonCustom text="리뷰 등록" onPress={()=>handlePostReview()}/>
             </View>
         </View>
     )
