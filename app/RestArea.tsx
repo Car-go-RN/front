@@ -46,7 +46,7 @@ const RestArea = () => {
                     nav=='detail' ? (
                         <RestDetail />
                     ) : nav=='review' ?  (
-                        <RestReview />
+                        <RestReview restAreaName={'동명휴게소'} />
                     ) : (
                         <RestWriteReview setNav={setNav} />
                     )

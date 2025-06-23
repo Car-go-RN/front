@@ -70,6 +70,9 @@ const Signup = () => {
         if(res.pass){
             alert("이메일을 확인해주세요");
         }
+        else {
+            alert(res.data)
+        }
     }
 
     const emailCodeVerify = async () => {
@@ -93,7 +96,7 @@ const Signup = () => {
                     type="email"
                     isSignup={true}
                     onChangeText={(text)=>dispatch({type:'CHANGE_INPUT', name:'email', value:text})}
-                    onPress={emailVerify}
+                    onPress={()=>emailVerify}
                 />
                 <InputCustom 
                     label="인증번호"
@@ -101,7 +104,7 @@ const Signup = () => {
                     type="authNum"
                     isSignup={true}
                     onChangeText={(text)=>dispatch({type:'CHANGE_INPUT', name:'authNum', value:text})}
-                    onPress={emailCodeVerify}
+                    onPress={()=>emailCodeVerify}
                 />
                 <InputCustom 
                     label="비밀번호"
