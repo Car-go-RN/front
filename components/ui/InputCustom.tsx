@@ -20,7 +20,7 @@ const InputCustom:React.FC<InputCustomProps> = ({label, placeholder, isError, is
             <Text style={styles.text}>{label}</Text>
             <View style={{flexDirection: 'row'}}>
                 <TextInput 
-                    style={[styles.input,{borderColor: isError ? Colors.red : Colors.lightGrey, width: isSignup ? '70%' : undefined}]}
+                    style={[styles.input,{borderColor: isError ? Colors.red : Colors.lightGrey, width: isSignup ? '70%' : '100%'}]}
                     placeholder={placeholder}
                     placeholderTextColor={Colors.placeholder}
                     secureTextEntry={type=='password'? true : false }

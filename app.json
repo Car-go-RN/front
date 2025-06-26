@@ -4,7 +4,7 @@
     "slug": "cargo",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/images/카GO바지logo2.png",
+    "icon": "./assets/images/카GO바지.svg",
     "scheme": "myapp",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
@@ -31,8 +31,8 @@
       [
         "expo-splash-screen",
         {
-          "image": "./assets/images/카GO바지logo1.png",
-          "imageWidth": 200,
+          "image": "./assets/images/카GO바지.svg",
+          "imageWidth": 100,
           "resizeMode": "contain",
           "backgroundColor": "#fff"
         }

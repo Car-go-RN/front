@@ -86,7 +86,7 @@ const Signup = () => {
     return(
         <View style={styles.container}>
             <HeaderCustom />
-            <Text style={[styles.text, {marginTop:100, marginLeft:48}]}>
+            <Text style={[styles.text, {marginTop:60, marginLeft:48}]}>
                 회원가입
             </Text>
             <View style={styles.inputContainer}>
