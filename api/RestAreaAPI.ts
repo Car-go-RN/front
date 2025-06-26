@@ -20,6 +20,10 @@ export const writeRestReview = async ({restAreaName, content, grade, userId}:{re
             content,
             grade, 
             userId
+        },{
+            headers: {
+                Authorization: 'Bearer '
+            }
         });
         return {data:res.data, pass: true}
     }

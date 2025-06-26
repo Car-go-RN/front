@@ -36,7 +36,8 @@ export const emailVerification = async ({email}:{email:string}) => {
         });
         return {data:res, pass: true}
     }
-    catch(error){
+    catch(error: any){
+        console.log("에러 응답", error?.response?.data);
         return {data:error, pass:false}
     }
 }

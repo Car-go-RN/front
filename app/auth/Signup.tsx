@@ -1,6 +1,6 @@
 import ButtonCustom from "@/components/ui/ButtonCustom";
 import HeaderCustom from "@/components/ui/HeaderCustom";
-import { View, Text, Pressable, StyleSheet } from "react-native"
+import { View, Text, Pressable, StyleSheet, Alert } from "react-native"
 
 import { Colors } from "@/constants/Colors";
 import InputCustom from "@/components/ui/InputCustom";
@@ -30,7 +30,6 @@ const initialForm:FormState = {
 const formReducer = (state:FormState, action: Action) : FormState => {
     switch(action.type){
         case 'CHANGE_INPUT':
-            console.log(state);
             return {
                 ...state,
                 [action.name]: action.value
@@ -49,12 +48,12 @@ const Signup = () => {
 
     const handlePostData = async () => {
         //회원가입 api 로직
-        if(emailCheck){
-            alert('이메일을 인증해주세요');
+        if(!emailCheck){
+            Alert.alert('회원가입 실패','이메일을 인증해주세요');
             return;
         }
         if(form.password !== form.repassword){
-            alert('비밀번호와 비밀번호 확인이 일치하지 않습니다');
+            Alert.alert('회원가입 실패','비밀번호와 비밀번호 확인이 일치하지 않습니다');
             return;
         }
         
@@ -63,22 +62,33 @@ const Signup = () => {
             dispatch({type:'RESET'})
             router.push('/auth/Login');
         }
+        else{
+            Alert.alert('회원가입 실패', '다시 시도해주세요');
+        }
     }
 
     const emailVerify = async () => {
+        if(form.email === ''){
+            Alert.alert('이메일 인증 실패',"이메일을 입력해주세요");
+            return;
+        }
         const res = await emailVerification({email:form.email});
         if(res.pass){
-            alert("이메일을 확인해주세요");
+            Alert.alert('인증코드 전송',"이메일을 확인해주세요");
         }
         else {
-            alert(res.data)
+            console.log(res.data)
         }
     }
 
     const emailCodeVerify = async () => {
+        if(form.authNum.length<6){
+            Alert.alert('이메일 인증 실패', "인증번호를 입력해주세요");
+            return;
+        }
         const res = await codeVerification({email: form.email, code:form.authNum})
         if(res.pass){
-            alert("인증되었습니다");
+            Alert.alert("이메일 인증 성공", "인증되었습니다");
             setEmailCheck(true);
         }
     }
@@ -96,7 +106,7 @@ const Signup = () => {
                     type="email"
                     isSignup={true}
                     onChangeText={(text)=>dispatch({type:'CHANGE_INPUT', name:'email', value:text})}
-                    onPress={()=>emailVerify}
+                    onPress={()=>emailVerify()}
                 />
                 <InputCustom 
                     label="인증번호"
@@ -104,7 +114,7 @@ const Signup = () => {
                     type="authNum"
                     isSignup={true}
                     onChangeText={(text)=>dispatch({type:'CHANGE_INPUT', name:'authNum', value:text})}
-                    onPress={()=>emailCodeVerify}
+                    onPress={()=>emailCodeVerify()}
                 />
                 <InputCustom 
                     label="비밀번호"
