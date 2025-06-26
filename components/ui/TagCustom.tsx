@@ -25,7 +25,7 @@ const TagCustom:React.FC<TagProps> = ({name,icon,select,isRestItem, isbrand}) =>
             <Pressable style={{flexDirection:'row'}} onPress={()=>setIsSelect(!isSelect)}>
                 {
                     isbrand ?
-                    <Image style={[styles.icon,{marginTop: isRestItem ? 0 : 3, width: isRestItem ? 15 : 20}]} source={icon ? brandImg[icon as brandKey]?.img : undefined}/>
+                    <Image style={[styles.icon,{marginTop: isRestItem ? 0 : 3, width: isRestItem ? 15 : 20}]} source={icon ? brandImg[icon as brandKey]?.img : require('@/assets/brands/CU.png')}/>
                     : 
                     <MaterialCommunityIcons name={icon as IconName} size={isRestItem ? 10 : 15} color="black" />
                 }

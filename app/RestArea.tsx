@@ -41,12 +41,12 @@ const RestArea = () => {
                     <Pressable onPress={()=>setNav('review')}><Text style={[styles.text,styles.nav, nav!=='detail' ? styles.activeNav : undefined]}>리뷰</Text></Pressable>
                 </View>
             </View>
-                <View style={container.all}>
+                <View style={[container.all, {flex: 1}]}>
                 {
                     nav=='detail' ? (
                         <RestDetail />
                     ) : nav=='review' ?  (
-                        <RestReview />
+                        <RestReview restAreaName={'동명휴게소'} />
                     ) : (
                         <RestWriteReview setNav={setNav} />
                     )
@@ -66,7 +66,7 @@ const RestArea = () => {
 
 const styles = StyleSheet.create({
     header: {
-        position: 'fixed',
+        position: 'absolute',
         width: '100%',
         zIndex: 1
     },

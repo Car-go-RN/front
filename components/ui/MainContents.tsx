@@ -25,10 +25,10 @@ const MainContents:React.FC<MainContentProps> = ({isLogin}) => {
                         <FontAwesome6 name="road" size={20} color={Colors.tint} />
                     </View>
                     <View style={styles.restList}>
-                        <ScrollView horizontal showsVerticalScrollIndicator={false}>
+                        <ScrollView style={{height: '100%'}} horizontal showsVerticalScrollIndicator={false}>
                             {
                                 list.map((item)=>(
-                                    <MainRestItem />
+                                    <MainRestItem key={item.id} />
                                 ))
                             }
                         </ScrollView>

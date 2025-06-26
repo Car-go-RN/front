@@ -11,7 +11,7 @@ const RouteQuest = () => {
       <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>   
         {
             list.map((item)=>(
-              <RestItem />
+              <RestItem key={item.id}/>
             ))
         }
       </ScrollView>

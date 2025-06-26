@@ -3,13 +3,24 @@ import { Colors } from "@/constants/Colors"
 import { View, Text, StyleSheet } from "react-native"
 
 type ReviewProps = {
-    message: string
+    grade: number,
+    message: string,
+    userId: number,
+    reviewId: number
 }
 
-const ReviewItem:React.FC<ReviewProps> = ({message}) => {
+const ReviewItem:React.FC<ReviewProps> = ({grade, message, userId, reviewId}) => {
     return(
         <View style={styles.container}>
-            <Text style={[styles.text,{color:Colors.yellow, marginBottom: 10}]}>★★★★☆ 3.0</Text>
+            <Text style={[styles.text,{color:Colors.yellow, marginBottom: 10}]}>
+                {
+                    Array.from({length: 5}, (_, i)=> i + 1).map((i) => {
+                        if(i<grade)return '★' 
+                        else return '☆'
+                    })
+                }
+                {grade}.0
+            </Text>
             <Text style={[styles.text,{}]}>{message}</Text>
         </View>
     )

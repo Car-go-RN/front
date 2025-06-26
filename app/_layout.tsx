@@ -32,9 +32,11 @@ export default function RootLayout() {
         <Stack.Screen name="Main" />
         <Stack.Screen name="search/RouteQuest" />
         <Stack.Screen name="profile/MyPage" />
+        <Stack.Screen name="profile/LookBookMark" />
         <Stack.Screen name="profile/EmailUpdate" />
         <Stack.Screen name="profile/PasswordUpdate" />
         <Stack.Screen name="Survey" />
+        <Stack.Screen name="RestArea" />
         <Stack.Screen name="+not-found" />
       </Stack>
       <StatusBar style="auto" />

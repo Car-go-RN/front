@@ -25,7 +25,6 @@ const SurveyOption:React.FC<surveyOptionProps> = ({name}) => {
                 {
                     checked && (name==='브랜드 매장' ? 
                     brands.map((item, index) =>(
-                        
                             <TagCustom key={index} name={item.name} icon={brandImg[item.icon].icon} select={true} isbrand={true} />
                     )) : name==='편의시설' && amenities.map((item, index) =>(
                             <TagCustom key={index} name={item.name} select={true} icon={AmenitiesIcon[item.name].icon}/>

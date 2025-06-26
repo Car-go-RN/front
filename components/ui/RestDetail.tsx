@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View } from "react-native"
+import { ScrollView, StyleSheet, Text, View } from "react-native"
 import TagCustom from "./TagCustom";
 
 import { brandImg } from "@/constants/BrandImg";
@@ -6,7 +6,7 @@ import { amenities } from "@/constants/TagMock";
 
 const RestDetail = () => {
     return(
-        <View style={styles.container}>
+        <ScrollView style={styles.container}>
             <View style={styles.itemContainer}>
                 <Text style={[styles.text,styles.subject]}>운영시간</Text>
                 <Text style={[styles.text,{paddingTop: 4}]}>09:30~23:30</Text>
@@ -38,7 +38,7 @@ const RestDetail = () => {
                     <Text style={styles.text}>8500원</Text>
                 </View>
             </View>
-        </View>
+        </ScrollView>
     )
 }
 
@@ -50,7 +50,7 @@ const styles = StyleSheet.create({
     },
     text:{
         fontFamily: 'Paperlogy',
-        fontWeight: 400,
+        fontWeight: "400",
         fontSize: 13
     },
     itemContainer: {

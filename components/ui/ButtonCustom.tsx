@@ -12,7 +12,7 @@ type ButtonCustomProps = {
 const ButtonCustom: React.FC<ButtonCustomProps> = ({ text, outline, onPress }) => {
   return (
     <Pressable style={[styles.button, outline && styles.outline]} onPress={onPress}>
-      <Text style={[styles.text, {color: outline ? Colors.tint : undefined}]}>{text}</Text>
+      <Text style={[styles.text, {color: outline ? Colors.tint : Colors.background}]}>{text}</Text>
     </Pressable>
   );
 };

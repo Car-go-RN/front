@@ -6,6 +6,7 @@ import { useRouter } from "expo-router"
 import TagCustom from "./TagCustom"
 import { brandImg } from "@/constants/BrandImg"
 import { amenities } from "@/constants/TagMock"
+import { postMyFavorite } from "@/api/RestAreaAPI"
 
 type RestMark = {
   isMark?: boolean;
@@ -15,11 +16,18 @@ type RestMark = {
 const RestItem:React.FC<RestMark> = ({isMark = false}) => {
   const router = useRouter()
   const [marked, setMarked] = useState(isMark);
-  const handleMark = () => {
-    setMarked(true)
+  const handleMark = async () => {
+    const res = await postMyFavorite({restAreaId:245, userId: 1})
+    if(res.pass){
+      //useState로 관리하는 거 수정 필요 ( api 연결해서 휴게소 즐겨찾기 값에 따라 나오게)
+      setMarked(true)
+    }
   }
-  const handleDownMark = () => {
-    setMarked(false)
+  const handleDownMark = async () => {
+    const res = await postMyFavorite({restAreaId:245, userId: 1})
+    if(res.pass){
+      setMarked(false)
+    }
   }
   return (
     <View style={styles.container}>
