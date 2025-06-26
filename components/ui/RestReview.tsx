@@ -31,6 +31,7 @@ const RestReview = ({restAreaName}:RestReview) => {
             }
         }
         getReviews();
+        console.log(reviewData);
     },[restAreaName]);
 
     return(
@@ -39,7 +40,6 @@ const RestReview = ({restAreaName}:RestReview) => {
                 {
                     reviewData.map((review:Review) => (
                         <ReviewItem key={review.id} message={review.content} grade={review.grade} userId={review.userId} reviewId={review.id} />
-
                     ))
                 }
             </ScrollView>

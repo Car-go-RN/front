@@ -5,7 +5,11 @@ import { BaseUrl } from "./BaseUrl";
 //휴게소 리뷰 조회
 export const restSearchReview = async ({restAreaId}:{restAreaId:string}) => {
     try{
-        const res = await BaseUrl.get(`/review/search?restAreaId=${restAreaId}`);
+        const res = await BaseUrl.get(`/review/search?restAreaId=${restAreaId}`,{
+            headers:{
+                Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJldW5zaWw1NTIzQGdtYWlsLmNvbSIsImlzcyI6ImNhcmdvYmFqaTI1QGdtYWlsLmNvbSIsImlhdCI6MTc1MDkzNDg1MCwiZXhwIjoxNzUxMDIxMjUwfQ.AbJTB1fFS0dXbUA9jQSOyLrATfDJKms4tyShEE7rGbM'
+            }
+        });
         return {data:res.data, pass: true}
     }
     catch(error){
