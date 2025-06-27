@@ -27,7 +27,6 @@ const initialForm:FormState = {
 const formReducer = (state:FormState, action: Action) : FormState => {
     switch(action.type){
         case 'CHANGE_INPUT':
-            console.log(state);
             return {
                 ...state,
                 [action.name]: action.value
@@ -47,12 +46,15 @@ const RestWriteReview:React.FC<writeProps> = ({setNav}) => {
         //폼 비었는지 환인하는 조건문 작성 필요
         if(form.grade===0){
             Alert.alert('리뷰 작성 실패', '만족도를 선택해주세요');
+            return;
         }
         else if(form.content===''){
             Alert.alert('리뷰 작성 실패', '리뷰 내용을 작성해주세요');
+            return;
         }
 
-        const res = await writeRestReview({restAreaName: '동명휴게소', content: form.content, grade: form.grade, userId: 1})
+        const res = await writeRestReview({restAreaName: '동명휴게소 춘천방향', content: form.content, grade: form.grade, userId: 2})
+        console.log(res.data);
         if(res.pass){
             Alert.alert('리뷰 작성 성공', '리뷰가 작성되었습니다');
             setNav('review')
