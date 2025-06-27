@@ -8,7 +8,7 @@ const RouteQuest = () => {
   return (
     <View style={{flex: 1}}>
       <MainHeader isRoute={true}/>
-      <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>   
+      <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
         {
             list.map((item)=>(
               <RestItem key={item.id}/>
