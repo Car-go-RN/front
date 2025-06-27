@@ -10,6 +10,7 @@ type InputCustomProps = {
     isError?: boolean;
     isSignup?: boolean;
     type: InputType;
+    value?: string;
     onChangeText?: (text:string) => void; 
     onPress?: () => void;
 }
