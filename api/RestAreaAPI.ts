@@ -5,9 +5,9 @@ import { BaseUrl } from "./BaseUrl";
 //휴게소 리뷰 조회
 export const restSearchReview = async ({restAreaId}:{restAreaId:string}) => {
     try{
-        const res = await BaseUrl.get(`/review/search?restAreaId=${restAreaId}`,{
-            headers:{
-                Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJldW5zaWw1NTIzQGdtYWlsLmNvbSIsImlzcyI6ImNhcmdvYmFqaTI1QGdtYWlsLmNvbSIsImlhdCI6MTc1MDkzNDg1MCwiZXhwIjoxNzUxMDIxMjUwfQ.AbJTB1fFS0dXbUA9jQSOyLrATfDJKms4tyShEE7rGbM'
+        const res = await BaseUrl.get(`/review/search`,{
+            params: {
+                restAreaId:restAreaId
             }
         });
         return {data:res.data, pass: true}
@@ -19,19 +19,17 @@ export const restSearchReview = async ({restAreaId}:{restAreaId:string}) => {
 
 //휴게소 리뷰 작성
 export const writeRestReview = async ({restAreaName, content, grade, userId}:{restAreaName:string, content:string, grade:number, userId:number}) => {
+    console.log(restAreaName, content, grade, userId );
     try{
         const res = await BaseUrl.post(`/review?restAreaNm=${restAreaName}`, {
             content,
-            grade, 
+            grade,
             userId
-        },{
-            headers: {
-                Authorization: 'Bearer '
-            }
         });
         return {data:res.data, pass: true}
     }
-    catch(error){
+    catch(error:any){
+        console.log(error?.response?.data)
         return {data:error, pass:false}
     }
 }
