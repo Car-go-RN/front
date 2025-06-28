@@ -64,7 +64,7 @@ const RestItem:React.FC<RestMark> = (props) => {
   }
   return (
     <View style={styles.container}>
-      <Pressable onPress={()=>router.push('/RestArea')} style={{flexDirection: 'row', justifyContent: 'center'}}>
+      <Pressable onPress={()=>router.push({pathname:'/RestArea', params: {stdRestNm: props.stdRestNm}})} style={{flexDirection: 'row', justifyContent: 'center'}}>
         {
           imgUrl && (
             <Image style={styles.routeImg} source={{uri:imgUrl}}/>

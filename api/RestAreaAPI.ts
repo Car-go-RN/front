@@ -4,13 +4,15 @@ import { BaseUrl } from "./BaseUrl";
 //리뷰
 
 //휴게소 리뷰 조회
-export const restSearchReview = async ({restAreaId}:{restAreaId:string}) => {
+export const restSearchReview = async ({restAreaId}:{restAreaId:number}) => {
+    const restId = restAreaId.toString();
     try{
         const res = await BaseUrl.get(`/review/search`,{
             params: {
-                restAreaId:restAreaId
+                restAreaId:restId
             }
         });
+        console.log(res.data)
         return {data:res.data, pass: true}
     }
     catch(error){
@@ -71,8 +73,9 @@ export const getMyFavorite =  async ({userId}:{userId:number}) => {
     }
 }
 
+//휴게소 정보 
 
-// 휴게소 이미지
+//휴게소 이미지
 export const getRestImg = async({restName}:{restName:string}) => {
     try{
         const res = await axios.get(`http://myway.dothome.co.kr/google_searcher.php?q=${restName}`);
@@ -80,5 +83,16 @@ export const getRestImg = async({restName}:{restName:string}) => {
     }
     catch (error){
         return {data: error, pass:false}
+    }
+}
+
+//휴게소 상세 정보
+export const getRestInfo = async({stdRestNm}:{stdRestNm:string}) => {
+    try{
+        const res = await BaseUrl.get(`http://13.124.148.94:8080/open-api/detail?stdRestNm=${stdRestNm}`);
+        return {data:res.data[0], pass:true}
+    }
+    catch (error){
+        return {data:error, pass:false}
     }
 }

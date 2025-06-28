@@ -1,3 +1,4 @@
+import { getRestInfo } from "@/api/RestAreaAPI";
 import HeaderCustom from "@/components/ui/HeaderCustom";
 import RestDetail from "@/components/ui/RestDetail";
 import RestReview from "@/components/ui/RestReview";
@@ -5,14 +6,51 @@ import RestWriteReview from "@/components/ui/RestWriteReview";
 import { Colors } from "@/constants/Colors";
 import AntDesign from '@expo/vector-icons/AntDesign';
 import Ionicons from '@expo/vector-icons/Ionicons';
-import { useState } from "react";
-import { StyleSheet, View, Text, Image, Pressable, ScrollView, Keyboard, KeyboardAvoidingView, Platform, TouchableWithoutFeedback } from "react-native"
+import { useLocalSearchParams } from "expo-router";
+import { useEffect, useState } from "react";
+import { StyleSheet, View, Text, Image, Pressable, ScrollView, Keyboard, KeyboardAvoidingView, Platform, TouchableWithoutFeedback, GestureResponderEvent, Alert } from "react-native"
 
+export type RestInfo = {
+    id: number,
+    stdRestNm: string,//화면에 표시되는 이름
+    restAreaNm: string, //파라미터로 보낼 이름
+    gasolinePrice:string,
+    diselPrice: string,
+    lpgPrice:string,
+    electric: string,
+    hydrogen: string,
+    roadAddress: string,
+    phone:string,
+    latitude: number,
+    longitude:number,
+    brands: string[],
+    facilities: string[],
+    foods: Record<string, string>[]
+}
 
+type navType = 'detail'|'review'|'write';
 
 const RestArea = () => {
-    type navType = 'detail'|'review'|'write';
+    const {stdRestNm} = useLocalSearchParams();
     const [nav, setNav] = useState<navType>('detail');
+    const [data, setData] = useState<RestInfo>()
+
+    useEffect(()=>{
+        const getInfo = async () => {
+            const res = await getRestInfo({stdRestNm: stdRestNm as string});
+            if(res.pass){
+                setData(res.data);
+            }
+            else {
+                Alert.alert('휴게소 정보 불러오기 실패', '데이터를 불러오지 못했습니다');
+            }
+        }
+        getInfo();
+    },[])
+
+    if(!data){
+        return;
+    }
 
     return(
         <KeyboardAvoidingView
@@ -26,7 +64,7 @@ const RestArea = () => {
                     </View>
                     <Image style={styles.restImg} source={require('@/assets/images/test-rest-area.png')}/>
                     <View style={[container.all,container.title,{paddingVertical: 35}]}>
-                        <Text style={[styles.text,{fontSize: 24, fontWeight:700}]}>동명휴게소(춘천방향)</Text>
+                        <Text style={[styles.text,{fontSize: 24, fontWeight:700}]}>{data.stdRestNm}</Text>
                         <View style={styles.reaction}>
                             <AntDesign name="heart" size={17} color={Colors.lightGrey} style={styles.icon} /><Text style={styles.reactState}>12</Text>
                             <Ionicons name="bookmark" size={17} color={Colors.lightGrey} style={styles.icon} />
@@ -43,26 +81,30 @@ const RestArea = () => {
                                     style={[styles.text, styles.nav, nav=='detail' ? styles.activeNav : undefined]}>상세정보
                                 </Text>
                             </Pressable>
-                            <Pressable onPress={()=>setNav('review')}><Text style={[styles.text,styles.nav, nav!=='detail' ? styles.activeNav : undefined]}>리뷰</Text></Pressable>
+                            <Pressable onPress={()=>{console.log('asdf');setNav('review')}}>
+                                <Text 
+                                    style={[styles.text,styles.nav, nav!=='detail' ? styles.activeNav : undefined]}>리뷰
+                                </Text>
+                            </Pressable>
                         </View>
                     </View>
                     
-                        <ScrollView style={[container.all, {flex: 1}]}>
+                        <View style={[container.all, {flex: 1}]}>
                         {
                             nav=='detail' ? (
-                                <RestDetail />
+                                <RestDetail data={data} />
                             ) : nav=='review' ?  (
-                                <RestReview restAreaName={'동명휴게소'} />
+                                <RestReview restId={data.id} />
                             ) : (
                                 <RestWriteReview setNav={setNav} />
                             )
                         }
-                        </ScrollView>
+                        </View>
                         
                         {
                             nav!=='write' && (
                                 <View style={container.writeButton}>
-                                    <Pressable onPress={()=>setNav('write')}><Ionicons name="chatbox-ellipses" size={30} color="white" /></Pressable>
+                                    <Pressable onPress={()=>{console.log('press');setNav('write')}}><Ionicons name="chatbox-ellipses" size={30} color="white" /></Pressable>
                                 </View>
                             )
                         }

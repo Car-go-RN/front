@@ -1,4 +1,4 @@
-import { ScrollView, StyleSheet, View } from "react-native"
+import { ScrollView, StyleSheet, View, Text } from "react-native"
 import ReviewItem from "./ReviewItem";
 import { useEffect, useState } from "react";
 import { restSearchReview } from "@/api/RestAreaAPI";
@@ -6,7 +6,7 @@ import { RootState } from "@/app/store/store";
 import { useSelector } from 'react-redux';
 
 type RestReview = {
-    restAreaName: string
+    restId: number
 }
 
 type Review = {
@@ -19,18 +19,21 @@ type Review = {
     restAreaId: number
 }
 
-const RestReview = ({restAreaName}:RestReview) => {
+const RestReview = ({restId}:RestReview) => {
     //수정사항 :: userId 받는 useSelector 완성하기
     const userId = useSelector((state:RootState)=>state.user).user?.userId;
 
     const [reviewData, setReviewData] = useState([]);
     const [isChange, setIsChange] = useState<boolean>(true);
 
+    console.log(restId);
+
     useEffect(()=>{
         const getReviews = async () => {
-            const res = await restSearchReview({restAreaId:'632'})
+            const res = await restSearchReview({restAreaId:restId})
             if(res.pass){
                 setReviewData(res.data.reviews)
+                console.log(res.data);
             }
             else {
                 console.log(res.data)
@@ -38,28 +41,26 @@ const RestReview = ({restAreaName}:RestReview) => {
             setIsChange(false);
         }
         if(isChange)getReviews();
-    },[restAreaName, isChange]);
+    },[isChange]);
 
     const reivewChange = () => {
         setIsChange(true);
     }
 
     return(
-        <View style={styles.container}>
-            <ScrollView showsVerticalScrollIndicator={false} >
-                {
-                    reviewData.map((review:Review) => (
-                        <ReviewItem key={review.id} message={review.content} grade={review.grade} reviewId={review.id} isMyReview={review.userId===userId} reivewChange={reivewChange}/>
-                    ))
-                }
-            </ScrollView>
-        </View>
+        <ScrollView style={styles.container}>
+        {
+            reviewData.map((review:Review) => (
+                <ReviewItem key={review.id} message={review.content} grade={review.grade} reviewId={review.id} isMyReview={review.userId===userId} reivewChange={reivewChange}/>
+            ))
+        }
+        </ScrollView>
     )
 }
 
 const styles = StyleSheet.create({
     container: {
-        height: '100%',
+        flex: 1
     }
 })
 
