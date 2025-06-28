@@ -22,7 +22,7 @@ export const brandImg : {
     롯데리아: {icon: '롯데리아', img: require('@/assets/brands/롯데리아.png')},
     도미노피자: {icon: '도미노피자', img: require('@/assets/brands/도미노피자.png')},
     BBQ: {icon:'BBQ', img: require('@/assets/brands/BBQ.png')},
-    파리바게트: {icon:'파리바게트', img: require('@/assets/brands/파리바게트.png')},
+    파리바게뜨: {icon:'파리바게트', img: require('@/assets/brands/파리바게트.png')},
 }
 
 export type brandKey = keyof typeof brandImg;

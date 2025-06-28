@@ -21,7 +21,7 @@ type Review = {
 
 const RestReview = ({restAreaName}:RestReview) => {
     //수정사항 :: userId 받는 useSelector 완성하기
-    const userId = useSelector((state:RootState)=>state.user);
+    const userId = useSelector((state:RootState)=>state.user).user?.userId;
 
     const [reviewData, setReviewData] = useState([]);
     const [isChange, setIsChange] = useState<boolean>(true);
@@ -49,7 +49,7 @@ const RestReview = ({restAreaName}:RestReview) => {
             <ScrollView showsVerticalScrollIndicator={false} >
                 {
                     reviewData.map((review:Review) => (
-                        <ReviewItem key={review.id} message={review.content} grade={review.grade} reviewId={review.id} isMyReview={review.userId===2} reivewChange={reivewChange}/>
+                        <ReviewItem key={review.id} message={review.content} grade={review.grade} reviewId={review.id} isMyReview={review.userId===userId} reivewChange={reivewChange}/>
                     ))
                 }
             </ScrollView>

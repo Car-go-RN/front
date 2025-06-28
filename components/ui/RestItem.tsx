@@ -1,38 +1,75 @@
 import { View, Image, StyleSheet, Text, GestureResponderEvent, Pressable } from "react-native"
 import { Colors } from "@/constants/Colors"
 import { Foundation } from "@expo/vector-icons"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { useRouter } from "expo-router"
 import TagCustom from "./TagCustom"
 import { brandImg } from "@/constants/BrandImg"
 import { amenities } from "@/constants/TagMock"
-import { postMyFavorite } from "@/api/RestAreaAPI"
+import { getRestImg, postMyFavorite } from "@/api/RestAreaAPI"
+import { useSelector } from "react-redux"
+import { RootState } from "@/app/store/store"
+import { AmenitiesIcon } from "@/constants/AmenitiesIcon"
 
 type RestMark = {
   isMark?: boolean;
   onPress?: (event: GestureResponderEvent) => void;
+  bookMarkChange: () => void,
+  restId: number,
+  stdRestNm: string,//화면에 표시되는 이름
+  restName: string, //파라미터로 보낼 이름
+  gasPrice:string,
+  diselPrice: string,
+  lpgPrice:string,
+  address: string,
+  phone:string,
+  latitude: number,
+  longitude:number,
+  brands: string[],
+  facilities: string[],
+  foods: Record<string, string>[]
 }
 
-const RestItem:React.FC<RestMark> = ({isMark = false}) => {
+const RestItem:React.FC<RestMark> = (props) => {
   const router = useRouter()
-  const [marked, setMarked] = useState(isMark);
+  const userId = useSelector((state:RootState) => state.user).user?.userId;
+  const [marked, setMarked] = useState(props.isMark);
+  const [imgUrl, setImgUrl] = useState<string>('');
+
+  useEffect(()=>{
+    const getRestImgUrl = async () => {
+      const res = await getRestImg({restName: props.restName})
+      if(res.pass){
+        setImgUrl(res.data[0].imageUrl);
+        console.log(res.data[0].imageUrl);
+      }
+    }
+    getRestImgUrl();
+  },[])
+
   const handleMark = async () => {
-    const res = await postMyFavorite({restAreaId:245, userId: 1})
+    const res = await postMyFavorite({restAreaId:props.restId, userId: userId as number})
     if(res.pass){
       //useState로 관리하는 거 수정 필요 ( api 연결해서 휴게소 즐겨찾기 값에 따라 나오게)
       setMarked(true)
+      props.bookMarkChange()
     }
   }
   const handleDownMark = async () => {
-    const res = await postMyFavorite({restAreaId:245, userId: 1})
+    const res = await postMyFavorite({restAreaId:props.restId, userId: userId as number})
     if(res.pass){
       setMarked(false)
+      props.bookMarkChange();
     }
   }
   return (
     <View style={styles.container}>
       <Pressable onPress={()=>router.push('/RestArea')} style={{flexDirection: 'row', justifyContent: 'center'}}>
-        <Image style={styles.routeImg} source={require('@/assets/images/test-rest-route.png')}/>
+        {
+          imgUrl && (
+            <Image style={styles.routeImg} source={{uri:imgUrl}}/>
+          )
+        }
         <View style={styles.restDetail}>
         <View style={styles.bookmark}>
             {
@@ -44,20 +81,31 @@ const RestItem:React.FC<RestMark> = ({isMark = false}) => {
               )
             }
           </View>
-          <Text style={[styles.text,{fontSize:15, fontWeight:'bold'}]}>청도새마을휴개소</Text>
+          <Text style={[styles.text,{fontSize:15, fontWeight:'bold'}]}>{props.stdRestNm}</Text>
           <Text style={[styles.text,{fontSize:13, color: Colors.yellow}]}>★★★☆☆</Text>
-          <Text style={[styles.text,{marginVertical:3}]}>경유 1,234  휘발유 1,234</Text>
+          <Text style={[styles.text,{marginVertical:3}]}>경유 {props.diselPrice}  휘발유 {props.gasPrice}</Text>
           <View style={{flex: 1, overflow:'scroll'}}>
             <View style={styles.row}>
               <Text style={[styles.text,{marginVertical:3, marginRight:17}]}>브랜드</Text>
               <View style={styles.tagContainer}>
-                <TagCustom isRestItem={true}  name="CU" isbrand={true} icon={brandImg.CU.icon}/> <TagCustom isRestItem={true}  name="던킨도너츠" isbrand={true} icon={brandImg.던킨도너츠.icon}/> <TagCustom isRestItem={true}  name="베스킨라빈스" isbrand={true} icon={brandImg.베스킨라빈스.icon}/>
+                {
+                  props.brands.map((brand)=>{
+                    console.log(brandImg[brand]);
+                    if(!brandImg[brand])return;
+                    return <TagCustom isRestItem={true}  name={brand} isbrand={true} icon={brandImg[brand].icon}/>
+                  })
+                }
               </View>
             </View>
             <View style={styles.row}>
               <Text style={[styles.text,{marginVertical:3, marginRight:8}]}>편의시설</Text>
                 <View style={styles.tagContainer}>
-                  <TagCustom isRestItem={true} name="병원" icon={amenities[6].icon}/> <TagCustom isRestItem={true} name="약국" icon={amenities[2].icon}/> <TagCustom isRestItem={true} name="경정비소" icon={amenities[9].icon}/>
+                  {
+                    props.facilities.map((facil)=>{
+                      if(!AmenitiesIcon[facil])return;
+                      return <TagCustom isRestItem={true} name={facil} icon={AmenitiesIcon[facil].icon}/>
+                    })
+                  }
                 </View>
             </View> 
           </View>       

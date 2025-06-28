@@ -13,7 +13,10 @@ interface AuthState {
 
 const initialState: AuthState = {
   token: null,
-  user: null,
+  user: {
+    email: '',
+    userId: 2
+  },
   isLoggedIn: false,
 }
 

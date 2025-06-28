@@ -1,3 +1,4 @@
+import axios from "axios";
 import { BaseUrl } from "./BaseUrl";
 
 //리뷰
@@ -56,5 +57,28 @@ export const postMyFavorite = async ({restAreaId, userId}:{restAreaId:number, us
     }
     catch(error){
         return {data:error, pass:false}
+    }
+}
+
+//즐겨찾기 목록
+export const getMyFavorite =  async ({userId}:{userId:number}) => {
+    try{
+        const res = await BaseUrl.get(`/favorites/user/${userId}`);
+        return {data:res.data, pass:true}
+    }
+    catch(error){
+        return {data:error, pass:false}
+    }
+}
+
+
+// 휴게소 이미지
+export const getRestImg = async({restName}:{restName:string}) => {
+    try{
+        const res = await axios.get(`http://myway.dothome.co.kr/google_searcher.php?q=${restName}`);
+        return {data: res.data, pass: true}
+    }
+    catch (error){
+        return {data: error, pass:false}
     }
 }

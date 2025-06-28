@@ -23,7 +23,7 @@ const Main = () => {
                         </Pressable>
                     </View>
                 </View>
-                <MainContents isLogin={false}/>
+                <MainContents isLogin={true}/>
             </View>
         </View>
     )
