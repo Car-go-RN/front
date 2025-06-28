@@ -1,66 +1,155 @@
+import { getRestImg, getRestInfo, getremainingDistance } from "@/api/RestAreaAPI";
 import HeaderCustom from "@/components/ui/HeaderCustom";
 import RestDetail from "@/components/ui/RestDetail";
 import RestReview from "@/components/ui/RestReview";
 import RestWriteReview from "@/components/ui/RestWriteReview";
 import { Colors } from "@/constants/Colors";
+import { useCurrentLocation } from "@/hooks/useCurrentLocation";
 import AntDesign from '@expo/vector-icons/AntDesign';
 import Ionicons from '@expo/vector-icons/Ionicons';
-import { useState } from "react";
-import { StyleSheet, View, Text, Image, Pressable } from "react-native"
+import { useLocalSearchParams } from "expo-router";
+import { useEffect, useState } from "react";
+import { StyleSheet, View, Text, Image, Pressable, ScrollView, Keyboard, KeyboardAvoidingView, Platform, TouchableWithoutFeedback, GestureResponderEvent, Alert } from "react-native"
 
+export type RestInfo = {
+    id: number,
+    stdRestNm: string,//화면에 표시되는 이름
+    restAreaNm: string, //파라미터로 보낼 이름
+    gasolinePrice:string,
+    diselPrice: string,
+    lpgPrice:string,
+    electric: string,
+    hydrogen: string,
+    roadAddress: string,
+    phone:string,
+    latitude: number,
+    longitude:number,
+    brands: string[],
+    facilities: string[],
+    foods: Record<string, string>[]
+}
 
+type navType = 'detail'|'review'|'write';
 
 const RestArea = () => {
-    type navType = 'detail'|'review'|'write';
+    const {stdRestNm} = useLocalSearchParams();
     const [nav, setNav] = useState<navType>('detail');
+    const [data, setData] = useState<RestInfo>()
+    const [distance, setDistance] = useState<number|null>(null)
+    const [imgUrl, setImgUrl] = useState<string>('');
+
+    const {location} = useCurrentLocation();
+
+
+    useEffect(()=>{
+        if(!data)return;
+        const getRestImgUrl = async () => {
+        const res = await getRestImg({restName: data.restAreaNm})
+        if(res.pass){
+            setImgUrl(res.data);
+        }
+        }
+        getRestImgUrl();
+    },[data])
+
+    useEffect(()=>{
+        const getInfo = async () => {
+            const res = await getRestInfo({stdRestNm: stdRestNm as string});
+            if(res.pass){
+                setData(res.data);
+            }
+            else {
+                Alert.alert('휴게소 정보 불러오기 실패', '데이터를 불러오지 못했습니다');
+            }
+        }
+        getInfo();
+    },[])
+
+    useEffect(()=>{
+        if(!location || !data){
+            return;
+        }
+        const {latitude, longitude} = location.coords
+        const getDistance = async () => {
+            const res = await getremainingDistance({latitude:latitude, longitude:longitude, stdRestNm: data.stdRestNm});
+            if(res.pass){
+                setDistance(res.data.distanceKm);
+                console.log(res.data);
+            }
+            else {
+                setDistance(null)
+            }
+        }
+        getDistance();
+    },[location])
+
+    if(!data || !location || !distance || !imgUrl){
+        return;
+    }
 
     return(
-        <View style={styles.container}>
-            <View style={styles.header}>
-                <HeaderCustom />
-            </View>
-            <Image style={styles.restImg} source={require('@/assets/images/test-rest-area.png')}/>
-            <View style={[container.all,container.title,{paddingVertical: 35}]}>
-                <Text style={[styles.text,{fontSize: 24, fontWeight:700}]}>동명휴게소(춘천방향)</Text>
-                <View style={styles.reaction}>
-                    <AntDesign name="heart" size={17} color={Colors.lightGrey} style={styles.icon} /><Text style={styles.reactState}>12</Text>
-                    <Ionicons name="bookmark" size={17} color={Colors.lightGrey} style={styles.icon} />
-                </View>
-            </View>
-            <View style={[container.all,container.title]}>
-                <Text style={[styles.text,{color:Colors.yellow, fontSize: 16}]}>★★★★☆ 3.0</Text>
-                <Text style={[styles.text,{color:Colors.tint, fontSize: 14, alignSelf:'center'}]}>휴게소까지 거리 28km</Text>
-            </View>
-            <View style={container.nav}>
-                <View style={[container.all,{flexDirection:'row', paddingVertical: 15}]}>
-                    <Pressable onPress={()=>setNav('detail')} style={{marginRight: 25}}>
-                        <Text 
-                            style={[styles.text, styles.nav, nav=='detail' ? styles.activeNav : undefined]}>상세정보
-                        </Text>
-                    </Pressable>
-                    <Pressable onPress={()=>setNav('review')}><Text style={[styles.text,styles.nav, nav!=='detail' ? styles.activeNav : undefined]}>리뷰</Text></Pressable>
-                </View>
-            </View>
-                <View style={[container.all, {flex: 1}]}>
-                {
-                    nav=='detail' ? (
-                        <RestDetail />
-                    ) : nav=='review' ?  (
-                        <RestReview restAreaName={'동명휴게소'} />
-                    ) : (
-                        <RestWriteReview setNav={setNav} />
-                    )
-                }
-                </View>
-                {
-                    nav!=='write' && (
-                        <View style={container.writeButton}>
-                            <Pressable onPress={()=>setNav('write')}><Ionicons name="chatbox-ellipses" size={30} color="white" /></Pressable>
+        <KeyboardAvoidingView
+                behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+                style={{ flex: 1 }}
+            >
+            <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+                <View style={styles.container}>
+                    <View style={styles.header}>
+                        <HeaderCustom />
+                    </View>
+                    <Image style={styles.restImg} source={{uri:imgUrl}} width={500}/>
+                    <View style={[container.all,container.title,{paddingVertical: 35}]}>
+                        <Text style={[styles.text,{fontSize: 24, fontWeight:700}]}>{data.stdRestNm}</Text>
+                        <View style={styles.reaction}>
+                            <AntDesign name="heart" size={17} color={Colors.lightGrey} style={styles.icon} /><Text style={styles.reactState}>12</Text>
+                            <Ionicons name="bookmark" size={17} color={Colors.lightGrey} style={styles.icon} />
                         </View>
-                    )
-                }
-                
-        </View>
+                    </View>
+                    <View style={[container.all,container.title]}>
+                        <Text style={[styles.text,{color:Colors.yellow, fontSize: 16}]}>★★★★☆ 3.0</Text>
+                        <Text style={[styles.text,{color:Colors.tint, fontSize: 14, alignSelf:'center'}]}>휴게소까지 거리 {distance || '오류'}km</Text>
+                    </View>
+                    <View style={container.nav}>
+                        <View style={[container.all,{flexDirection:'row', paddingVertical: 15}]}>
+                            <Pressable onPress={()=>setNav('detail')} style={{marginRight: 25}}>
+                                <Text 
+                                    style={[styles.text, styles.nav, nav=='detail' ? styles.activeNav : undefined]}>상세정보
+                                </Text>
+                            </Pressable>
+                            <Pressable onPress={()=>{setNav('review')}}>
+                                <Text 
+                                    style={[styles.text,styles.nav, nav!=='detail' ? styles.activeNav : undefined]}>리뷰
+                                </Text>
+                            </Pressable>
+                        </View>
+                    </View>
+                    
+                        <ScrollView 
+                            style={[container.all, {flex: 1}]}
+                            keyboardShouldPersistTaps="handled"
+                        >
+                        {
+                            nav=='detail' ? (
+                                <RestDetail data={data} />
+                            ) : nav=='review' ?  (
+                                <RestReview restId={data.id} />
+                            ) : (
+                                <RestWriteReview setNav={setNav} />
+                            )
+                        }
+                        </ScrollView>
+                        
+                        {
+                            nav!=='write' && (
+                                <View style={container.writeButton}>
+                                    <Pressable onPress={()=>{setNav('write')}}><Ionicons name="chatbox-ellipses" size={30} color="white" /></Pressable>
+                                </View>
+                            )
+                        }
+                        
+                </View>
+            </TouchableWithoutFeedback>
+        </KeyboardAvoidingView>
     )
 }
 

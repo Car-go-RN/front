@@ -1,8 +1,8 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 interface User {
-  id?: number,
-  email: string
+  email: string,
+  userId: number,
 }
 
 interface AuthState {
@@ -13,7 +13,10 @@ interface AuthState {
 
 const initialState: AuthState = {
   token: null,
-  user: null,
+  user: {
+    email: '',
+    userId: 2
+  },
   isLoggedIn: false,
 }
 
