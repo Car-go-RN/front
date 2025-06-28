@@ -50,7 +50,7 @@ const RestArea = () => {
         }
         }
         getRestImgUrl();
-    },[])
+    },[data])
 
     useEffect(()=>{
         const getInfo = async () => {
@@ -83,7 +83,7 @@ const RestArea = () => {
         getDistance();
     },[location])
 
-    if(!data || !location || !distance){
+    if(!data || !location || !distance || !imgUrl){
         return;
     }
 
