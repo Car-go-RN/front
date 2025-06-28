@@ -70,7 +70,7 @@ const RestArea = () => {
         getDistance();
     },[location])
 
-    if(!data){
+    if(!data || !location || !distance){
         return;
     }
 
@@ -94,7 +94,7 @@ const RestArea = () => {
                     </View>
                     <View style={[container.all,container.title]}>
                         <Text style={[styles.text,{color:Colors.yellow, fontSize: 16}]}>★★★★☆ 3.0</Text>
-                        <Text style={[styles.text,{color:Colors.tint, fontSize: 14, alignSelf:'center'}]}>휴게소까지 거리 {distance}km</Text>
+                        <Text style={[styles.text,{color:Colors.tint, fontSize: 14, alignSelf:'center'}]}>휴게소까지 거리 {distance || '오류'}km</Text>
                     </View>
                     <View style={container.nav}>
                         <View style={[container.all,{flexDirection:'row', paddingVertical: 15}]}>
