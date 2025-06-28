@@ -9,7 +9,10 @@
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "infoPlist": {
+        "NSLocationWhenInUseUsageDescription": "이 앱은 현재 위치를 사용하여 휴게소와의 거리 정보를 제공합니다."
+      } 
     },
     "androidStatusBar": {
       "backgroundColor": "#ffffff"

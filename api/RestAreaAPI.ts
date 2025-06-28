@@ -94,3 +94,14 @@ export const getRestInfo = async({stdRestNm}:{stdRestNm:string}) => {
         return {data:error, pass:false}
     }
 }
+
+//휴게소까지 남은 거리 조회
+export const getremainingDistance = async ({latitude, longitude, stdRestNm}:{latitude:number, longitude:number, stdRestNm:string}) => {
+    try{
+        const res = await BaseUrl.get(`/distance?currentLat=${latitude}&currentLng=${longitude}&stdRestNm=${stdRestNm}`);
+        return {data:res.data, pass:true}
+    }
+    catch(error){
+        return {data:error, pass:false}
+    }
+}

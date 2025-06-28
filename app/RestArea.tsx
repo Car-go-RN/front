@@ -1,9 +1,10 @@
-import { getRestInfo } from "@/api/RestAreaAPI";
+import { getRestInfo, getremainingDistance } from "@/api/RestAreaAPI";
 import HeaderCustom from "@/components/ui/HeaderCustom";
 import RestDetail from "@/components/ui/RestDetail";
 import RestReview from "@/components/ui/RestReview";
 import RestWriteReview from "@/components/ui/RestWriteReview";
 import { Colors } from "@/constants/Colors";
+import { useCurrentLocation } from "@/hooks/useCurrentLocation";
 import AntDesign from '@expo/vector-icons/AntDesign';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import { useLocalSearchParams } from "expo-router";
@@ -34,6 +35,9 @@ const RestArea = () => {
     const {stdRestNm} = useLocalSearchParams();
     const [nav, setNav] = useState<navType>('detail');
     const [data, setData] = useState<RestInfo>()
+    const [distance, setDistance] = useState<number|null>(null)
+
+    const {location} = useCurrentLocation();
 
     useEffect(()=>{
         const getInfo = async () => {
@@ -47,6 +51,24 @@ const RestArea = () => {
         }
         getInfo();
     },[])
+
+    useEffect(()=>{
+        if(!location || !data){
+            return;
+        }
+        const {latitude, longitude} = location.coords
+        const getDistance = async () => {
+            const res = await getremainingDistance({latitude:latitude, longitude:longitude, stdRestNm: data.stdRestNm});
+            if(res.pass){
+                setDistance(res.data.distanceKm);
+                console.log(res.data);
+            }
+            else {
+                setDistance(null)
+            }
+        }
+        getDistance();
+    },[location])
 
     if(!data){
         return;
@@ -72,7 +94,7 @@ const RestArea = () => {
                     </View>
                     <View style={[container.all,container.title]}>
                         <Text style={[styles.text,{color:Colors.yellow, fontSize: 16}]}>★★★★☆ 3.0</Text>
-                        <Text style={[styles.text,{color:Colors.tint, fontSize: 14, alignSelf:'center'}]}>휴게소까지 거리 28km</Text>
+                        <Text style={[styles.text,{color:Colors.tint, fontSize: 14, alignSelf:'center'}]}>휴게소까지 거리 {distance}km</Text>
                     </View>
                     <View style={container.nav}>
                         <View style={[container.all,{flexDirection:'row', paddingVertical: 15}]}>
