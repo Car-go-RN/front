@@ -54,7 +54,7 @@ const RestWriteReview:React.FC<writeProps> = ({setNav}) => {
         }
 
         const res = await writeRestReview({restAreaName: '동명휴게소 춘천방향', content: form.content, grade: form.grade, userId: 2})
-        console.log(res.data);
+        
         if(res.pass){
             Alert.alert('리뷰 작성 성공', '리뷰가 작성되었습니다');
             setNav('review')

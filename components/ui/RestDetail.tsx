@@ -7,7 +7,7 @@ import { AmenitiesIcon } from "@/constants/AmenitiesIcon";
 
 const RestDetail = ({data}:{data:RestInfo}) => {
     return(
-        <ScrollView style={styles.container}>
+        <View style={styles.container}>
             <View style={styles.itemContainer}>
                 <Text style={[styles.text,styles.subject]}>운영시간</Text>
                 <Text style={[styles.text,{paddingTop: 4}]}>09:30~23:30</Text>
@@ -21,7 +21,6 @@ const RestDetail = ({data}:{data:RestInfo}) => {
                 <View style={styles.tagContainer}>
                 {
                     data.brands.map((brand)=>{
-                        console.log(brandImg[brand]);
                         if(!brandImg[brand])return;
                         return <TagCustom key={brand} name={brand} isbrand={true} icon={brandImg[brand].icon}/>
                     })
@@ -43,14 +42,14 @@ const RestDetail = ({data}:{data:RestInfo}) => {
                 <Text style={[styles.text,styles.subject]}>메뉴</Text>
                 {
                     data.foods.map((food) => (
-                        <View style={{marginTop: 15, flexDirection: 'row', justifyContent:'space-between'}}>
+                        <View key={food.foodNm} style={{marginTop: 15, flexDirection: 'row', justifyContent:'space-between'}}>
                             <Text style={styles.text}>{food.foodNm}</Text>
                             <Text style={styles.text}>{food.foodCost}원</Text>
                         </View>
                     ))
                 }
             </View>
-        </ScrollView>
+        </View>
     )
 }
 

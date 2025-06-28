@@ -81,7 +81,7 @@ const RestArea = () => {
                                     style={[styles.text, styles.nav, nav=='detail' ? styles.activeNav : undefined]}>상세정보
                                 </Text>
                             </Pressable>
-                            <Pressable onPress={()=>{console.log('asdf');setNav('review')}}>
+                            <Pressable onPress={()=>{setNav('review')}}>
                                 <Text 
                                     style={[styles.text,styles.nav, nav!=='detail' ? styles.activeNav : undefined]}>리뷰
                                 </Text>
@@ -89,7 +89,10 @@ const RestArea = () => {
                         </View>
                     </View>
                     
-                        <View style={[container.all, {flex: 1}]}>
+                        <ScrollView 
+                            style={[container.all, {flex: 1}]}
+                            keyboardShouldPersistTaps="handled"
+                        >
                         {
                             nav=='detail' ? (
                                 <RestDetail data={data} />
@@ -99,12 +102,12 @@ const RestArea = () => {
                                 <RestWriteReview setNav={setNav} />
                             )
                         }
-                        </View>
+                        </ScrollView>
                         
                         {
                             nav!=='write' && (
                                 <View style={container.writeButton}>
-                                    <Pressable onPress={()=>{console.log('press');setNav('write')}}><Ionicons name="chatbox-ellipses" size={30} color="white" /></Pressable>
+                                    <Pressable onPress={()=>{setNav('write')}}><Ionicons name="chatbox-ellipses" size={30} color="white" /></Pressable>
                                 </View>
                             )
                         }

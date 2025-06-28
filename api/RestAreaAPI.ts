@@ -12,7 +12,6 @@ export const restSearchReview = async ({restAreaId}:{restAreaId:number}) => {
                 restAreaId:restId
             }
         });
-        console.log(res.data)
         return {data:res.data, pass: true}
     }
     catch(error){
@@ -22,7 +21,7 @@ export const restSearchReview = async ({restAreaId}:{restAreaId:number}) => {
 
 //휴게소 리뷰 작성
 export const writeRestReview = async ({restAreaName, content, grade, userId}:{restAreaName:string, content:string, grade:number, userId:number}) => {
-    console.log(restAreaName, content, grade, userId );
+    
     try{
         const res = await BaseUrl.post(`/review?restAreaNm=${restAreaName}`, {
             content,
@@ -32,7 +31,6 @@ export const writeRestReview = async ({restAreaName, content, grade, userId}:{re
         return {data:res.data, pass: true}
     }
     catch(error:any){
-        console.log(error?.response?.data)
         return {data:error, pass:false}
     }
 }

@@ -41,7 +41,6 @@ const RestItem:React.FC<RestMark> = (props) => {
       const res = await getRestImg({restName: props.restName})
       if(res.pass){
         setImgUrl(res.data[0].imageUrl);
-        console.log(res.data[0].imageUrl);
       }
     }
     getRestImgUrl();
@@ -90,7 +89,6 @@ const RestItem:React.FC<RestMark> = (props) => {
               <View style={styles.tagContainer}>
                 {
                   props.brands.map((brand)=>{
-                    console.log(brandImg[brand]);
                     if(!brandImg[brand])return;
                     return <TagCustom isRestItem={true}  name={brand} isbrand={true} icon={brandImg[brand].icon}/>
                   })

@@ -26,17 +26,11 @@ const RestReview = ({restId}:RestReview) => {
     const [reviewData, setReviewData] = useState([]);
     const [isChange, setIsChange] = useState<boolean>(true);
 
-    console.log(restId);
-
     useEffect(()=>{
         const getReviews = async () => {
             const res = await restSearchReview({restAreaId:restId})
             if(res.pass){
                 setReviewData(res.data.reviews)
-                console.log(res.data);
-            }
-            else {
-                console.log(res.data)
             }
             setIsChange(false);
         }
@@ -48,13 +42,13 @@ const RestReview = ({restId}:RestReview) => {
     }
 
     return(
-        <ScrollView style={styles.container}>
+        <View style={styles.container}>
         {
             reviewData.map((review:Review) => (
                 <ReviewItem key={review.id} message={review.content} grade={review.grade} reviewId={review.id} isMyReview={review.userId===userId} reivewChange={reivewChange}/>
             ))
         }
-        </ScrollView>
+        </View>
     )
 }
 
