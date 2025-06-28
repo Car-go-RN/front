@@ -77,7 +77,9 @@ export const getMyFavorite =  async ({userId}:{userId:number}) => {
 export const getRestImg = async({restName}:{restName:string}) => {
     try{
         const res = await axios.get(`http://myway.dothome.co.kr/google_searcher.php?q=${restName}`);
-        return {data: res.data, pass: true}
+        const jpgImage = res.data.find((item:{imageUrl:string, title:string}) => item.imageUrl.toLowerCase().split('?')[0].endsWith('.jpg'));
+        console.log(jpgImage.imageUrl);
+        return {data: jpgImage.imageUrl, pass: true}
     }
     catch (error){
         return {data: error, pass:false}

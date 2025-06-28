@@ -1,4 +1,4 @@
-import { getRestInfo, getremainingDistance } from "@/api/RestAreaAPI";
+import { getRestImg, getRestInfo, getremainingDistance } from "@/api/RestAreaAPI";
 import HeaderCustom from "@/components/ui/HeaderCustom";
 import RestDetail from "@/components/ui/RestDetail";
 import RestReview from "@/components/ui/RestReview";
@@ -36,8 +36,21 @@ const RestArea = () => {
     const [nav, setNav] = useState<navType>('detail');
     const [data, setData] = useState<RestInfo>()
     const [distance, setDistance] = useState<number|null>(null)
+    const [imgUrl, setImgUrl] = useState<string>('');
 
     const {location} = useCurrentLocation();
+
+
+    useEffect(()=>{
+        if(!data)return;
+        const getRestImgUrl = async () => {
+        const res = await getRestImg({restName: data.restAreaNm})
+        if(res.pass){
+            setImgUrl(res.data);
+        }
+        }
+        getRestImgUrl();
+    },[])
 
     useEffect(()=>{
         const getInfo = async () => {
@@ -84,7 +97,7 @@ const RestArea = () => {
                     <View style={styles.header}>
                         <HeaderCustom />
                     </View>
-                    <Image style={styles.restImg} source={require('@/assets/images/test-rest-area.png')}/>
+                    <Image style={styles.restImg} source={{uri:imgUrl}} width={500}/>
                     <View style={[container.all,container.title,{paddingVertical: 35}]}>
                         <Text style={[styles.text,{fontSize: 24, fontWeight:700}]}>{data.stdRestNm}</Text>
                         <View style={styles.reaction}>

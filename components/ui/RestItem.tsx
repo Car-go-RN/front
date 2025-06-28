@@ -40,7 +40,7 @@ const RestItem:React.FC<RestMark> = (props) => {
     const getRestImgUrl = async () => {
       const res = await getRestImg({restName: props.restName})
       if(res.pass){
-        setImgUrl(res.data[0].imageUrl);
+        setImgUrl(res.data);
       }
     }
     getRestImgUrl();
@@ -61,12 +61,14 @@ const RestItem:React.FC<RestMark> = (props) => {
       props.bookMarkChange();
     }
   }
+  if(!imgUrl)return;
+
   return (
     <View style={styles.container}>
       <Pressable onPress={()=>router.push({pathname:'/RestArea', params: {stdRestNm: props.stdRestNm}})} style={{flexDirection: 'row', justifyContent: 'center'}}>
         {
           imgUrl && (
-            <Image style={styles.routeImg} source={{uri:imgUrl}}/>
+            <Image style={styles.routeImg} source={{uri:imgUrl}} width={150}/>
           )
         }
         <View style={styles.restDetail}>
@@ -90,7 +92,7 @@ const RestItem:React.FC<RestMark> = (props) => {
                 {
                   props.brands.map((brand)=>{
                     if(!brandImg[brand])return;
-                    return <TagCustom isRestItem={true}  name={brand} isbrand={true} icon={brandImg[brand].icon}/>
+                    return <TagCustom  key={brand} isRestItem={true}  name={brand} isbrand={true} icon={brandImg[brand].icon}/>
                   })
                 }
               </View>
@@ -101,7 +103,7 @@ const RestItem:React.FC<RestMark> = (props) => {
                   {
                     props.facilities.map((facil)=>{
                       if(!AmenitiesIcon[facil])return;
-                      return <TagCustom isRestItem={true} name={facil} icon={AmenitiesIcon[facil].icon}/>
+                      return <TagCustom key={facil} isRestItem={true} name={facil} icon={AmenitiesIcon[facil].icon}/>
                     })
                   }
                 </View>
