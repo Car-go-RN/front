@@ -63,6 +63,7 @@ const Signup = () => {
             router.push('/auth/Login');
         }
         else{
+            console.log(res.data);
             Alert.alert('회원가입 실패', '다시 시도해주세요');
         }
     }

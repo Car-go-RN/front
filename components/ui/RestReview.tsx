@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { restSearchReview } from "@/api/RestAreaAPI";
 import { RootState } from "@/app/store/store";
 import { useSelector } from 'react-redux';
+import { Colors } from "@/constants/Colors";
 
 type RestReview = {
     restId: number
@@ -31,6 +32,7 @@ const RestReview = ({restId}:RestReview) => {
             const res = await restSearchReview({restAreaId:restId})
             if(res.pass){
                 setReviewData(res.data.reviews)
+                console.log(res.data);
             }
             setIsChange(false);
         }
@@ -44,6 +46,11 @@ const RestReview = ({restId}:RestReview) => {
     return(
         <View style={styles.container}>
         {
+            reviewData.length === 0 ? (
+                <View style={{display:'flex', justifyContent: 'center', alignItems:'center', marginTop: 50}}>
+                    <Text style={{color:Colors.tint}}>리뷰가 없습니다....</Text>
+                </View>
+            ) :
             reviewData.map((review:Review) => (
                 <ReviewItem key={review.id} message={review.content} grade={review.grade} reviewId={review.id} isMyReview={review.userId===userId} reivewChange={reivewChange}/>
             ))
