@@ -60,8 +60,9 @@ const Login = () => {
             const user = {email: form.email };
             console.log("로그인 성공! token: ", token);
 
+            console.log(res.data.userId)
             //Redux에 저장
-            dispatch(loginSuccess({ token, user }));
+            dispatch(loginSuccess({ token, user: {email: user.email,userId:res.data.userId } }));
 
             //SecureStore에 저장
             await SecureStore.setItemAsync('accessToken', token);
