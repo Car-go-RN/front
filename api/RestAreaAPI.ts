@@ -1,5 +1,5 @@
 import axios from "axios";
-import { BaseUrl } from "./BaseUrl";
+import { PublicAxios } from "./BaseUrl";
 
 //리뷰
 
@@ -7,7 +7,7 @@ import { BaseUrl } from "./BaseUrl";
 export const restSearchReview = async ({restAreaId}:{restAreaId:number}) => {
     const restId = restAreaId.toString();
     try{
-        const res = await BaseUrl.get(`/review/search`,{
+        const res = await PublicAxios.get(`/review/search`,{
             params: {
                 restAreaId:restId
             }
@@ -23,7 +23,7 @@ export const restSearchReview = async ({restAreaId}:{restAreaId:number}) => {
 export const writeRestReview = async ({restAreaName, content, grade, userId}:{restAreaName:string, content:string, grade:number, userId:number}) => {
     
     try{
-        const res = await BaseUrl.post(`/review?restAreaNm=${restAreaName}`, {
+        const res = await PublicAxios.post(`/review?restAreaNm=${restAreaName}`, {
             content,
             grade,
             userId
@@ -38,7 +38,7 @@ export const writeRestReview = async ({restAreaName, content, grade, userId}:{re
 //휴게소 리뷰 삭제
 export const deleteRestReview = async ({reviewId}:{reviewId:number}) => {
     try{
-        const res = await BaseUrl.delete(`/review/${reviewId}`);
+        const res = await PublicAxios.delete(`/review/${reviewId}`);
         return {data:res.data, pass: true}
     }
     catch(error){
@@ -52,7 +52,7 @@ export const deleteRestReview = async ({reviewId}:{reviewId:number}) => {
 //즐겨찾기 표시/취소
 export const postMyFavorite = async ({restAreaId, userId}:{restAreaId:number, userId:number}) => {
     try{
-        const res = await BaseUrl.post(`/favorites/${restAreaId}?userId=${userId}`);
+        const res = await PublicAxios.post(`/favorites/${restAreaId}?userId=${userId}`);
         return {data:res.data, pass: true}
     }
     catch(error){
@@ -63,7 +63,7 @@ export const postMyFavorite = async ({restAreaId, userId}:{restAreaId:number, us
 //즐겨찾기 목록
 export const getMyFavorite =  async ({userId}:{userId:number}) => {
     try{
-        const res = await BaseUrl.get(`/favorites/user/${userId}`);
+        const res = await PublicAxios.get(`/favorites/user/${userId}`);
         return {data:res.data, pass:true}
     }
     catch(error){
@@ -89,7 +89,7 @@ export const getRestImg = async({restName}:{restName:string}) => {
 //휴게소 상세 정보
 export const getRestInfo = async({stdRestNm}:{stdRestNm:string}) => {
     try{
-        const res = await BaseUrl.get(`http://13.124.148.94:8080/open-api/detail?stdRestNm=${stdRestNm}`);
+        const res = await PublicAxios.get(`http://13.124.148.94:8080/open-api/detail?stdRestNm=${stdRestNm}`);
         return {data:res.data[0], pass:true}
     }
     catch (error){
@@ -100,7 +100,7 @@ export const getRestInfo = async({stdRestNm}:{stdRestNm:string}) => {
 //휴게소까지 남은 거리 조회
 export const getremainingDistance = async ({latitude, longitude, stdRestNm}:{latitude:number, longitude:number, stdRestNm:string}) => {
     try{
-        const res = await BaseUrl.get(`/distance?currentLat=${latitude}&currentLng=${longitude}&stdRestNm=${stdRestNm}`);
+        const res = await PublicAxios.get(`/distance?currentLat=${latitude}&currentLng=${longitude}&stdRestNm=${stdRestNm}`);
         return {data:res.data, pass:true}
     }
     catch(error){
