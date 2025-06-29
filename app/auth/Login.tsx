@@ -67,6 +67,7 @@ const Login = () => {
             await SecureStore.setItemAsync('accessToken', token);
 
             console.log("로그인 성공! token: ", token);
+            console.log("token 저장됨:", await SecureStore.getItemAsync('accessToken'));
             router.push('/');
         } else {
             const errorMessage = res.data?.response?.data?.message || "로그인 실패";

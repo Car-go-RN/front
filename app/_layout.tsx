@@ -1,12 +1,14 @@
 import { useFonts } from 'expo-font';
 import * as SplashScreen from 'expo-splash-screen';
+import * as SecureStore from 'expo-secure-store'
 import { StatusBar } from 'expo-status-bar';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import 'react-native-reanimated';
 import { Stack } from 'expo-router';
 import AppInitializer from '@/components/AppInitializer';
-import { Provider } from 'react-redux'
+import { Provider } from 'react-redux';
 import { store } from './store/store';
+import { loginSuccess } from './store/slices/userSlices';
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
@@ -16,15 +18,33 @@ export default function RootLayout() {
     Paperlogy: require('../assets/fonts/Paperlogy-4Regular.ttf'),
   });
 
+  const [ready, setReady] = useState(false);
+
+  // useEffect(() => {
+  //   if (loaded) {
+  //     SplashScreen.hideAsync();
+  //   }
+  // }, [loaded]);
+
+  // if (!loaded) {
+  //   return null;
+  // }
+
   useEffect(() => {
-    if (loaded) {
-      SplashScreen.hideAsync();
-    }
+    const prepare = async () => {
+      if (loaded) {
+        const token = await SecureStore.getItemAsync("accessToken");
+        if (token) {
+          store.dispatch(loginSuccess({ token, user: { email: "unknown"}}));
+        }
+        setReady(true);
+        await SplashScreen.hideAsync();
+      }
+    };
+    prepare()
   }, [loaded]);
 
-  if (!loaded) {
-    return null;
-  }
+  if (!ready) return null;
 
   return (
     <Provider store={store}>
