@@ -30,19 +30,19 @@ export default function RootLayout() {
   //   return null;
   // }
 
-  useEffect(() => {
-    const prepare = async () => {
-      if (loaded) {
-        const token = await SecureStore.getItemAsync("accessToken");
-        if (token) {
-          store.dispatch(loginSuccess({ token, user: { email: "unknown"}}));
-        }
-        setReady(true);
-        await SplashScreen.hideAsync();
-      }
-    };
-    prepare()
-  }, [loaded]);
+  // useEffect(() => {
+  //   const prepare = async () => {
+  //     if (loaded) {
+  //       const token = await SecureStore.getItemAsync("accessToken");
+  //       if (token) {
+  //         store.dispatch(loginSuccess({ token, user: { email: "unknown"}}));
+  //       }
+  //       setReady(true);
+  //       await SplashScreen.hideAsync();
+  //     }
+  //   };
+  //   prepare()
+  // }, [loaded]);
 
   if (!ready) return null;
 

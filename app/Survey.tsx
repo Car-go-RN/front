@@ -5,13 +5,10 @@ import { Colors } from "@/constants/Colors";
 import { StyleSheet, Text, View, ScrollView } from "react-native"
 
 const surveyChoice = [
-    {name:'전기/수소차 충전소'},
+    {name:'전기 충전소'},
+    {name:'수소 충전소'},
     {name:'브랜드 매장'},
-    {name:'저렴한 주유소'},
     {name:'편의시설'},
-    {name:'경정비소'},
-    {name:'화물차 라운지'},
-    {name:'세차장'}
 ];
 
 const Survey = () => {
