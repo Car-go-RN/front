@@ -1,4 +1,5 @@
 import { configureStore } from "@reduxjs/toolkit";
+
 import authReducer from "./slices/userSlices";
 import favoriteReducer from "./slices/favoriteSlice"
 import restAreaReducer from "./slices/restAreaSlice"
