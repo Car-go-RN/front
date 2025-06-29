@@ -28,6 +28,7 @@ export const writeRestReview = async ({restAreaName, content, grade, userId}:{re
             grade,
             userId
         });
+        console.log(res.data);
         return {data:res.data, pass: true}
     }
     catch(error:any){
@@ -74,6 +75,7 @@ export const postMyLikes = async ({restAreaId, userId}:{restAreaId:number, userI
 export const getRestLikesCount = async ({restAreaId}: {restAreaId:number}) => {
     try{
         const res = await PublicAxios.get(`/likes/${restAreaId}`);
+        console.log(res.data)
         return {data:res.data, pass:true}
     }
     catch (error){
@@ -132,9 +134,9 @@ export const getRestImg = async({restName}:{restName:string}) => {
 }
 
 //휴게소 상세 정보
-export const getRestInfo = async({stdRestNm}:{stdRestNm:string}) => {
+export const getRestInfo = async({latitude, longitude, stdRestNm}:{latitude:number, longitude:number, stdRestNm:string}) => {
     try{
-        const res = await PublicAxios.get(`http://13.124.148.94:8080/open-api/detail?stdRestNm=${stdRestNm}`);
+        const res = await PublicAxios.get(`http://13.124.148.94:8080/open-api/detail?stdRestNm=${stdRestNm}&currentLng=${longitude}&currentLat=${latitude}`);
         return {data:res.data[0], pass:true}
     }
     catch (error){

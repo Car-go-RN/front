@@ -60,11 +60,13 @@ const RestArea = () => {
     const {location} = useCurrentLocation();
 
     useEffect(()=>{
+        if(!location)return;
         const getInfo = async () => {
             console.log(stdRestNm);
-            const res = await getRestInfo({stdRestNm: stdRestNm as string});
+            const res = await getRestInfo({stdRestNm: stdRestNm as string, latitude: location.coords.latitude, longitude: location.coords.longitude});
             if(res.pass){
                 setData(res.data);
+                console.log(res.data);
             }
             else {
                 console.log(res.data);
@@ -74,7 +76,7 @@ const RestArea = () => {
             }
         }
         getInfo();
-    },[])
+    },[location])
 
     useEffect(()=>{
         if(!data)return;
@@ -96,12 +98,8 @@ const RestArea = () => {
                 }
             }
         }
-        const getLikeCount = async () => {
-            const res = await getRestLikesCount({restAreaId: data.id})
-        }
         getIsFavorite();
         getIsLike();
-        getLikeCount();
     },[data])
 
     useEffect(()=>{
@@ -139,17 +137,27 @@ const RestArea = () => {
             const res = await postMyLikes({restAreaId:data.id, userId });
             if(res.pass){
                 setReaction((prev)=>({...prev, like: !prev.like}));
+
+                const countRes = await getRestLikesCount({ restAreaId: data.id });
+                if (countRes.pass) {
+                    console.log(countRes.data)
+                    setReaction((prev) => ({ ...prev, likeCount: countRes.data }));
+                }
+                else {
+                    console.log(countRes.data);
+                }
             }
         }
         else if(key==='favorite'){
             const res = await postMyFavorite({restAreaId:data.id, userId });
             if(res.pass){
-                setReaction((prev)=>({...prev, like: !prev.favorite}));
+                setReaction((prev)=>({...prev, favorite: !prev.favorite}));
             }
         }
     }
 
     if(!data || !distance || !imgUrl){
+        console.log('으웹', data, distance, imgUrl);
         return;
     }
 
@@ -213,7 +221,7 @@ const RestArea = () => {
                             ) : nav=='review' ?  (
                                 <RestReview restId={data.id} />
                             ) : (
-                                <RestWriteReview setNav={setNav} />
+                                <RestWriteReview setNav={setNav} restAreaName={data.restAreaNm}/>
                             )
                         }
                         </ScrollView>

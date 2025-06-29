@@ -5,9 +5,13 @@ import React, { useReducer, useState } from "react";
 import ButtonCustom from "./ButtonCustom";
 import { Colors } from "@/constants/Colors";
 import { writeRestReview } from "@/api/RestAreaAPI";
+import { useSelector } from "react-redux";
+import { RootState } from "@/app/store/store";
+import { useRouter } from "expo-router";
 
 type writeProps = {
-    setNav: (nav:'write'|'detail'|'review') => void
+    setNav: (nav:'write'|'detail'|'review') => void,
+    restAreaName: string
 }
 
 type FormState = {
@@ -39,11 +43,14 @@ const formReducer = (state:FormState, action: Action) : FormState => {
 }
 
 
-const RestWriteReview:React.FC<writeProps> = ({setNav}) => {
+const RestWriteReview:React.FC<writeProps> = ({setNav, restAreaName}) => {
+    const router = useRouter();
+    const userId = useSelector((state:RootState)=>state.user).user?.userId;
     const [form, dispatch] = useReducer(formReducer, initialForm)
 
     const handlePostReview = async () => {
         //폼 비었는지 환인하는 조건문 작성 필요
+        if(!userId)return;
         if(form.grade===0){
             Alert.alert('리뷰 작성 실패', '만족도를 선택해주세요');
             return;
@@ -53,12 +60,18 @@ const RestWriteReview:React.FC<writeProps> = ({setNav}) => {
             return;
         }
 
-        const res = await writeRestReview({restAreaName: '동명휴게소 춘천방향', content: form.content, grade: form.grade, userId: 2})
+        const res = await writeRestReview({restAreaName: restAreaName, content: form.content, grade: form.grade, userId: userId})
         
         if(res.pass){
             Alert.alert('리뷰 작성 성공', '리뷰가 작성되었습니다');
-            setNav('review')
+            setNav('review');
         }
+    }
+
+    if(!userId){
+        Alert.alert('로그인 정보 오류', '로그인이 필요한 기능입니다.');
+        router.push('/');
+        return;
     }
 
     return(
