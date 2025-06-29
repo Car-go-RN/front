@@ -4,7 +4,7 @@ import { StatusBar } from 'expo-status-bar';
 import { useEffect } from 'react';
 import 'react-native-reanimated';
 import { Stack } from 'expo-router';
-import AppInitializer from '@/components/AppInitializer';
+// import AppInitializer from '@/components/AppInitializer';
 import { Provider } from 'react-redux'
 import { store } from './store/store';
 
@@ -28,7 +28,7 @@ export default function RootLayout() {
 
   return (
     <Provider store={store}>
-      <AppInitializer />
+      {/* <AppInitializer /> */}
       <Stack
         screenOptions={{ headerShown: false }}>
         <Stack.Screen name="auth/Login" />

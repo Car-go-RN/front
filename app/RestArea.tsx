@@ -1,4 +1,4 @@
-import { getRestImg, getRestInfo, getremainingDistance } from "@/api/RestAreaAPI";
+import { getRestFavoriteIds, getRestImg, getRestInfo, getRestLikeIds, getRestLikesCount, getremainingDistance, postMyFavorite, postMyLikes } from "@/api/RestAreaAPI";
 import HeaderCustom from "@/components/ui/HeaderCustom";
 import RestDetail from "@/components/ui/RestDetail";
 import RestReview from "@/components/ui/RestReview";
@@ -7,12 +7,15 @@ import { Colors } from "@/constants/Colors";
 import { useCurrentLocation } from "@/hooks/useCurrentLocation";
 import AntDesign from '@expo/vector-icons/AntDesign';
 import Ionicons from '@expo/vector-icons/Ionicons';
-import { useLocalSearchParams } from "expo-router";
+import { useLocalSearchParams, useRouter } from "expo-router";
 import { useEffect, useState } from "react";
-import { StyleSheet, View, Text, Image, Pressable, ScrollView, Keyboard, KeyboardAvoidingView, Platform, TouchableWithoutFeedback, GestureResponderEvent, Alert } from "react-native"
+import { StyleSheet, View, Text, Image, Pressable, ScrollView, Keyboard, KeyboardAvoidingView, Platform, TouchableWithoutFeedback, Alert } from "react-native"
+import { useSelector } from "react-redux";
+import { RootState } from "./store/store";
 
 export type RestInfo = {
     id: number,
+    reviewAVG: number,
     stdRestNm: string,//화면에 표시되는 이름
     restAreaNm: string, //파라미터로 보낼 이름
     gasolinePrice:string,
@@ -31,15 +34,75 @@ export type RestInfo = {
 
 type navType = 'detail'|'review'|'write';
 
+type reactionType = {
+    like: boolean;
+    likeCount: number|null;
+    favorite :boolean;
+}
+
+const initialReaction:reactionType = {
+    like: false,
+    likeCount: null,
+    favorite: false
+}
+
 const RestArea = () => {
+    const router = useRouter();
     const {stdRestNm} = useLocalSearchParams();
+    const userId = useSelector((state:RootState)=>state.user).user?.userId;
+
     const [nav, setNav] = useState<navType>('detail');
     const [data, setData] = useState<RestInfo>()
     const [distance, setDistance] = useState<number|null>(null)
     const [imgUrl, setImgUrl] = useState<string>('');
+    const [reaction, setReaction] = useState<reactionType>(initialReaction);
 
     const {location} = useCurrentLocation();
 
+    useEffect(()=>{
+        const getInfo = async () => {
+            console.log(stdRestNm);
+            const res = await getRestInfo({stdRestNm: stdRestNm as string});
+            if(res.pass){
+                setData(res.data);
+            }
+            else {
+                console.log(res.data);
+                Alert.alert('휴게소 정보 불러오기 실패', '데이터를 불러오지 못했습니다');
+                router.push('/');
+                return;
+            }
+        }
+        getInfo();
+    },[])
+
+    useEffect(()=>{
+        if(!data)return;
+        const getIsFavorite = async () => {
+            if(!userId)return;
+            const res = await getRestFavoriteIds({userId});
+            if(res.pass){
+                if(res.data.some((item:Record<string, number>)=> item.restAreaId===data.id)){
+                    setReaction((prev)=>({...prev, favorite: true}));
+                }
+            }
+        }
+        const getIsLike = async () => {
+            if(!userId)return;
+            const res = await getRestLikeIds({userId});
+            if(res.pass){
+                if(res.data.some((item:Record<string, number>)=> item.restAreaId===data.id)){
+                    setReaction((prev)=>({...prev, like: true}));
+                }
+            }
+        }
+        const getLikeCount = async () => {
+            const res = await getRestLikesCount({restAreaId: data.id})
+        }
+        getIsFavorite();
+        getIsLike();
+        getLikeCount();
+    },[data])
 
     useEffect(()=>{
         if(!data)return;
@@ -51,19 +114,6 @@ const RestArea = () => {
         }
         getRestImgUrl();
     },[data])
-
-    useEffect(()=>{
-        const getInfo = async () => {
-            const res = await getRestInfo({stdRestNm: stdRestNm as string});
-            if(res.pass){
-                setData(res.data);
-            }
-            else {
-                Alert.alert('휴게소 정보 불러오기 실패', '데이터를 불러오지 못했습니다');
-            }
-        }
-        getInfo();
-    },[])
 
     useEffect(()=>{
         if(!location || !data){
@@ -83,7 +133,23 @@ const RestArea = () => {
         getDistance();
     },[location])
 
-    if(!data || !location || !distance || !imgUrl){
+    const onPressReaction = async (key:string) => {
+        if(!data || !userId)return;
+        if(key==='like'){
+            const res = await postMyLikes({restAreaId:data.id, userId });
+            if(res.pass){
+                setReaction((prev)=>({...prev, like: !prev.like}));
+            }
+        }
+        else if(key==='favorite'){
+            const res = await postMyFavorite({restAreaId:data.id, userId });
+            if(res.pass){
+                setReaction((prev)=>({...prev, like: !prev.favorite}));
+            }
+        }
+    }
+
+    if(!data || !distance || !imgUrl){
         return;
     }
 
@@ -101,12 +167,25 @@ const RestArea = () => {
                     <View style={[container.all,container.title,{paddingVertical: 35}]}>
                         <Text style={[styles.text,{fontSize: 24, fontWeight:700}]}>{data.stdRestNm}</Text>
                         <View style={styles.reaction}>
-                            <AntDesign name="heart" size={17} color={Colors.lightGrey} style={styles.icon} /><Text style={styles.reactState}>12</Text>
-                            <Ionicons name="bookmark" size={17} color={Colors.lightGrey} style={styles.icon} />
+                            <Pressable onPress={()=>onPressReaction('like')}>
+                                <AntDesign name="heart" size={17} color={reaction.like ? Colors.red : Colors.lightGrey} style={styles.icon} />
+                            </Pressable>
+                            <Text style={styles.reactState}>{reaction.likeCount || 0}</Text>
+                            <Pressable onPress={()=>onPressReaction('favorite')}>
+                                <Ionicons name="bookmark" size={17} color={reaction.favorite ? Colors.yellow : Colors.lightGrey} style={styles.icon} />
+                            </Pressable>
                         </View>
                     </View>
                     <View style={[container.all,container.title]}>
-                        <Text style={[styles.text,{color:Colors.yellow, fontSize: 16}]}>★★★★☆ 3.0</Text>
+                        <Text style={[styles.text,{color:Colors.yellow, fontSize: 16}]}>
+                            {
+                                Array.from({length: 5}, (_, i)=> i + 1).map((i) => {
+                                    if(i<=Math.round(data.reviewAVG))return '★' 
+                                    else return '☆'
+                                })
+                            }
+                            <Text style={[styles.text,{color:Colors.yellow, marginLeft:5}]}>{data.reviewAVG}</Text>
+                        </Text>
                         <Text style={[styles.text,{color:Colors.tint, fontSize: 14, alignSelf:'center'}]}>휴게소까지 거리 {distance || '오류'}km</Text>
                     </View>
                     <View style={container.nav}>

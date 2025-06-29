@@ -46,8 +46,53 @@ export const deleteRestReview = async ({reviewId}:{reviewId:number}) => {
     }
 }
 
+//좋아요
+
+//좋아요한 휴게소 ID 조회
+export const getRestLikeIds = async ({userId}:{userId:number}) => {
+    try{
+        const res = await PublicAxios.get(`likes/check/user/${userId}`);
+        return {data: res.data, pass:true}
+    }
+    catch (error){
+        return {data:error, pass:false}
+    }
+}
+
+//좋아요 표시/취소
+export const postMyLikes = async ({restAreaId, userId}:{restAreaId:number, userId:number}) => {
+    try{
+        const res = await PublicAxios.post(`likes/${restAreaId}?userId=${userId}`);
+        return {data:res.data, pass:true}
+    }
+    catch (error){
+        return {data:error, pass:false}
+    }
+}
+
+//휴게소 좋아요 개수
+export const getRestLikesCount = async ({restAreaId}: {restAreaId:number}) => {
+    try{
+        const res = await PublicAxios.get(`/likes/${restAreaId}`);
+        return {data:res.data, pass:true}
+    }
+    catch (error){
+        return {data:error, pass:false}
+    }
+}
 
 //즐겨찾기
+
+//즐겨찾기한 휴게소 ID 조회
+export const getRestFavoriteIds = async ({userId}:{userId:number}) => {
+    try {
+        const res = await PublicAxios.get(`favorites/check/user/${userId}`);
+        return {data:res.data, pass:true}
+    }
+    catch (error){
+        return {data:error, pass:false} 
+    }
+}
 
 //즐겨찾기 표시/취소
 export const postMyFavorite = async ({restAreaId, userId}:{restAreaId:number, userId:number}) => {
