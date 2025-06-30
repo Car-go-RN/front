@@ -8,7 +8,7 @@ import { brandImg } from "@/constants/BrandImg"
 import { amenities } from "@/constants/TagMock"
 import { getRestImg, postMyFavorite } from "@/api/RestAreaAPI"
 import { useSelector } from "react-redux"
-import { RootState } from "@/app/store/store"
+import { RootState } from "@/store/store"
 import { AmenitiesIcon } from "@/constants/AmenitiesIcon"
 
 type RestMark = {

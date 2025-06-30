@@ -11,7 +11,7 @@ import { useLocalSearchParams, useRouter } from "expo-router";
 import { useEffect, useState } from "react";
 import { StyleSheet, View, Text, Image, Pressable, ScrollView, Keyboard, KeyboardAvoidingView, Platform, TouchableWithoutFeedback, Alert } from "react-native"
 import { useSelector } from "react-redux";
-import { RootState } from "./store/store";
+import { RootState } from "@/store/store";
 
 export type RestInfo = {
     id: number,

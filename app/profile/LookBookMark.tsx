@@ -6,7 +6,7 @@ import CategoryCustom from "@/components/ui/CategoryCustom"
 import { useEffect, useState } from "react"
 import { getMyFavorite } from "@/api/RestAreaAPI"
 import { useSelector } from "react-redux"
-import { RootState } from "../store/store"
+import { RootState } from "@/store/store"
 import { useRouter } from "expo-router"
 
 const list = [{id:1},{id:2},{id:3},{id:4}]

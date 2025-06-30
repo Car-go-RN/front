@@ -2,7 +2,7 @@ import { ScrollView, StyleSheet, View, Text } from "react-native"
 import ReviewItem from "./ReviewItem";
 import { useEffect, useState } from "react";
 import { restSearchReview } from "@/api/RestAreaAPI";
-import { RootState } from "@/app/store/store";
+import { RootState } from "@/store/store";
 import { useSelector } from 'react-redux';
 import { Colors } from "@/constants/Colors";
 

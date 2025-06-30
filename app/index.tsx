@@ -5,7 +5,7 @@ import { Colors } from "@/constants/Colors";
 import MainContents from "@/components/ui/MainContents";
 import { useRouter } from "expo-router";
 import { useSelector } from "react-redux";
-import { RootState } from "./store/store";
+import { RootState } from "@/store/store";
 
 const Main = () => {
     const router = useRouter();

@@ -7,8 +7,8 @@ import 'react-native-reanimated';
 import { Stack } from 'expo-router';
 // import AppInitializer from '@/components/AppInitializer';
 import { Provider } from 'react-redux'
-import { store } from './store/store';
-import { loginSuccess } from './store/slices/userSlices';
+import { store } from '@/store/store';
+import { loginSuccess } from '@/store/slices/userSlices';
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();

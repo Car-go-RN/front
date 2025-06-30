@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import * as SecureStore from 'expo-secure-store';
 import { useDispatch } from 'react-redux';
-import { loginSuccess } from '@/app/store/slices/userSlices';
+import { loginSuccess } from '@/store/slices/userSlices';
 import { useRouter } from "expo-router";
 
 const AppInitializer = () => {
@@ -13,7 +13,7 @@ const AppInitializer = () => {
     const init = async () => {
       const token = await SecureStore.getItemAsync('accessToken');
       if (token) {
-        dispatch(loginSuccess({ token, user: {email: 'unknown'}}));
+        dispatch(loginSuccess({ token, user: {email: 'unknown', userId: 0}}));
         router.replace('/');
       }
       setLoading(false)
