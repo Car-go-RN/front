@@ -41,9 +41,9 @@ const MainRestItem = () => {
                 <View style={styles.row}>
                     <Text style={[styles.text,{marginVertical:3, marginRight:17}]}>브랜드</Text>
                     <View style={styles.tagContainer}>
-                        <TagCustom isRestItem={true}  name="CU" isbrand={true} icon={brandImg.CU.icon}/>
-                        <TagCustom isRestItem={true}  name="던킨도너츠" isbrand={true} icon={brandImg.던킨도너츠.icon}/>
-                        <TagCustom isRestItem={true}  name="베스킨라빈스" isbrand={true} icon={brandImg.베스킨라빈스.icon}/>
+                        <TagCustom isRestItem={true} name="CU" isbrand={true} icon={brandImg.CU.icon}/>
+                        <TagCustom isRestItem={true} name="던킨도너츠" isbrand={true} icon={brandImg.던킨도너츠.icon}/>
+                        <TagCustom isRestItem={true} name="베스킨라빈스" isbrand={true} icon={brandImg.베스킨라빈스.icon}/>
                     </View>
                 </View>
                 <View style={styles.row}>

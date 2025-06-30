@@ -1,20 +1,77 @@
 import { Colors } from "@/constants/Colors";
 import Ionicons from '@expo/vector-icons/Ionicons';
 import AntDesign from '@expo/vector-icons/AntDesign';
-import React from "react";
-import { View, StyleSheet, Text, Pressable, TextInput } from "react-native";
+import React, { useEffect, useReducer, useState } from "react";
+import { View, StyleSheet, Text, Pressable, TextInput, Alert } from "react-native";
 import HeaderCustom from "./HeaderCustom";
 import { useRouter } from "expo-router";
 import CategoryCustom from "./CategoryCustom";
+import SearchList from "./SearchList";
+import { shallowEqual, useSelector } from "react-redux";
+import { RootState } from "@/store/store";
+import { getSearchCategory } from "@/api/SearchAPI";
+import { useCurrentLocation } from "@/hooks/useCurrentLocation";
 
 type MainHeaderProps = {
     isRoute?:boolean,
 }
 
+export type SearchDataType = {
+    id:number,
+    stdRestNm:string
+    reviewAVG: number,
+    gasolinePrice: string,
+    diselPrice: string,
+    lpgPrice:string,
+    electric:string,
+    hydrogen: string,
+    roadAddress: string,
+    phone: string,
+    latitude: number,
+    longitude: number,
+    restAreaNm: string,
+    distance: number|null,
+    brands: string[];
+    facilities: string[],
+    foods: {foodNm:string, foodCost:string}[]
+};
+
 const MainHeader:React.FC<MainHeaderProps> = ({isRoute}) => {
     const router = useRouter();
+    const {location} = useCurrentLocation();
+    const selectedCategories = useSelector((state:RootState) => state.category, shallowEqual);
+
+    const [searchItems, setSearchItems] = useState<SearchDataType[]>([]);
+
+    useEffect(()=>{
+        const getSearchItems = async () => {
+            console.log(selectedCategories);
+            if(!location){
+                console.log('위치 없음');
+                return;
+            }
+            const res = await getSearchCategory({
+                brands: selectedCategories.brands,
+                facilities: selectedCategories.facilities, 
+                gas: selectedCategories.gas, 
+                currentLat: location.coords.latitude, 
+                currentLng: location.coords.longitude
+            });
+            if(res.pass){
+                console.log(res.data)
+                setSearchItems(res.data);
+            }
+            console.log(res.data);
+        }
+        getSearchItems();
+    },[selectedCategories])
+
+    const resetSearchItems = () => {
+        setSearchItems([]);
+    }
+
     return(
-        <View style={{position:'relative'}}>
+        <View style={{position:'relative', height: '100%'}}>
             <View style={styles.header}>
             {
                 isRoute ? (
@@ -54,7 +111,10 @@ const MainHeader:React.FC<MainHeaderProps> = ({isRoute}) => {
                 )
             } 
             </View>
-            <CategoryCustom />   
+            <CategoryCustom />
+            <View style={{height:360}}>
+                <SearchList data={searchItems} reset={resetSearchItems}/>
+            </View>
         </View>
     )
 }
@@ -64,7 +124,6 @@ const styles = StyleSheet.create({
         backgroundColor: Colors.tint,
         width: '100%',
         height: 200
-
     },
     container:{
         display:'flex',

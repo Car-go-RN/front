@@ -105,10 +105,18 @@ const RestArea = () => {
     useEffect(()=>{
         if(!data)return;
         const getRestImgUrl = async () => {
-        const res = await getRestImg({restName: data.restAreaNm})
-        if(res.pass){
-            setImgUrl(res.data);
-        }
+            const res = await getRestImg({restName: data.restAreaNm})
+            if(res.pass){
+                setImgUrl(res.data);
+            }
+            const countRes = await getRestLikesCount({ restAreaId: data.id });
+            if (countRes.pass) {
+                console.log(countRes.data)
+                setReaction((prev) => ({ ...prev, likeCount: countRes.data }));
+            }
+            else {
+                console.log(countRes.data);
+            }
         }
         getRestImgUrl();
     },[data])
@@ -156,7 +164,7 @@ const RestArea = () => {
         }
     }
 
-    if(!data || !distance || !imgUrl){
+    if(!data || !imgUrl){
         console.log('으웹', data, distance, imgUrl);
         return;
     }
@@ -194,7 +202,7 @@ const RestArea = () => {
                             }
                             <Text style={[styles.text,{color:Colors.yellow, marginLeft:5}]}>{data.reviewAVG}</Text>
                         </Text>
-                        <Text style={[styles.text,{color:Colors.tint, fontSize: 14, alignSelf:'center'}]}>휴게소까지 거리 {distance || '오류'}km</Text>
+                        <Text style={[styles.text,{color:Colors.tint, fontSize: 14, alignSelf:'center'}]}>{ distance ? `휴게소까지 거리 ${distance}km` : '불러오는 중...'}</Text>
                     </View>
                     <View style={container.nav}>
                         <View style={[container.all,{flexDirection:'row', paddingVertical: 15}]}>
@@ -249,7 +257,8 @@ const styles = StyleSheet.create({
     container: {
         backgroundColor: Colors.background,
         flex: 1,
-        zIndex: 0
+        zIndex: 0,
+        height: '100%'
     },
     restImg: {
         width: '100%',

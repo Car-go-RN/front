@@ -3,6 +3,9 @@ import React, { useState } from "react";
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 import { View, Text, Image, StyleSheet, Pressable } from "react-native"
 import { brandImg, brandKey } from "@/constants/BrandImg";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "@/store/store";
+import { CategoryState, addCategories, deleteCategories } from "@/store/slices/CategorySlices";
 
 type IconName = keyof typeof MaterialCommunityIcons.glyphMap;
 
@@ -11,18 +14,39 @@ type TagProps = {
     icon?: string,
     select?:boolean,
     isRestItem?: boolean,
-    isbrand?: boolean
+    isbrand?: boolean,
+    tagClass?: keyof CategoryState
 }
 
-const TagCustom:React.FC<TagProps> = ({name,icon,select,isRestItem, isbrand}) => {
-    const [isSelect, setIsSelect] = useState(false)
+const TagCustom:React.FC<TagProps> = ({name,icon,select,isRestItem, isbrand, tagClass}) => {
+    const dispatch = useDispatch();
+    let tagList
+    let selectStatus
+    if(select && tagClass){
+        tagList = useSelector((state:RootState)=> state.category[tagClass]);
+        selectStatus = tagList.includes(name);
+    }
+    const [isSelect, setIsSelect] = useState(selectStatus)
+
+    const onPressTag = () => {
+        if(!tagClass)return;
+        if(!isSelect){
+            dispatch(addCategories({key:tagClass, value: name}));
+            setIsSelect(true);
+        }
+        else {
+            dispatch(deleteCategories({key:tagClass, value: name}));
+            setIsSelect(false);
+        }
+    }
+
     return(
         <View style={[styles.container, {
             borderColor: select ? isSelect ? Colors.tint : Colors.lightGrey: Colors.lightGrey, 
             paddingHorizontal: isRestItem ? 1 : 7, 
             paddingVertical: isRestItem ?  1 : 3,
             }]}>
-            <Pressable style={{flexDirection:'row'}} onPress={()=>setIsSelect(!isSelect)}>
+            <Pressable style={{flexDirection:'row'}} onPress={select ? (()=>onPressTag()) : null}>
                 {
                     isbrand ?
                     <Image style={[styles.icon,{marginTop: isRestItem ? 0 : 3, width: isRestItem ? 15 : 20}]} source={icon ? brandImg[icon as brandKey]?.img : require('@/assets/brands/CU.png')}/>

@@ -3,9 +3,7 @@ import { Pressable, StyleSheet, Text, View } from "react-native"
 import TagCustom from "./TagCustom"
 import AntDesign from '@expo/vector-icons/AntDesign';
 import { Colors } from "@/constants/Colors";
-import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
-
-type IconName = keyof typeof MaterialCommunityIcons.glyphMap;
+import { CategoryState } from "@/store/slices/CategorySlices";
 
 type Tag = {
     icon?: string,
@@ -15,10 +13,11 @@ type Tag = {
 type ToggleListProps = {
     title: string,
     tagList: Tag[],
-    isbrand: boolean
+    isbrand: boolean,
+    tagClass: keyof CategoryState
 }
 
-const ToggleListCustom:React.FC<ToggleListProps> = ({title,tagList,isbrand}) => {
+const ToggleListCustom:React.FC<ToggleListProps> = ({title,tagList,isbrand, tagClass}) => {
     const [open, setOpen] = useState(false);
     return(
         <View style={styles.container}>
@@ -39,7 +38,7 @@ const ToggleListCustom:React.FC<ToggleListProps> = ({title,tagList,isbrand}) => 
                     <View style={styles.tagContainer}>
                         {
                             tagList.map((item, index)=>(
-                                <TagCustom key={index} name={item.name} isbrand={isbrand} icon={item.icon && item.icon !== '' ? item.icon : undefined } select={true}/>
+                                <TagCustom key={index} tagClass={tagClass} name={item.name} isbrand={isbrand} icon={item.icon && item.icon !== '' ? item.icon : undefined } select={true}/>
                             ))
                         }
                     </View>

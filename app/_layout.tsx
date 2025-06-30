@@ -20,31 +20,15 @@ export default function RootLayout() {
 
   const [ready, setReady] = useState(false);
 
-  // useEffect(() => {
-  //   if (loaded) {
-  //     SplashScreen.hideAsync();
-  //   }
-  // }, [loaded]);
+  useEffect(() => {
+    if (loaded) {
+      SplashScreen.hideAsync();
+    }
+  }, [loaded]);
 
-  // if (!loaded) {
-  //   return null;
-  // }
-
-  // useEffect(() => {
-  //   const prepare = async () => {
-  //     if (loaded) {
-  //       const token = await SecureStore.getItemAsync("accessToken");
-  //       if (token) {
-  //         store.dispatch(loginSuccess({ token, user: { email: "unknown"}}));
-  //       }
-  //       setReady(true);
-  //       await SplashScreen.hideAsync();
-  //     }
-  //   };
-  //   prepare()
-  // }, [loaded]);
-
-  if (!ready) return null;
+  if (!loaded) {
+    return null;
+  }
 
   return (
     <Provider store={store}>
