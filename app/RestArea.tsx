@@ -67,6 +67,7 @@ const RestArea = () => {
             if(res.pass){
                 setData(res.data);
                 console.log(res.data);
+                console.log('id',res.data.id);
             }
             else {
                 console.log(res.data);
@@ -165,7 +166,6 @@ const RestArea = () => {
     }
 
     if(!data || !imgUrl){
-        console.log('으웹', data, distance, imgUrl);
         return;
     }
 

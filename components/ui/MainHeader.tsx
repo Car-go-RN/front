@@ -2,14 +2,14 @@ import { Colors } from "@/constants/Colors";
 import Ionicons from '@expo/vector-icons/Ionicons';
 import AntDesign from '@expo/vector-icons/AntDesign';
 import React, { useEffect, useReducer, useState } from "react";
-import { View, StyleSheet, Text, Pressable, TextInput, Alert } from "react-native";
+import { View, StyleSheet, Text, Pressable, TextInput, Alert, NativeSyntheticEvent, TextInputChangeEventData } from "react-native";
 import HeaderCustom from "./HeaderCustom";
 import { useRouter } from "expo-router";
 import CategoryCustom from "./CategoryCustom";
 import SearchList from "./SearchList";
 import { shallowEqual, useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/store/store";
-import { getSearchCategory } from "@/api/SearchAPI";
+import { getSearchCategory, getSearchKeyword } from "@/api/SearchAPI";
 import { useCurrentLocation } from "@/hooks/useCurrentLocation";
 import { resetCategories } from "@/store/slices/CategorySlices";
 
@@ -44,6 +44,7 @@ const MainHeader:React.FC<MainHeaderProps> = ({isRoute}) => {
     const selectedCategories = useSelector((state:RootState) => state.category, shallowEqual);
 
     const [searchItems, setSearchItems] = useState<SearchDataType[]>([]);
+    const [keyword, setKeyword] = useState<string>('');
 
     useEffect(()=>{
         const getSearchItems = async () => {
@@ -66,9 +67,35 @@ const MainHeader:React.FC<MainHeaderProps> = ({isRoute}) => {
         getSearchItems();
     },[selectedCategories])
 
+    useEffect(()=>{
+        if(keyword===''){
+            setSearchItems([]);
+            return;
+        }
+
+        const debounceKeyword = setTimeout(()=>{
+            const getSearchItems = async () => {
+                const res = await getSearchKeyword({keyword: keyword});
+                if(res.pass){
+                    setSearchItems(res.data);
+                }
+            }
+            getSearchItems();
+        },500);
+
+        return ()=>{
+            clearTimeout(debounceKeyword);
+        }
+
+    },[keyword])
+
     const resetSearchItems = () => {
         setSearchItems([]);
         dispatch(resetCategories());
+    }
+
+    const onChangeKeyword = (text: string) => {
+        setKeyword(text);
     }
 
     return(
@@ -105,6 +132,8 @@ const MainHeader:React.FC<MainHeaderProps> = ({isRoute}) => {
                             <TextInput 
                                 style={styles.searchInput}
                                 placeholder="검색어/키워드를 입력해 보세요."
+                                value={keyword}
+                                onChangeText={onChangeKeyword}
                                 placeholderTextColor={Colors.placeholderGreen}
                             />
                         </View>

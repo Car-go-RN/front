@@ -34,6 +34,9 @@ const RestReview = ({restId}:RestReview) => {
                 setReviewData(res.data.reviews)
                 console.log(res.data);
             }
+            else {
+                console.log(res.data, restId);
+            }
             setIsChange(false);
         }
         if(isChange)getReviews();
