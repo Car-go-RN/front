@@ -4,7 +4,7 @@ import * as SecureStore from 'expo-secure-store';
 // 토큰 없는 요청용 (로그인, 회원가입 등)
 export const PublicAxios = axios.create({
     baseURL: process.env.EXPO_PUBLIC_BASE_URL,
-    timeout: 5000,
+    timeout: 10000,
     headers: {
         'Content-Type':'application/json'
     }

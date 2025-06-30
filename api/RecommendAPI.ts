@@ -18,3 +18,14 @@ export const postRecommandSurvey = async ({userId, gases, facilities, brands}:{u
         return {data: error, pass:false}
     }
 }
+
+//추천 설문조사 키워드 조회
+export const getRecommandRestKeyword = async ({userId}:{userId:number}) => {
+    try {
+        const res = await PublicAxios.get(`/recommend/list/${userId}`);
+        return {data: res.data, pass:true}
+    }
+    catch(error){
+        return {data:error, pass:false}
+    }
+}
