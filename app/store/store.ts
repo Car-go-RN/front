@@ -1,14 +1,14 @@
 import { configureStore } from "@reduxjs/toolkit";
 
 import authReducer from "./slices/userSlices";
-import favoriteReducer from "./slices/favoriteSlice"
-import restAreaReducer from "./slices/restAreaSlice"
+// import favoriteReducer from "./slices/favoriteSlice"
+// import restAreaReducer from "./slices/restAreaSlice"
 
 export const store = configureStore({
   reducer: {
     user: authReducer, //auth 상태로 등록
-    favorite: favoriteReducer,
-    restArea: restAreaReducer,
+    // favorite: favoriteReducer,
+    // restArea: restAreaReducer,
   },
 })
 

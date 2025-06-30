@@ -4,9 +4,13 @@ import FontAwesome5 from '@expo/vector-icons/FontAwesome5';
 import { Colors } from "@/constants/Colors";
 import MainContents from "@/components/ui/MainContents";
 import { useRouter } from "expo-router";
+import { useSelector } from "react-redux";
+import { RootState } from "./store/store";
 
 const Main = () => {
     const router = useRouter();
+    const isLogin = useSelector((state:RootState) => state.user).isLoggedIn;
+    
     return(
         <View>
             <View style={{position:'absolute', width: '100%', zIndex: 1}}><MainHeader /></View>
@@ -23,7 +27,7 @@ const Main = () => {
                         </Pressable>
                     </View>
                 </View>
-                <MainContents isLogin={true}/>
+                <MainContents isLogin={isLogin}/>
             </View>
         </View>
     )

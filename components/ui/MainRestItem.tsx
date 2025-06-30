@@ -41,25 +41,17 @@ const MainRestItem = () => {
                 <View style={styles.row}>
                     <Text style={[styles.text,{marginVertical:3, marginRight:17}]}>브랜드</Text>
                     <View style={styles.tagContainer}>
-<<<<<<< Updated upstream
                         <TagCustom isRestItem={true}  name="CU" isbrand={true} icon={brandImg.CU.icon}/>
                         <TagCustom isRestItem={true}  name="던킨도너츠" isbrand={true} icon={brandImg.던킨도너츠.icon}/>
                         <TagCustom isRestItem={true}  name="베스킨라빈스" isbrand={true} icon={brandImg.베스킨라빈스.icon}/>
-=======
-                        <TagCustom isRestItem={true}  name="CU" isbrand={true} icon={brandImg.CU.icon}/><TagCustom isRestItem={true}  name="던킨도너츠" isbrand={true} icon={brandImg.던킨도너츠.icon}/><TagCustom isRestItem={true}  name="베스킨라빈스" isbrand={true} icon={brandImg.베스킨라빈스.icon}/>
->>>>>>> Stashed changes
                     </View>
                 </View>
                 <View style={styles.row}>
                     <Text style={[styles.text,{marginVertical:3, marginRight:8}]}>편의시설</Text>
                     <View style={styles.tagContainer}>
-<<<<<<< Updated upstream
                         <TagCustom isRestItem={true} name="병원" icon={amenities[6].icon}/>
                         <TagCustom isRestItem={true} name="약국" icon={amenities[2].icon}/>
                         <TagCustom isRestItem={true} name="경정비소" icon={amenities[9].icon}/>
-=======
-                        <TagCustom isRestItem={true} name="병원" icon={amenities[6].icon}/><TagCustom isRestItem={true} name="약국" icon={amenities[2].icon}/><TagCustom isRestItem={true} name="경정비소" icon={amenities[9].icon}/>
->>>>>>> Stashed changes
                     </View>
                 </View>
             </View>

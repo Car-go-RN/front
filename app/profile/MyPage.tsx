@@ -1,4 +1,4 @@
-import { View, StyleSheet, Text, Pressable } from "react-native"
+import { View, StyleSheet, Text, Pressable, Alert } from "react-native"
 import { useRouter } from "expo-router";
 import { Colors } from "@/constants/Colors";
 import { MaterialIcons } from "@expo/vector-icons";
@@ -7,10 +7,20 @@ import { FontAwesome } from "@expo/vector-icons";
 import { Feather } from "@expo/vector-icons";
 import { Entypo } from "@expo/vector-icons";
 import ProfileHeader from "@/components/ui/ProfileHeader";
+import { useSelector } from "react-redux";
+import { RootState } from "../store/store";
 
 
 const MyPage = () => {
   const router = useRouter();
+  const userId = useSelector((state:RootState)=>state.user).user?.userId;
+
+  if(!userId){
+    Alert.alert('로그인 정보 오류', '로그인이 필요한 기능입니다.');
+    router.push('/');
+    return;
+  }
+
   return (
     <View style={styles.container}>
       <ProfileHeader isSurvey={true} name="마이페이지"/>

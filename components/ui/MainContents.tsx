@@ -28,11 +28,7 @@ const MainContents:React.FC<MainContentProps> = ({isLogin}) => {
                         <ScrollView style={{height: '100%'}} horizontal showsVerticalScrollIndicator={false}>
                             {
                                 list.map((item)=>(
-<<<<<<< Updated upstream
                                     <MainRestItem key={item.id} />
-=======
-                                    <MainRestItem key={item.id}/>
->>>>>>> Stashed changes
                                 ))
                             }
                         </ScrollView>
