@@ -7,10 +7,11 @@ import HeaderCustom from "./HeaderCustom";
 import { useRouter } from "expo-router";
 import CategoryCustom from "./CategoryCustom";
 import SearchList from "./SearchList";
-import { shallowEqual, useSelector } from "react-redux";
+import { shallowEqual, useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/store/store";
 import { getSearchCategory } from "@/api/SearchAPI";
 import { useCurrentLocation } from "@/hooks/useCurrentLocation";
+import { resetCategories } from "@/store/slices/CategorySlices";
 
 type MainHeaderProps = {
     isRoute?:boolean,
@@ -37,6 +38,7 @@ export type SearchDataType = {
 };
 
 const MainHeader:React.FC<MainHeaderProps> = ({isRoute}) => {
+    const dispatch = useDispatch();
     const router = useRouter();
     const {location} = useCurrentLocation();
     const selectedCategories = useSelector((state:RootState) => state.category, shallowEqual);
@@ -58,16 +60,15 @@ const MainHeader:React.FC<MainHeaderProps> = ({isRoute}) => {
                 currentLng: location.coords.longitude
             });
             if(res.pass){
-                console.log(res.data)
                 setSearchItems(res.data);
             }
-            console.log(res.data);
         }
         getSearchItems();
     },[selectedCategories])
 
     const resetSearchItems = () => {
         setSearchItems([]);
+        dispatch(resetCategories());
     }
 
     return(

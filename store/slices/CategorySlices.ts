@@ -26,9 +26,14 @@ const categorySlice = createSlice({
         deleteCategories(state:CategoryState, action: PayloadAction<{key:keyof CategoryState, value:string}>){
             const {key, value} = action.payload;
             state[key] = state[key].filter((item)=>item!==value);
+        },
+        resetCategories(state:CategoryState){
+            state.brands=[];
+            state.facilities=[];
+            state.gas=[]
         }
     }
 })
 
-export const {addCategories, deleteCategories} = categorySlice.actions;
+export const {addCategories, deleteCategories, resetCategories} = categorySlice.actions;
 export default categorySlice.reducer;
