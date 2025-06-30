@@ -11,7 +11,7 @@ import { useLocalSearchParams, useRouter } from "expo-router";
 import { useEffect, useState } from "react";
 import { StyleSheet, View, Text, Image, Pressable, ScrollView, Keyboard, KeyboardAvoidingView, Platform, TouchableWithoutFeedback, Alert } from "react-native"
 import { useSelector } from "react-redux";
-import { RootState } from "./store/store";
+import { RootState } from "@/store/store";
 
 export type RestInfo = {
     id: number,
@@ -67,6 +67,7 @@ const RestArea = () => {
             if(res.pass){
                 setData(res.data);
                 console.log(res.data);
+                console.log('id',res.data.id);
             }
             else {
                 console.log(res.data);
@@ -105,10 +106,18 @@ const RestArea = () => {
     useEffect(()=>{
         if(!data)return;
         const getRestImgUrl = async () => {
-        const res = await getRestImg({restName: data.restAreaNm})
-        if(res.pass){
-            setImgUrl(res.data);
-        }
+            const res = await getRestImg({restName: data.restAreaNm})
+            if(res.pass){
+                setImgUrl(res.data);
+            }
+            const countRes = await getRestLikesCount({ restAreaId: data.id });
+            if (countRes.pass) {
+                console.log(countRes.data)
+                setReaction((prev) => ({ ...prev, likeCount: countRes.data }));
+            }
+            else {
+                console.log(countRes.data);
+            }
         }
         getRestImgUrl();
     },[data])
@@ -156,8 +165,7 @@ const RestArea = () => {
         }
     }
 
-    if(!data || !distance || !imgUrl){
-        console.log('으웹', data, distance, imgUrl);
+    if(!data || !imgUrl){
         return;
     }
 
@@ -194,7 +202,7 @@ const RestArea = () => {
                             }
                             <Text style={[styles.text,{color:Colors.yellow, marginLeft:5}]}>{data.reviewAVG}</Text>
                         </Text>
-                        <Text style={[styles.text,{color:Colors.tint, fontSize: 14, alignSelf:'center'}]}>휴게소까지 거리 {distance || '오류'}km</Text>
+                        <Text style={[styles.text,{color:Colors.tint, fontSize: 14, alignSelf:'center'}]}>{ distance ? `휴게소까지 거리 ${distance}km` : '불러오는 중...'}</Text>
                     </View>
                     <View style={container.nav}>
                         <View style={[container.all,{flexDirection:'row', paddingVertical: 15}]}>
@@ -249,7 +257,8 @@ const styles = StyleSheet.create({
     container: {
         backgroundColor: Colors.background,
         flex: 1,
-        zIndex: 0
+        zIndex: 0,
+        height: '100%'
     },
     restImg: {
         width: '100%',

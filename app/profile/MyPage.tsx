@@ -8,7 +8,7 @@ import { Feather } from "@expo/vector-icons";
 import { Entypo } from "@expo/vector-icons";
 import ProfileHeader from "@/components/ui/ProfileHeader";
 import { useSelector } from "react-redux";
-import { RootState } from "../store/store";
+import { RootState } from "@/store/store";
 
 
 const MyPage = () => {

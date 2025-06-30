@@ -8,7 +8,7 @@ import Checkbox from 'expo-checkbox';
 import { Colors } from "@/constants/Colors";
 import * as SecureStore from 'expo-secure-store';
 import { useDispatch } from 'react-redux'
-import { loginSuccess } from '../store/slices/userSlices';
+import { loginSuccess } from '@/store/slices/userSlices';
 import { postLogin } from '@/api/AuthAPI';
 
 type LoginState = {

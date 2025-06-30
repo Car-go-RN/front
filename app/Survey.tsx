@@ -1,20 +1,39 @@
+import { postRecommandSurvey } from "@/api/RecommendAPI";
 import ButtonCustom from "@/components/ui/ButtonCustom";
 import HeaderCustom from "@/components/ui/HeaderCustom";
 import SurveyOption from "@/components/ui/SurveyOption";
 import { Colors } from "@/constants/Colors";
-import { StyleSheet, Text, View, ScrollView } from "react-native"
+import { RootState } from "@/store/store";
+import { useRouter } from "expo-router";
+import { StyleSheet, Text, View, ScrollView, Alert } from "react-native"
+import { useSelector } from "react-redux";
 
 const surveyChoice = [
-    {name:'전기/수소차 충전소'},
+    {name:'전기 충전소'},
+    {name:'수소 충전소'},
     {name:'브랜드 매장'},
-    {name:'저렴한 주유소'},
     {name:'편의시설'},
-    {name:'경정비소'},
-    {name:'화물차 라운지'},
-    {name:'세차장'}
 ];
 
 const Survey = () => {
+    const router = useRouter();
+
+    const userId = useSelector((state:RootState)=>state.user).user?.userId;
+    const surveyData = useSelector((state:RootState)=>state.category);
+
+    const onSubmitSurvey = async () => {
+        if(!userId)return;
+        const res = await postRecommandSurvey({userId, gases:surveyData.gas, facilities: surveyData.facilities, brands: surveyData.brands})
+        if(res.pass){
+            Alert.alert('설문조사 성공', '폼이 성공적으로 제출되었습니다.');
+            router.push('/profile/MyPage');
+            return;
+        }
+        else {
+            console.log(res.data)
+        }
+    }
+
     return(
         <View style={styles.container}>
             <View style={styles.header}>
@@ -32,7 +51,7 @@ const Survey = () => {
                 }
             </ScrollView>
             <View style={styles.buttonContainer}>
-                <ButtonCustom text="설문조사 완료하기"/>
+                <ButtonCustom text="설문조사 완료하기" onPress={()=>onSubmitSurvey()}/>
             </View>
         </View>
     )

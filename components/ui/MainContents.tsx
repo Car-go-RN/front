@@ -1,10 +1,16 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
 import FontAwesome6 from '@expo/vector-icons/FontAwesome6';
 import { Colors } from "@/constants/Colors";
 import MainRestItem from "./MainRestItem";
 import ButtonCustom from "./ButtonCustom";
 import { useRouter } from "expo-router";
+import { getRecommandRestKeyword } from "@/api/RecommendAPI";
+import { useSelector } from "react-redux";
+import { RootState } from "@/store/store";
+import { SearchDataType } from "./MainHeader";
+import { useCurrentLocation } from "@/hooks/useCurrentLocation";
+import { getSearchCategory } from "@/api/SearchAPI";
 
 const list = [{id:1},{id:2},{id:3}]
 
@@ -14,6 +20,38 @@ type MainContentProps = {
 
 const MainContents:React.FC<MainContentProps> = ({isLogin}) => {
     const router = useRouter();
+    const {location} = useCurrentLocation();
+    const userId = useSelector((state:RootState)=>state.user).user?.userId;
+
+    const [recommendItems, setRecommendItems] = useState<SearchDataType[]>([]);
+
+    useEffect(()=>{
+        const getRecommandItems = async () => {
+            if(!userId)return;
+            if(!location){
+                console.log('위치 없음');
+                return;
+            }
+            const keywordRes = await getRecommandRestKeyword({userId});
+            if(keywordRes.pass){
+                console.log(keywordRes.data)
+                const {brands, gases, facilities} = keywordRes.data.preferences;
+                const res = await getSearchCategory({
+                    brands: brands || [],
+                    facilities: facilities || [],
+                    gas: gases || [],
+                    currentLat: location.coords.latitude, 
+                    currentLng: location.coords.longitude
+                })
+                if(res.pass){
+                    setRecommendItems(res.data);
+                }
+            }
+
+        }
+        getRecommandItems();
+    },[userId, location])
+
 
     return(
         <View style={styles.container}>
@@ -27,8 +65,8 @@ const MainContents:React.FC<MainContentProps> = ({isLogin}) => {
                     <View style={styles.restList}>
                         <ScrollView style={{height: '100%'}} horizontal showsVerticalScrollIndicator={false}>
                             {
-                                list.map((item)=>(
-                                    <MainRestItem key={item.id} />
+                                recommendItems.map((item)=>(
+                                    <MainRestItem key={item.id} {...item} />
                                 ))
                             }
                         </ScrollView>

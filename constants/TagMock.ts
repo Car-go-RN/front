@@ -1,8 +1,7 @@
 
 export const gas = [
-    {name: '전기 충전소', icon:'car-electric'},
-    {name: '수소 충전소', icon:'hydrogen-station' },
-    {name: '주유소', icon: 'gas-station'}
+    {name: '전기', icon:'car-electric'},
+    {name: '수소', icon:'hydrogen-station' }
 ]
 
 export const brands = [

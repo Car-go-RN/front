@@ -6,7 +6,7 @@ import CategoryCustom from "@/components/ui/CategoryCustom"
 import { useEffect, useState } from "react"
 import { getMyFavorite } from "@/api/RestAreaAPI"
 import { useSelector } from "react-redux"
-import { RootState } from "../store/store"
+import { RootState } from "@/store/store"
 import { useRouter } from "expo-router"
 
 const list = [{id:1},{id:2},{id:3},{id:4}]
@@ -50,8 +50,8 @@ const LookBookMark = () => {
           {
               bookMarks.map((item)=>(
                 <RestItem 
-                  key={item.id as number} 
-                  isMark={true} 
+                  key={item.id as number}
+                  isMark={true}
                   restId={item.id as number}
                   stdRestNm={item.stdRestNm as string}
                   restName={item.restAreaNm as string}
@@ -64,9 +64,9 @@ const LookBookMark = () => {
                   longitude={item.longitude as number}
                   brands={item.brands as string[]}
                   facilities={item.facilities as string[]}
-                  foods={item.foods as Record<string,string>[]}
-                  bookMarkChange={bookMarkChange}
-                />
+                  foods={item.foods as Record<string, string>[]}
+                  bookMarkChange={bookMarkChange} 
+                  reviewAVG={item.reviewAVG as number}                />
               ))
           }
         </ScrollView>

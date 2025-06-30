@@ -7,8 +7,8 @@ import 'react-native-reanimated';
 import { Stack } from 'expo-router';
 // import AppInitializer from '@/components/AppInitializer';
 import { Provider } from 'react-redux'
-import { store } from './store/store';
-import { loginSuccess } from './store/slices/userSlices';
+import { store } from '@/store/store';
+import { loginSuccess } from '@/store/slices/userSlices';
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
@@ -20,31 +20,15 @@ export default function RootLayout() {
 
   const [ready, setReady] = useState(false);
 
-  // useEffect(() => {
-  //   if (loaded) {
-  //     SplashScreen.hideAsync();
-  //   }
-  // }, [loaded]);
-
-  // if (!loaded) {
-  //   return null;
-  // }
-
   useEffect(() => {
-    const prepare = async () => {
-      if (loaded) {
-        const token = await SecureStore.getItemAsync("accessToken");
-        if (token) {
-          store.dispatch(loginSuccess({ token, user: { email: "unknown"}}));
-        }
-        setReady(true);
-        await SplashScreen.hideAsync();
-      }
-    };
-    prepare()
+    if (loaded) {
+      SplashScreen.hideAsync();
+    }
   }, [loaded]);
 
-  if (!ready) return null;
+  if (!loaded) {
+    return null;
+  }
 
   return (
     <Provider store={store}>

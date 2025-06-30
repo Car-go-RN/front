@@ -17,13 +17,13 @@ const CategoryCustom = () => {
                 isOpen && (
                     <View>
                         <View style={styles.category}>
-                            <ToggleListCustom title="주유/충전소" tagList={gas} isbrand={false}/>
+                            <ToggleListCustom title="주유/충전소" tagClass="gas" tagList={gas} isbrand={false}/>
                         </View>
                         <View style={styles.category}>
-                            <ToggleListCustom title="브랜드" tagList={brands} isbrand={true} />
+                            <ToggleListCustom title="브랜드" tagClass="brands" tagList={brands} isbrand={true} />
                         </View>
                         <View style={styles.category}>
-                            <ToggleListCustom title="편의시설" tagList={amenities} isbrand={false}/>
+                            <ToggleListCustom title="편의시설" tagClass="facilities" tagList={amenities} isbrand={false}/>
                         </View>
                     </View>
                 )
