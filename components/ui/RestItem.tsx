@@ -18,6 +18,7 @@ type RestMark = {
   restId: number,
   stdRestNm: string,//화면에 표시되는 이름
   restName: string, //파라미터로 보낼 이름
+  reviewAVG:number,
   gasPrice:string,
   diselPrice: string,
   lpgPrice:string,
@@ -83,7 +84,14 @@ const RestItem:React.FC<RestMark> = (props) => {
             }
           </View>
           <Text style={[styles.text,{fontSize:15, fontWeight:'bold'}]}>{props.stdRestNm}</Text>
-          <Text style={[styles.text,{fontSize:13, color: Colors.yellow}]}>★★★☆☆</Text>
+          <Text style={[styles.text,{fontSize:13, color: Colors.yellow}]}>
+          {
+              Array.from({length: 5}, (_, i)=> i + 1).map((i) => {
+                  if(i<=Math.round(props.reviewAVG))return '★' 
+                  else return '☆'
+              })
+          }
+          </Text>
           <Text style={[styles.text,{marginVertical:3}]}>경유 {props.diselPrice}  휘발유 {props.gasPrice}</Text>
           <View style={{flex: 1, overflow:'scroll'}}>
             <View style={styles.row}>
