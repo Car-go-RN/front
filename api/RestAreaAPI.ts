@@ -1,5 +1,5 @@
 import axios from "axios";
-import { PublicAxios } from "./BaseUrl";
+import { PrivateAxios, PublicAxios } from "./BaseUrl";
 
 //리뷰
 
@@ -39,7 +39,7 @@ export const writeRestReview = async ({restAreaName, content, grade, userId}:{re
 //휴게소 리뷰 삭제
 export const deleteRestReview = async ({reviewId}:{reviewId:number}) => {
     try{
-        const res = await PublicAxios.delete(`/review/${reviewId}`);
+        const res = await PrivateAxios.delete(`/review/${reviewId}`);
         return {data:res.data, pass: true}
     }
     catch(error){
@@ -99,7 +99,8 @@ export const getRestFavoriteIds = async ({userId}:{userId:number}) => {
 //즐겨찾기 표시/취소
 export const postMyFavorite = async ({restAreaId, userId}:{restAreaId:number, userId:number}) => {
     try{
-        const res = await PublicAxios.post(`/favorites/${restAreaId}?userId=${userId}`);
+        const res = await PrivateAxios.post(`/favorites/${restAreaId}?userId=${userId}`);
+        console.log("API 결과:", res);
         return {data:res.data, pass: true}
     }
     catch(error){
@@ -110,7 +111,7 @@ export const postMyFavorite = async ({restAreaId, userId}:{restAreaId:number, us
 //즐겨찾기 목록
 export const getMyFavorite =  async ({userId}:{userId:number}) => {
     try{
-        const res = await PublicAxios.get(`/favorites/user/${userId}`);
+        const res = await PrivateAxios.get(`/favorites/user/${userId}`);
         return {data:res.data, pass:true}
     }
     catch(error){
@@ -152,5 +153,26 @@ export const getremainingDistance = async ({latitude, longitude, stdRestNm}:{lat
     }
     catch(error){
         return {data:error, pass:false}
+    }
+}
+
+//휴게소 API 요청 함수 
+export const getRestAreaList = async ({page,latitude,longitude }:{page: number, latitude:number, longitude:number}) => {
+  const res = await PublicAxios.get(`/open-api/detail?page=${page}&currentLat=${latitude}&currentLng=${longitude}`);
+  return res.data; 
+};
+
+// 휴게소 출발지, 도착지 사이 조회 API
+export const getRestAreaAlong = async (originX: number, originY: number, destX: number, destY: number) => {
+    console.log("API 호출 시도:", originX, originY, destX, destY);
+    try {
+        const res = await PublicAxios.get(
+            `/rest-area/search/path?originX=${originX}&originY=${originY}&destX=${destX}&destY=${destY}`
+        );
+        console.log("응답 데이터:", res.data);
+        return res.data;
+    } catch (err) {
+        console.error("API 호출 실패:", err);
+        throw err;
     }
 }

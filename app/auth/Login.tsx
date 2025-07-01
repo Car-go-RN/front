@@ -1,4 +1,4 @@
-import React, { useReducer, useState } from 'react'
+import React, { useReducer, useState, useEffect } from 'react'
 import ButtonCustom from '@/components/ui/ButtonCustom';
 import HeaderCustom from '@/components/ui/HeaderCustom';
 import InputCustom from '@/components/ui/InputCustom';
@@ -45,6 +45,18 @@ const Login = () => {
     const [form, formDispatch] = useReducer(formReducer, initialForm);
     const [isChecked, setChecked] = useState(false);
 
+    useEffect(() => {
+        const loadSavedEmail = async () => {
+            const savedEmail = await SecureStore.getItemAsync('savedEmail');
+            console.log("저장된 이메일:", savedEmail);
+            if (savedEmail) {
+                formDispatch({ type: 'CHANGE_INPUT', name: 'email', value: savedEmail });
+                setChecked(true);
+            }
+        };
+        loadSavedEmail();
+    }, [])
+
     const handleLogin = async () => {
         console.log('보내는 것: ', form);
 
@@ -57,18 +69,29 @@ const Login = () => {
 
         if (res.pass) {
             const token = res.data.token; 
-            const user = {email: form.email };
-            console.log("로그인 성공! token: ", token);
-
+            const user = {
+                email: form.email,
+                userId: res.data.userId,
+            }
+            console.log("user 객체: ", user);
             console.log(res.data.userId)
             //Redux에 저장
-            dispatch(loginSuccess({ token, user: {email: user.email,userId:res.data.userId } }));
-
+            // dispatch(loginSuccess({ token, user: {email: form.email, userId: user.userId } }));
+            dispatch(loginSuccess({ token, user }));
+            console.log(user)
             //SecureStore에 저장
             await SecureStore.setItemAsync('accessToken', token);
+            await SecureStore.setItemAsync('user', JSON.stringify(user));
 
-            console.log("로그인 성공! token: ", token);
+            if (isChecked) {
+                await SecureStore.setItemAsync('savedEmail', form.email);
+            } else {
+                await SecureStore.deleteItemAsync('savedEmail');
+            }
+
+            console.log("로그인 성공! token: ", token); 
             console.log("token 저장됨:", await SecureStore.getItemAsync('accessToken'));
+            console.log('userId', res.data.userId);
             router.push('/');
         } else {
             const errorMessage = res.data?.response?.data?.message || "로그인 실패";
@@ -104,7 +127,6 @@ const Login = () => {
                     <Checkbox style={styles.checkbox} value={isChecked} onValueChange={setChecked} />
                     <Text style={styles.middleText}>아이디 저장하기</Text>
                 </View>
-                <Text style={styles.middleText}>비밀번호를 잊어버리셨습니까?</Text>
             </View> 
             <ButtonCustom
                 text="로그인"   

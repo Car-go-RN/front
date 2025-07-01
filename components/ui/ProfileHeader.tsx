@@ -5,6 +5,8 @@ import { useRouter, usePathname } from "expo-router";
 import { AntDesign } from "@expo/vector-icons";
 import CategoryCustom from "./CategoryCustom";
 import ButtonCustom from "./ButtonCustom";
+import { useSelector } from "react-redux";
+import { RootState } from "../../store/store";
 
 type ProfileHeaderProps = {
   isCategory?:boolean,
@@ -15,6 +17,9 @@ type ProfileHeaderProps = {
 const ProfileHeader: React.FC<ProfileHeaderProps> = ({isCategory, isSurvey, name}) => {
   const pathname = usePathname();
   const router = useRouter();
+  const user = useSelector((state: RootState) => state.user.user);
+
+  // console.log("Redux user 정보:", user);
 
   const handleBack = () => {
     if (pathname === '/profile/MyPage') {
@@ -33,7 +38,7 @@ const ProfileHeader: React.FC<ProfileHeaderProps> = ({isCategory, isSurvey, name
         </View>
         <View style={styles.container}> 
           <Image style={styles.img} source={require('@/assets/images/person.png')}/>
-          <Text style={[styles.text, {textAlign:'center'}]}>lioba00700@gmail.com</Text>
+          <Text style={[styles.text, {textAlign:'center'}]}>{user?.email || '이메일 정보 없음'}</Text>
         </View>
       </View>
       {isCategory && <CategoryCustom />}

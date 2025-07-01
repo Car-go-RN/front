@@ -16,17 +16,21 @@ const LookBookMark = () => {
   const userId = useSelector((state:RootState)=>state.user).user?.userId;
 
   const [isChange, setIsChange] = useState<boolean>(true);
-
-  if(!userId){
-    Alert.alert('즐겨찾기 목록 불러오기 실패', '유효하지 않은 접근입니다');
-    router.push('/profile/MyPage');
-  }
   const [bookMarks, setBookMarks] = useState<Record<string, string | number | string[] | Record<string,string>[]>[]>([])
+
+  useEffect(() => {
+    if(!userId){
+      Alert.alert('즐겨찾기 목록 불러오기 실패', '유효하지 않은 접근입니다');
+      router.push('/profile/MyPage');
+    }
+  }, [userId])
+
   useEffect(()=>{
     const getBookMarks = async () => {
       const res = await getMyFavorite({userId: userId as number});
       if(res.pass){
         setBookMarks(res.data);
+        console.log("즐겨찾기 목록: ", res.data);
       }
       else {
         Alert.alert('즐겨찾기 목록 불러오기 실패', '데이터를 불러오지 못했습니다');
@@ -38,8 +42,8 @@ const LookBookMark = () => {
   },[isChange])
 
   const bookMarkChange = () => {
-        setIsChange(true);
-    }
+      setIsChange(true);
+  }
 
 
   return (
