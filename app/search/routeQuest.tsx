@@ -25,7 +25,6 @@ const RouteQuest = () => {
 
   useEffect(()=> {
     if(!location){
-      console.log('위치 없음')
       return;
     }
     if (!startCoord || !endCoord) {
@@ -36,14 +35,10 @@ const RouteQuest = () => {
 
   const onToggleFavorite = async (restAreaId: number) => {
     if (!userId) return;
-    console.log("[즐겨찾기 요청] restAreaId:", restAreaId);
 
     const res = await postMyFavorite({ restAreaId, userId });
     if (res.pass) {
-      console.log("[API 응답 성공] 즐겨찾기 변경");
       dispatch(toggleFavorite(restAreaId));
-    } else {
-      console.log("[API 응답 실패]", res.data);
     }
   };  
 

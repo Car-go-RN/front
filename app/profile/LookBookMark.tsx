@@ -30,7 +30,6 @@ const LookBookMark = () => {
       const res = await getMyFavorite({userId: userId as number});
       if(res.pass){
         setBookMarks(res.data);
-        console.log("즐겨찾기 목록: ", res.data);
       }
       else {
         Alert.alert('즐겨찾기 목록 불러오기 실패', '데이터를 불러오지 못했습니다');

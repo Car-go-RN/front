@@ -29,9 +29,6 @@ const Survey = () => {
             router.push('/profile/MyPage');
             return;
         }
-        else {
-            console.log(res.data)
-        }
     }
 
     return(

@@ -11,8 +11,10 @@
     "ios": {
       "supportsTablet": true,
       "infoPlist": {
-        "NSLocationWhenInUseUsageDescription": "이 앱은 현재 위치를 사용하여 휴게소와의 거리 정보를 제공합니다."
-      } 
+        "NSLocationWhenInUseUsageDescription": "이 앱은 현재 위치를 사용하여 휴게소와의 거리 정보를 제공합니다.",
+        "ITSAppUsesNonExemptEncryption": false
+      },
+      "bundleIdentifier": "com.cargo.cargoRN"
     },
     "androidStatusBar": {
       "backgroundColor": "#ffffff"

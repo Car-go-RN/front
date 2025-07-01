@@ -32,10 +32,6 @@ const RestReview = ({restId}:RestReview) => {
             const res = await restSearchReview({restAreaId:restId})
             if(res.pass){
                 setReviewData(res.data.reviews)
-                console.log(res.data);
-            }
-            else {
-                console.log(res.data, restId);
             }
             setIsChange(false);
         }

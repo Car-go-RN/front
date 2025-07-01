@@ -29,12 +29,10 @@ const MainContents:React.FC<MainContentProps> = ({isLogin}) => {
         const getRecommandItems = async () => {
             if(!userId)return;
             if(!location){
-                console.log('위치 없음');
                 return;
             }
             const keywordRes = await getRecommandRestKeyword({userId});
             if(keywordRes.pass){
-                console.log('설문조사값 :',keywordRes.data)
                 const {brands, gases, facilities} = keywordRes.data.preferences;
                 const res = await getSearchCategory({
                     brands: brands || [],
@@ -45,10 +43,6 @@ const MainContents:React.FC<MainContentProps> = ({isLogin}) => {
                 })
                 if(res.pass){
                     setRecommendItems(res.data);
-                    console.log(res.data);
-                }
-                else {
-                    console.log('추천',res.data);
                 }
             }
 

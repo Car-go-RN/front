@@ -129,9 +129,7 @@ const MainHeader:React.FC<MainHeaderProps> = ({isRoute}) => {
 
     useEffect(()=>{
       const getSearchItems = async () => {
-          console.log(selectedCategories);
           if(!location){
-              console.log('위치 없음');
               return;
           }
           const res = await getSearchCategory({

@@ -55,7 +55,6 @@ const SurveyOption:React.FC<surveyOptionProps> = ({name}) => {
                     }) : name==='편의시설' && amenities.map((item, index) =>{
                         const iconData = AmenitiesIcon[item.name];
                         if(!iconData)return null;
-                        console.log(iconData);
                         return (
                             <TagCustom 
                                 tagClass="facilities" 

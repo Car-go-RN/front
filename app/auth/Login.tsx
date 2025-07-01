@@ -48,7 +48,6 @@ const Login = () => {
     useEffect(() => {
         const loadSavedEmail = async () => {
             const savedEmail = await SecureStore.getItemAsync('savedEmail');
-            console.log("저장된 이메일:", savedEmail);
             if (savedEmail) {
                 formDispatch({ type: 'CHANGE_INPUT', name: 'email', value: savedEmail });
                 setChecked(true);
@@ -58,14 +57,11 @@ const Login = () => {
     }, [])
 
     const handleLogin = async () => {
-        console.log('보내는 것: ', form);
 
         const res = await postLogin({
             email: form.email,
             password: form.password,
         });
-
-        console.log("로그인 응답 전체: ", res);
 
         if (res.pass) {
             const token = res.data.token; 
@@ -73,12 +69,9 @@ const Login = () => {
                 email: form.email,
                 userId: res.data.userId,
             }
-            console.log("user 객체: ", user);
-            console.log(res.data.userId)
             //Redux에 저장
             // dispatch(loginSuccess({ token, user: {email: form.email, userId: user.userId } }));
             dispatch(loginSuccess({ token, user }));
-            console.log(user)
             //SecureStore에 저장
             await SecureStore.setItemAsync('accessToken', token);
             await SecureStore.setItemAsync('user', JSON.stringify(user));
@@ -89,14 +82,10 @@ const Login = () => {
                 await SecureStore.deleteItemAsync('savedEmail');
             }
 
-            console.log("로그인 성공! token: ", token); 
-            console.log("token 저장됨:", await SecureStore.getItemAsync('accessToken'));
-            console.log('userId', res.data.userId);
             router.push('/');
         } else {
             const errorMessage = res.data?.response?.data?.message || "로그인 실패";
             alert(errorMessage);
-            console.log("로그인 에러: ", res.data);
         }
     }
 

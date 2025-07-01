@@ -62,15 +62,11 @@ const RestArea = () => {
     useEffect(()=>{
         if(!location)return;
         const getInfo = async () => {
-            console.log(stdRestNm);
             const res = await getRestInfo({stdRestNm: stdRestNm as string, latitude: location.coords.latitude, longitude: location.coords.longitude});
             if(res.pass){
                 setData(res.data);
-                console.log(res.data);
-                console.log('id',res.data.id);
             }
             else {
-                console.log(res.data);
                 Alert.alert('휴게소 정보 불러오기 실패', '데이터를 불러오지 못했습니다');
                 router.push('/');
                 return;
@@ -112,11 +108,7 @@ const RestArea = () => {
             }
             const countRes = await getRestLikesCount({ restAreaId: data.id });
             if (countRes.pass) {
-                console.log(countRes.data)
                 setReaction((prev) => ({ ...prev, likeCount: countRes.data }));
-            }
-            else {
-                console.log(countRes.data);
             }
         }
         getRestImgUrl();
@@ -131,7 +123,6 @@ const RestArea = () => {
             const res = await getremainingDistance({latitude:latitude, longitude:longitude, stdRestNm: data.stdRestNm});
             if(res.pass){
                 setDistance(res.data.distanceKm);
-                console.log(res.data);
             }
             else {
                 setDistance(null)
@@ -149,11 +140,7 @@ const RestArea = () => {
 
                 const countRes = await getRestLikesCount({ restAreaId: data.id });
                 if (countRes.pass) {
-                    console.log(countRes.data)
                     setReaction((prev) => ({ ...prev, likeCount: countRes.data }));
-                }
-                else {
-                    console.log(countRes.data);
                 }
             }
         }

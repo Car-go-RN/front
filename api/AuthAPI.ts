@@ -11,7 +11,6 @@ export const postLogin = async ({email, password}: {email:string, password:strin
     }
     catch(error: any){
         const message = error.response?.data?.message || '로그인 실패';
-        console.log('로그인 에러:', message);
         return {data: error, pass:false}
     }
 }
@@ -32,10 +31,6 @@ export const changePassword = async ({
 
         return { pass: true, data: res.data };
     } catch (err: any) {
-        console.log("비밀번호 변경 에러 전체:", err);
-        console.log("비밀번호 변경 에러 데이터:", err.response?.data);
-        console.log("비밀번호 변경 상태 코드:", err.response?.status);
-        console.log("비밀번호 변경 에러 메시지:", err.message);
         const message =
             err.response?.data?.message || err.message || "비밀번호 변경 실패";
         return { pass: false, data: message };
@@ -65,7 +60,6 @@ export const emailVerification = async ({email}:{email:string}) => {
         return {data:res, pass: true}
     }
     catch(error: any){
-        console.log("에러 응답", error?.response?.data);
         return {data:error, pass:false}
     }
 }

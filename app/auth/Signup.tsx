@@ -49,11 +49,11 @@ const Signup = () => {
     const handlePostData = async () => {
         //회원가입 api 로직
         if(!emailCheck){
-            alert('이메일을 인증해주세요');
+            Alert.alert('회원가입 실패','이메일을 인증해주세요');
             return;
         }
         if(form.password !== form.repassword){
-            console.log('비밀번호와 비밀번호 확인이 일치하지 않습니다');
+            Alert.alert('회원가입 실패','비밀번호와 비밀번호 확인이 일치하지 않습니다');
             return;
         }
         
@@ -63,7 +63,6 @@ const Signup = () => {
             router.push('/auth/Login');
         }
         else{
-            console.log(res.data);
             Alert.alert('회원가입 실패', '다시 시도해주세요');
         }
     }
@@ -75,10 +74,7 @@ const Signup = () => {
         }
         const res = await emailVerification({email:form.email});
         if(res.pass){
-            alert("이메일을 확인해주세요");
-        } else {
-            alert(res.data)
-            console.error(res.data);
+            Alert.alert("이메일을 확인해주세요");
         }
     }
 

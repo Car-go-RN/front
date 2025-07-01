@@ -13,20 +13,13 @@ const AppInitializer = () => {
       const token = await SecureStore.getItemAsync('accessToken');
       const userString = await SecureStore.getItemAsync('user');
 
-      console.log("accessToken:", token);
-      console.log("userString:", userString);
-
       if (token && userString) {
         try {
           const user = JSON.parse(userString);
           dispatch(loginSuccess({ token, user }))
-          console.log("자동로그인성공", user);
           router.replace('/');
         } catch (err) {
-          console.log("유저정보 불러오기 실패", err)
         }
-      } else {
-        console.log("토큰 또는 유저 정보 없음")
       }
     };
     init();

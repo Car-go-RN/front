@@ -16,7 +16,6 @@ export const getSearchCategory = async ({brands, facilities, gas, currentLng, cu
         return {data:res.data, pass: true}
     }
     catch (error:any){
-        console.log(error.response)
         return {data:error, pass: false}
     }
 }

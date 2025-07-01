@@ -28,7 +28,6 @@ export const writeRestReview = async ({restAreaName, content, grade, userId}:{re
             grade,
             userId
         });
-        console.log(res.data);
         return {data:res.data, pass: true}
     }
     catch(error:any){
@@ -75,7 +74,6 @@ export const postMyLikes = async ({restAreaId, userId}:{restAreaId:number, userI
 export const getRestLikesCount = async ({restAreaId}: {restAreaId:number}) => {
     try{
         const res = await PublicAxios.get(`/likes/${restAreaId}`);
-        console.log(res.data)
         return {data:res.data, pass:true}
     }
     catch (error){
@@ -100,7 +98,6 @@ export const getRestFavoriteIds = async ({userId}:{userId:number}) => {
 export const postMyFavorite = async ({restAreaId, userId}:{restAreaId:number, userId:number}) => {
     try{
         const res = await PrivateAxios.post(`/favorites/${restAreaId}?userId=${userId}`);
-        console.log("API 결과:", res);
         return {data:res.data, pass: true}
     }
     catch(error){
@@ -126,7 +123,6 @@ export const getRestImg = async({restName}:{restName:string}) => {
     try{
         const res = await axios.get(`http://myway.dothome.co.kr/google_searcher.php?q=${restName}`);
         const jpgImage = res.data.find((item:{imageUrl:string, title:string}) => item.imageUrl.toLowerCase().split('?')[0].endsWith('.jpg'));
-        console.log(jpgImage.imageUrl);
         return {data: jpgImage.imageUrl, pass: true}
     }
     catch (error){
@@ -164,12 +160,10 @@ export const getRestAreaList = async ({page,latitude,longitude }:{page: number, 
 
 // 휴게소 출발지, 도착지 사이 조회 API
 export const getRestAreaAlong = async (originX: number, originY: number, destX: number, destY: number) => {
-    console.log("API 호출 시도:", originX, originY, destX, destY);
     try {
         const res = await PublicAxios.get(
             `/rest-area/search/path?originX=${originX}&originY=${originY}&destX=${destX}&destY=${destY}`
         );
-        console.log("응답 데이터:", res.data);
         return res.data;
     } catch (err) {
         console.error("API 호출 실패:", err);
