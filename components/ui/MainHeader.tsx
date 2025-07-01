@@ -1,20 +1,105 @@
 import { Colors } from "@/constants/Colors";
 import Ionicons from '@expo/vector-icons/Ionicons';
 import AntDesign from '@expo/vector-icons/AntDesign';
-import React from "react";
-import { View, StyleSheet, Text, Pressable, TextInput } from "react-native";
+import React, { useEffect, useReducer, useState } from "react";
+import { View, StyleSheet, Text, Pressable, TextInput, Alert, NativeSyntheticEvent, TextInputChangeEventData } from "react-native";
 import HeaderCustom from "./HeaderCustom";
 import { useRouter } from "expo-router";
 import CategoryCustom from "./CategoryCustom";
+import SearchList from "./SearchList";
+import { shallowEqual, useDispatch, useSelector } from "react-redux";
+import { RootState } from "@/store/store";
+import { getSearchCategory, getSearchKeyword } from "@/api/SearchAPI";
+import { useCurrentLocation } from "@/hooks/useCurrentLocation";
+import { resetCategories } from "@/store/slices/CategorySlices";
 
 type MainHeaderProps = {
     isRoute?:boolean,
 }
 
+export type SearchDataType = {
+    id:number,
+    stdRestNm:string
+    reviewAVG: number,
+    gasolinePrice: string,
+    diselPrice: string,
+    lpgPrice:string,
+    electric:string,
+    hydrogen: string,
+    roadAddress: string,
+    phone: string,
+    latitude: number,
+    longitude: number,
+    restAreaNm: string,
+    distance: number|null,
+    brands: string[];
+    facilities: string[],
+    foods: {foodNm:string, foodCost:string}[]
+};
+
 const MainHeader:React.FC<MainHeaderProps> = ({isRoute}) => {
+    const dispatch = useDispatch();
     const router = useRouter();
+    const {location} = useCurrentLocation();
+    const selectedCategories = useSelector((state:RootState) => state.category, shallowEqual);
+
+    const [searchItems, setSearchItems] = useState<SearchDataType[]>([]);
+    const [keyword, setKeyword] = useState<string>('');
+
+    useEffect(()=>{
+        const getSearchItems = async () => {
+            console.log(selectedCategories);
+            if(!location){
+                console.log('위치 없음');
+                return;
+            }
+            const res = await getSearchCategory({
+                brands: selectedCategories.brands,
+                facilities: selectedCategories.facilities, 
+                gas: selectedCategories.gas, 
+                currentLat: location.coords.latitude, 
+                currentLng: location.coords.longitude
+            });
+            if(res.pass){
+                setSearchItems(res.data);
+            }
+        }
+        getSearchItems();
+    },[selectedCategories])
+
+    useEffect(()=>{
+        if(keyword===''){
+            setSearchItems([]);
+            return;
+        }
+
+        const debounceKeyword = setTimeout(()=>{
+            const getSearchItems = async () => {
+                const res = await getSearchKeyword({keyword: keyword});
+                if(res.pass){
+                    setSearchItems(res.data);
+                }
+            }
+            getSearchItems();
+        },500);
+
+        return ()=>{
+            clearTimeout(debounceKeyword);
+        }
+
+    },[keyword])
+
+    const resetSearchItems = () => {
+        setSearchItems([]);
+        dispatch(resetCategories());
+    }
+
+    const onChangeKeyword = (text: string) => {
+        setKeyword(text);
+    }
+
     return(
-        <View style={{position:'relative'}}>
+        <View style={{position:'relative', height: '100%'}}>
             <View style={styles.header}>
             {
                 isRoute ? (
@@ -47,6 +132,8 @@ const MainHeader:React.FC<MainHeaderProps> = ({isRoute}) => {
                             <TextInput 
                                 style={styles.searchInput}
                                 placeholder="검색어/키워드를 입력해 보세요."
+                                value={keyword}
+                                onChangeText={onChangeKeyword}
                                 placeholderTextColor={Colors.placeholderGreen}
                             />
                         </View>
@@ -54,7 +141,10 @@ const MainHeader:React.FC<MainHeaderProps> = ({isRoute}) => {
                 )
             } 
             </View>
-            <CategoryCustom />   
+            <CategoryCustom />
+            <View style={{height:360}}>
+                <SearchList data={searchItems} reset={resetSearchItems}/>
+            </View>
         </View>
     )
 }
@@ -64,7 +154,6 @@ const styles = StyleSheet.create({
         backgroundColor: Colors.tint,
         width: '100%',
         height: 200
-
     },
     container:{
         display:'flex',

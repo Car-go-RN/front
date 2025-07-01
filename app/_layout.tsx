@@ -19,16 +19,6 @@ export default function RootLayout() {
 
   const [ready, setReady] = useState(false);
 
-  // useEffect(() => {
-  //   if (loaded) {
-  //     SplashScreen.hideAsync();
-  //   }
-  // }, [loaded]);
-
-  // if (!loaded) {
-  //   return null;
-  // }
-
   useEffect(() => {
     const prepare = async () => {
       if (loaded) {
@@ -39,7 +29,9 @@ export default function RootLayout() {
     prepare()
   }, [loaded]);
 
-  if (!ready) return null;
+  if (!loaded) {
+    return null;
+  }
 
   return (
     <Provider store={store}>

@@ -6,7 +6,7 @@ import ButtonCustom from "./ButtonCustom";
 import { Colors } from "@/constants/Colors";
 import { writeRestReview } from "@/api/RestAreaAPI";
 import { useSelector } from "react-redux";
-import { RootState } from "@/app/store/store";
+import { RootState } from "@/store/store";
 import { useRouter } from "expo-router";
 
 type writeProps = {
