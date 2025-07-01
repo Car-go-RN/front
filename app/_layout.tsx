@@ -1,6 +1,5 @@
 import { useFonts } from 'expo-font';
 import * as SplashScreen from 'expo-splash-screen';
-import * as SecureStore from 'expo-secure-store'
 import { StatusBar } from 'expo-status-bar';
 import { useEffect, useState } from 'react';
 import 'react-native-reanimated';
@@ -8,7 +7,7 @@ import { Stack } from 'expo-router';
 // import AppInitializer from '@/components/AppInitializer';
 import { Provider } from 'react-redux'
 import { store } from './store/store';
-import { loginSuccess } from './store/slices/userSlices';
+import AppInitializer from '@/components/AppInitializer';
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
@@ -33,10 +32,6 @@ export default function RootLayout() {
   useEffect(() => {
     const prepare = async () => {
       if (loaded) {
-        const token = await SecureStore.getItemAsync("accessToken");
-        if (token) {
-          store.dispatch(loginSuccess({ token, user: { email: "unknown"}}));
-        }
         setReady(true);
         await SplashScreen.hideAsync();
       }
@@ -48,16 +43,14 @@ export default function RootLayout() {
 
   return (
     <Provider store={store}>
-      {/* <AppInitializer /> */}
+      <AppInitializer />
       <Stack
         screenOptions={{ headerShown: false }}>
         <Stack.Screen name="auth/Login" />
         <Stack.Screen name="auth/Signup" />
-        <Stack.Screen name="Main" />
-        <Stack.Screen name="search/RouteQuest" />
+        <Stack.Screen name="search/routeQuest" />
         <Stack.Screen name="profile/MyPage" />
         <Stack.Screen name="profile/LookBookMark" />
-        <Stack.Screen name="profile/EmailUpdate" />
         <Stack.Screen name="profile/PasswordUpdate" />
         <Stack.Screen name="Survey" />
         <Stack.Screen name="RestArea" />

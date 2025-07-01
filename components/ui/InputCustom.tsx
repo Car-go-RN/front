@@ -15,7 +15,7 @@ type InputCustomProps = {
     onPress?: () => void;
 }
 
-const InputCustom:React.FC<InputCustomProps> = ({label, placeholder, isError, isSignup, type, onChangeText, onPress }) => {
+const InputCustom:React.FC<InputCustomProps> = ({label, placeholder, isError, isSignup, type, onChangeText, onPress, value }) => {
     return(
         <View style={styles.container}>
             <Text style={styles.text}>{label}</Text>
@@ -26,6 +26,7 @@ const InputCustom:React.FC<InputCustomProps> = ({label, placeholder, isError, is
                     placeholderTextColor={Colors.placeholder}
                     secureTextEntry={type=='password'? true : false }
                     onChangeText={onChangeText}
+                    value={value}
                 />{
                     isSignup && (
                         <Pressable style={styles.authButton} onPress={onPress}>
