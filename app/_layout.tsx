@@ -4,7 +4,6 @@ import { StatusBar } from 'expo-status-bar';
 import { useEffect, useState } from 'react';
 import 'react-native-reanimated';
 import { Stack } from 'expo-router';
-// import AppInitializer from '@/components/AppInitializer';
 import { Provider } from 'react-redux'
 import { store } from '../store/store';
 import AppInitializer from '@/components/AppInitializer';
@@ -20,13 +19,9 @@ export default function RootLayout() {
   const [ready, setReady] = useState(false);
 
   useEffect(() => {
-    const prepare = async () => {
       if (loaded) {
-        setReady(true);
-        await SplashScreen.hideAsync();
-      }
+        SplashScreen.hideAsync();
     };
-    prepare()
   }, [loaded]);
 
   if (!loaded) {

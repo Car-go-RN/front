@@ -5,7 +5,6 @@ import { useEffect, useState } from "react"
 import { useRouter } from "expo-router"
 import TagCustom from "./TagCustom"
 import { brandImg } from "@/constants/BrandImg"
-import { amenities } from "@/constants/TagMock"
 import { getRestImg, postMyFavorite } from "@/api/RestAreaAPI"
 import { useSelector } from "react-redux"
 import { RootState } from "@/store/store"
@@ -52,18 +51,18 @@ const RestItem:React.FC<RestMark> = (props) => {
     if(res.pass){
       //useState로 관리하는 거 수정 필요 ( api 연결해서 휴게소 즐겨찾기 값에 따라 나오게)
       setMarked(true)
-      props.bookMarkChange()
+      // props.bookMarkChange()
     }
   }
   const handleDownMark = async () => {
     const res = await postMyFavorite({restAreaId:props.restId, userId: userId as number})
     if(res.pass){
       setMarked(false)
-      props.bookMarkChange();
+      // props.bookMarkChange();
     }
   }
-  if(!imgUrl)return;
 
+  if(!imgUrl)return;
   return (
     <View style={styles.container}>
       <Pressable onPress={()=>router.push({pathname:'/RestArea', params: {stdRestNm: props.stdRestNm}})} style={{flexDirection: 'row', justifyContent: 'center'}}>

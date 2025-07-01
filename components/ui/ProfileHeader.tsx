@@ -6,7 +6,7 @@ import { AntDesign } from "@expo/vector-icons";
 import CategoryCustom from "./CategoryCustom";
 import ButtonCustom from "./ButtonCustom";
 import { useSelector } from "react-redux";
-import { RootState } from "@/app/store/store";
+import { RootState } from "../../store/store";
 
 type ProfileHeaderProps = {
   isCategory?:boolean,
