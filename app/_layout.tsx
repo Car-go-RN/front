@@ -6,7 +6,7 @@ import 'react-native-reanimated';
 import { Stack } from 'expo-router';
 // import AppInitializer from '@/components/AppInitializer';
 import { Provider } from 'react-redux'
-import { store } from './store/store';
+import { store } from '../store/store';
 import AppInitializer from '@/components/AppInitializer';
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
