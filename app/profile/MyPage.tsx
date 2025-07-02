@@ -46,7 +46,8 @@ const MyPage = () => {
           dispatch(logout());
           // SecureStore 토큰 삭제
           await SecureStore.deleteItemAsync('accessToken');
-          router.replace('/')
+          router.replace('/');
+          return;
         }
       }
     ])

@@ -2,9 +2,10 @@
   "expo": {
     "name": "cargo",
     "slug": "cargo",
+    "owner": "shinsuji",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/images/카GO바지.svg",
+    "icon": "./assets/images/카GO바지logo3.png",
     "scheme": "myapp",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
@@ -12,7 +13,7 @@
       "supportsTablet": true,
       "infoPlist": {
         "NSLocationWhenInUseUsageDescription": "이 앱은 현재 위치를 사용하여 휴게소와의 거리 정보를 제공합니다."
-      } 
+      }
     },
     "androidStatusBar": {
       "backgroundColor": "#ffffff"
@@ -22,7 +23,8 @@
         "foregroundImage": "./assets/images/카GO바지logo2.png",
         "backgroundColor": "#ffffff"
       },
-      "package": "com.shinsuji.cargo"
+      "package": "com.shinsuji.cargo",
+      "usesCleartextTraffic": true
     },
     "web": {
       "bundler": "metro",
@@ -34,7 +36,7 @@
       [
         "expo-splash-screen",
         {
-          "image": "./assets/images/카GO바지.svg",
+          "image": "./assets/images/카GO바지logo2.png",
           "imageWidth": 100,
           "resizeMode": "contain",
           "backgroundColor": "#fff"
@@ -50,8 +52,9 @@
         "origin": false
       },
       "eas": {
-        "projectId": "6036fadc-398c-4e35-ba3d-8052421bac5c"
-      }
+        "projectId": "b58ea963-ee79-4587-80bb-3a9753200454"
+      },
+      "EXPO_PUBLIC_BASE_URL": "http://13.124.148.94:8080"
     }
   }
 }
